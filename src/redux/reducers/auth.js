@@ -9,9 +9,11 @@ export default function authReducer (state, action) {
   if (!state || !action) return defaultState
 
   if (action === 'LOGIN') {
-    return { user: action.user }
+    return { ...state, user: action.user }
   } else if (action === 'SIGNUP') {
-    return { user: action.user }
+    return { ...state, user: action.user }
+  } else if (action === 'UPDATE_TOKEN') {
+    return { ...state, token: action.token }
   } else {
     return state
   }
