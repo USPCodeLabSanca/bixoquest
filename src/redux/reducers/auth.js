@@ -8,5 +8,11 @@ const defaultState = {
 export default function authReducer (state, action) {
   if (!state || !action) return defaultState
 
-  return state
+  if (action === 'LOGIN') {
+    return { user: action.user }
+  } else if (action === 'SIGNUP') {
+    return { user: action.user }
+  } else {
+    return state
+  }
 }
