@@ -1,9 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { ThemeProvider } from '@material-ui/core'
+import MuiTheme from './MuiTheme'
 
 export default function App () {
   return (
-    <h1>Hello, World</h1>
+    <ThemeProvider theme={MuiTheme}>
+    </ThemeProvider>
   )
 }
 
