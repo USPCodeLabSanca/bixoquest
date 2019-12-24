@@ -20,3 +20,11 @@ export async function signup (email, password) {
     user
   }
 }
+
+/** @argument { string } token */
+export function updateToken (token) {
+  return {
+    type: 'UPDATE_TOKEN',
+    token
+  }
+}
