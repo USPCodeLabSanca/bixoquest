@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import MuiTheme from './MuiTheme'
 import routes from './constants/routes'
 import store from './redux/store'
+import { requiresNoAuthentication } from './lib/auth-checker'
 
 // Pages
 import Home from './pages/Home'
@@ -23,7 +24,7 @@ function App () {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
-            <Route path={routes.home} component={Home} />
+            <Route path={routes.home} component={requiresNoAuthentication(Home)} />
             <Redirect to={routes.home} />
           </Switch>
         </BrowserRouter>
