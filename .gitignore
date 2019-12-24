@@ -1,6 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# VSCode things
 .vscode
+
+# Tailwind built file
+tailwind.build.css
 
 # dependencies
 /node_modules
