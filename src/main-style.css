@@ -1,5 +1,36 @@
-body, html {
+:root {
+  --color-primary: #45AAF2;
+  --color-secondary: #FA8231;
+}
+
+body, html, #root {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+  height: 100%;
+  width: 100%;
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.row-gap-6 {
+  row-gap: 1.5rem;
+}
+
+.grid {
+  display: grid;
 }
