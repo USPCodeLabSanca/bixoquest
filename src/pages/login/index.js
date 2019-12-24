@@ -1,9 +1,11 @@
 import React from 'react'
+
 import { useHistory } from 'react-router-dom'
-import Routes from '../../constants/routes'
-import { AuthActions } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
 import CircularProgress from '@material-ui/core/CircularProgress'
+
+import { AuthActions } from '../../redux/actions'
+import Routes from '../../constants/routes'
 
 const style = {
   root: 'flex flex-col items-center text-center px-4 bg-primary h-full text-white',
@@ -35,7 +37,9 @@ const LoginScreen = () => {
         dispatch(action)
         history.push(Routes.home)
       })
-    } catch (e) { console.error(e) } finally {
+    } catch (e) {
+      console.error(e)
+    } finally {
       setIsLoading(false)
     }
   }
