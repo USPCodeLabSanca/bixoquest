@@ -29,10 +29,12 @@ const LoginScreen = () => {
       const password = passwordRef.current.value
       event.preventDefault()
       const action = await AuthActions.login({ email, password })
-      dispatch(action)
 
       // This timeout is to prevent unmounting before the state changes
-      setTimeout(() => history.push(Routes.home))
+      setTimeout(() => {
+        dispatch(action)
+        history.push(Routes.home)
+      })
     } catch (e) { console.error(e) } finally {
       setIsLoading(false)
     }
