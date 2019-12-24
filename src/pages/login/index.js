@@ -18,7 +18,7 @@ const style = {
 const LoginScreen = () => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const [isLoading, setIsLoading] = React.useState(true)
+  const [isLoading, setIsLoading] = React.useState(false)
   const emailRef = React.useRef()
   const passwordRef = React.useRef()
 
@@ -51,7 +51,7 @@ const LoginScreen = () => {
           className={style.button}
           onClick={login}
         >
-          LOGIN{isLoading && <CircularProgress size={10} />}
+          LOGIN {isLoading && <CircularProgress size={15} color='inherit' />}
         </button>
       </form>
     </main>
