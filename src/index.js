@@ -18,6 +18,7 @@ import Home from './pages/Home'
 
 // CSS
 import './main-style.css'
+import './tailwind.build.css'
 
 initializeAPI({
   baseURL: APIBaseURL,
