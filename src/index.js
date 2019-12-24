@@ -12,6 +12,7 @@ import store from './redux/store'
 
 // Pages
 import Home from './pages/Home'
+import Login from './pages/login'
 
 // CSS
 import './main-style.css'
@@ -24,6 +25,7 @@ function App () {
         <BrowserRouter>
           <Switch>
             <Route path={routes.home} component={Home} />
+            <Route path={routes.login} component={Login} />
             <Redirect to={routes.home} />
           </Switch>
         </BrowserRouter>
