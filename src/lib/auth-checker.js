@@ -34,7 +34,7 @@ export const requiresNoAuthentication = Component => {
       setTimeout(() => history.push(Routes.home))
       return null
     } else {
-      return <Component {...props} user={auth.user} />
+      return <Component {...props} />
     }
   }
 }
