@@ -1,6 +1,8 @@
 import React from 'react'
+
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+
 import Routes from '../constants/routes'
 
 /** Only renders a component if the user is logged in
