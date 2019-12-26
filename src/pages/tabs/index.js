@@ -13,7 +13,7 @@ import Header from './header'
 
 const style = {
   main: 'h-full flex flex-col justify-between',
-  barRoot: 'flex space-between',
+  barRoot: 'flex space-between shadow-lg',
   buttonRoot: 'flex justify-center items-center height h-16 w-full transition',
   buttonSelected: 'bg-gray-400',
   buttonUnselected: 'bg-white'

@@ -28,6 +28,10 @@ body, html, #root {
   color: var(--color-secondary);
 }
 
+.z-10 {
+  z-index: 10;
+}
+
 .bg-tertiary {
   background-color: var(--color-tertiary);
 }

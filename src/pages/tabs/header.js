@@ -3,7 +3,7 @@ import BookIcon from '@material-ui/icons/ImportContacts'
 import StyleIcon from '@material-ui/icons/Style'
 
 const style = {
-  root: 'h-16 shadow-lg w-full flex justify-around items-center bg-secondary text-white text-2xl',
+  root: 'h-16 z-10 shadow-lg w-full flex justify-around items-center bg-secondary text-white text-2xl',
   item: 'flex items-center justify-between',
   icon: 'mr-2'
 }
