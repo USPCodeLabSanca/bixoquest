@@ -1,5 +1,9 @@
 const routes = {
-  home: '/home',
+  tabs: {
+    map: '/map',
+    missions: '/missions',
+    profile: '/profile'
+  },
   login: '/login',
   signup: '/signup'
 }
