@@ -15,12 +15,13 @@ import APIBaseURL from './constants/api-url'
 import { updateToken } from './redux/actions/auth'
 
 // Pages
-import Home from './pages/Home'
+import Tabs from './pages/tabs'
 import Login from './pages/login'
 
 // CSS
 import './main-style.css'
 import './tailwind.build.css'
+import 'ol/ol.css'
 
 initializeAPI({
   baseURL: APIBaseURL,
@@ -35,9 +36,9 @@ function App () {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
-            <Route path={routes.home} component={Home} />
+            <Route path={[routes.tabs.map, routes.tabs.missions, routes.tabs.profile]} component={Tabs} />
             <Route path={routes.login} component={requiresNoAuthentication(Login)} />
-            <Redirect to={routes.home} />
+            <Redirect to={routes.tabs.map} />
           </Switch>
         </BrowserRouter>
       </Provider>
