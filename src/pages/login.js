@@ -14,8 +14,7 @@ const style = {
   root: 'flex flex-col items-center text-center px-4 bg-primary h-full text-white',
   header: 'text-6xl mt-16',
   subheader: 'text-2xl mb-8',
-  card: 'bg-white shadow-lg rounded-lg grid row-gap-6 w-full p-6',
-  button: 'text-white bg-secondary rounded-lg p-4'
+  card: 'bg-white shadow-lg rounded-lg grid row-gap-6 w-full p-6'
 }
 
 /** LoginScreen */
