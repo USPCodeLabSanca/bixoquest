@@ -9,7 +9,9 @@ export default function authReducer (state, action) {
   if (!state || !action) return defaultState
 
   if (action.type === 'SET_USER') {
-    return { user: action.user }
+    return { ...state, user: action.user }
+  } else if (action.type === 'UPDATE_TOKEN') {
+    return { ...state, token: action.token }
   } else {
     return state
   }
