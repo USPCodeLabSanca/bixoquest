@@ -1,6 +1,8 @@
 import React from 'react'
 
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
 import BookIcon from '@material-ui/icons/ImportContacts'
 import HomeIcon from '@material-ui/icons/Home'
 import PersonIcon from '@material-ui/icons/Person'
@@ -13,22 +15,25 @@ import Header from './header'
 
 const style = {
   main: 'h-full flex flex-col justify-between',
-  barRoot: 'flex space-between shadow-lg',
-  buttonRoot: 'flex justify-center items-center height h-16 w-full transition',
-  buttonSelected: 'bg-gray-400',
-  buttonUnselected: 'bg-white'
+  footer: 'flex space-between shadow-lg w-full'
 }
 
-const BarButton = ({ label, to }) => {
-  const history = useHistory()
+const TabOrder = [Routes.tabs.missions, Routes.tabs.map, Routes.tabs.profile]
+
+const PathToTabIndex = path => TabOrder.findIndex(s => s === path)
+
+const TabIndexToPath = index => TabOrder[index]
+
+export default function TabsScreen () {
   const location = useLocation()
-  const isButtonSelected = location.pathname === to
+  const [tabValue, setTabValue] = React.useState(PathToTabIndex(location.pathname))
+  const history = useHistory()
 
-  const buttonStyle = style.buttonRoot + ' ' + (isButtonSelected ? style.buttonSelected : style.buttonUnselected)
-  return <div className={buttonStyle} onClick={() => history.push(to)}>{label} </div>
-}
+  const handleChange = (_, newValue) => {
+    history.push(TabIndexToPath(newValue))
+    setTabValue(newValue)
+  }
 
-export default function Tabs () {
   return (
     <main className={style.main}>
       <Header />
@@ -37,10 +42,17 @@ export default function Tabs () {
         <Route component={Missions} path={Routes.tabs.missions} />
         <Route component={Map} path={Routes.tabs.profile} />
       </Switch>
-      <footer className={style.barRoot}>
-        <BarButton label={<BookIcon />} to={Routes.tabs.missions} />
-        <BarButton label={<HomeIcon />} to={Routes.tabs.map} />
-        <BarButton label={<PersonIcon />} to={Routes.tabs.profile} />
+      <footer className={style.footer}>
+        <Tabs
+          value={tabValue}
+          onChange={handleChange}
+          variant='fullWidth'
+          className='w-full'
+        >
+          <Tab icon={<BookIcon />} />
+          <Tab icon={<HomeIcon />} />
+          <Tab icon={<PersonIcon />} />
+        </Tabs>
       </footer>
     </main>
   )
