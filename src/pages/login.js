@@ -35,7 +35,7 @@ const LoginScreen = () => {
       // This timeout is to prevent unmounting before the state changes
       setTimeout(() => {
         dispatch(action)
-        history.push(Routes.home)
+        history.push(Routes.tabs.map)
       })
     } catch (e) {
       console.error(e)
@@ -43,7 +43,6 @@ const LoginScreen = () => {
       setIsLoading(false)
     }
   }
-
   return (
     <main className={style.root}>
       <h1 className={style.header}>BixoQuest</h1>

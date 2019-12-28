@@ -9,7 +9,6 @@ import { Provider } from 'react-redux'
 import MuiTheme from './MuiTheme'
 import routes from './constants/routes'
 import store from './redux/store'
-import { requiresNoAuthentication } from './lib/auth-checker'
 import { initializeAPI } from './api/base-api'
 import APIBaseURL from './constants/api-url'
 import { updateToken } from './redux/actions/auth'
@@ -37,8 +36,8 @@ function App () {
         <BrowserRouter>
           <Switch>
             <Route path={[routes.tabs.map, routes.tabs.missions, routes.tabs.profile]} component={Tabs} />
-            <Route path={routes.login} component={requiresNoAuthentication(Login)} />
-            <Redirect to={routes.tabs.map} />
+            <Route path={routes.login} component={Login} />
+            <Redirect to={routes.login} />
           </Switch>
         </BrowserRouter>
       </Provider>
