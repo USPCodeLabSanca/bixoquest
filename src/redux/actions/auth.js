@@ -5,7 +5,7 @@ const fakeRequest = () => new Promise(resolve => setTimeout(resolve, 500))
 export async function login (user) {
   await fakeRequest()
   return {
-    type: 'LOGIN',
+    type: 'SET_USER',
     user
   }
 }
@@ -14,7 +14,7 @@ export async function login (user) {
 export async function signup (user) {
   await fakeRequest()
   return {
-    type: 'SIGNUP',
+    type: 'SET_USER',
     user
   }
 }
