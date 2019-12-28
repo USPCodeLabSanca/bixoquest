@@ -1,21 +1,11 @@
-// TODO - Replace this with the actual API request
-const fakeRequest = () => new Promise(resolve => setTimeout(resolve, 500))
+import API from '../../api'
 
 /** @argument {{ email: string, password: string }} user */
 export async function login (user) {
-  await fakeRequest()
+  const response = await API.login(user)
   return {
     type: 'SET_USER',
-    user
-  }
-}
-
-/** @argument {{ email: string, password: string }} user */
-export async function signup (user) {
-  await fakeRequest()
-  return {
-    type: 'SET_USER',
-    user
+    user: response.data.data
   }
 }
 
