@@ -1,15 +1,22 @@
-// import API from './base-api'
-// import { withCustomError } from './error-message'
+import API from './base-api'
+import { withCustomError } from './error-message'
+
+/** @template T @typedef { import('axios').AxiosResponse<T> } AxiosResponse */
+
+/** @template T @typedef { Promise<AxiosResponse<{
+  message: string,
+  success: boolean,
+  data: T
+}>> } APIResponse */
 
 const Handlers = {
-  // Put your handlers here. Example:
-  // getTodo: todoId => API.get('/todos/' + todoId)
 
-  // with custom error:
-  // getTodo: withCustomError(
-  //   todoId => API.get('/todos/' + todoId),
-  //   { 404: 'Todo not found!' }
-  // )
+  login: withCustomError(
+    /** @argument {{ nusp: string, password: string }} userInfo
+    @returns { APIResponse<{{ _id: string, nusp: string, name: string, course: string }}> } */
+    (userInfo) => API.post('/auth', userInfo),
+    { 401: 'Desculpe, Suas credenciais são inválidas! Por acaso você errou alguma coisa?' }
+  )
 }
 
 export default Handlers
