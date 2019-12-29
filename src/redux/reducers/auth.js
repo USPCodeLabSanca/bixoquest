@@ -1,5 +1,3 @@
-import {} from 'redux'
-
 const defaultState = {
   user: null,
   token: null
