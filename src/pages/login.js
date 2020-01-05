@@ -2,6 +2,8 @@ import React from 'react'
 
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { AuthActions } from '../redux/actions'
@@ -12,9 +14,7 @@ const style = {
   root: 'flex flex-col items-center text-center px-4 bg-primary h-full text-white',
   header: 'text-6xl mt-16',
   subheader: 'text-2xl mb-8',
-  card: 'bg-white shadow-lg rounded-lg grid row-gap-6 w-full p-6',
-  input: 'border border-black rounded-lg p-4 text-black',
-  button: 'text-white bg-secondary rounded-lg p-4'
+  card: 'bg-white shadow-lg rounded-lg grid row-gap-6 w-full p-6'
 }
 
 /** LoginScreen */
@@ -52,16 +52,11 @@ const LoginScreen = () => {
       <h1 className={style.header}>BixoQuest</h1>
       <p className={style.subheader}>Entrar com número USP e senha única</p>
       <form onSubmit={login} className={style.card}>
-        <input ref={nuspRef} placeholder='Número USP' className={style.input} />
-        <input ref={passwordRef} placeholder='Senha' className={style.input} />
-        <button
-          disabled={isLoading}
-          type='submit'
-          className={style.button}
-          onClick={login}
-        >
-          LOGIN {isLoading && <CircularProgress size={15} color='inherit' />}
-        </button>
+        <TextField label='Número USP' inputRef={nuspRef} />
+        <TextField label='Senha' inputRef={passwordRef} />
+        <Button variant='contained' onClick={login} type='submit' disabled={isLoading} color='secondary'>
+          login {isLoading && <CircularProgress size={15} color='inherit' />}
+        </Button>
       </form>
     </main>
   )

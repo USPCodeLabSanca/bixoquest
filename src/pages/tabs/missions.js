@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Paper from '@material-ui/core/Paper'
 import ArrowDown from '@material-ui/icons/ArrowDropUp'
 import ArrowUp from '@material-ui/icons/ArrowDropDown'
 
@@ -8,7 +9,7 @@ const style = {
 }
 
 const cardStyle = {
-  root: 'w-full pt-2 bg-white rounded-lg my-6 shadow-lg',
+  root: 'pt-2 my-6',
   titleContainer: 'flex mx-4 justify-between font-bold',
   description: 'text-xs my-1 mx-4',
   statusContainer: 'flex',
@@ -243,7 +244,7 @@ const MissionCard = ({ mission }) => {
   const ArrowComponent = isOpen ? ArrowUp : ArrowDown
 
   return (
-    <div className={cardStyle.root}>
+    <Paper className={cardStyle.root} elevation={3}>
       <div className={cardStyle.titleContainer} onClick={() => setIsOpen(s => !s)}>
         <h2>{mission.title}</h2>
         <ArrowComponent />
@@ -267,7 +268,7 @@ const MissionCard = ({ mission }) => {
           <div className='h-2' />
         )
       }
-    </div>
+    </Paper>
   )
 }
 
