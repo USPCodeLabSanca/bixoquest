@@ -13,6 +13,7 @@ import { store, persistor } from './redux/store'
 import { initializeAPI } from './api/base-api'
 import APIBaseURL from './constants/api-url'
 import { updateToken } from './redux/actions/auth'
+import { GeoActions } from './redux/actions'
 import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-checker'
 
 // Pages
@@ -30,6 +31,14 @@ initializeAPI({
   tokenDispatcher: newToken => store.dispatch(updateToken(newToken)),
   onError: message => window.alert(message)
 })
+
+navigator.geolocation.watchPosition(
+  pos => store.dispatch(GeoActions.setPosition(pos)),
+  error => {
+    store.dispatch(GeoActions.unavailable(error))
+    console.error(error)
+  }
+)
 
 function App () {
   return (
