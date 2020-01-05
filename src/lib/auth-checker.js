@@ -15,7 +15,7 @@ export const requiresAuthentication = Component => {
 
     // User is not logged in
     if (!auth.user) {
-      setTimeout(() => history.push(Routes.home))
+      setTimeout(() => history.push(Routes.login))
       return null
     } else {
       return <Component {...props} user={auth.user} />
@@ -33,7 +33,7 @@ export const requiresNoAuthentication = Component => {
 
     // User is logged in
     if (auth.user) {
-      setTimeout(() => history.push(Routes.home))
+      setTimeout(() => history.push(Routes.tabs.map))
       return null
     } else {
       return <Component {...props} />

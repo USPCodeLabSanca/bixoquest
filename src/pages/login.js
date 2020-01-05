@@ -6,6 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { AuthActions } from '../redux/actions'
 import Routes from '../constants/routes'
+import validators from '../lib/validators'
 
 const style = {
   root: 'flex flex-col items-center text-center px-4 bg-primary h-full text-white',
@@ -21,21 +22,24 @@ const LoginScreen = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = React.useState(false)
-  const emailRef = React.useRef()
+  const nuspRef = React.useRef()
   const passwordRef = React.useRef()
 
   const login = async (event) => {
+    event.preventDefault()
     setIsLoading(true)
     try {
-      const email = emailRef.current.value
-      const password = passwordRef.current.value
-      event.preventDefault()
-      const action = await AuthActions.login({ email, password })
+      const nusp = nuspRef.current.value.trim()
+      const password = passwordRef.current.value.trim()
+      const newUser = { nusp, password }
+      const errors = validators.login(newUser)
+      if (errors.length > 0) return window.alert(errors.join('\n'))
+      const action = await AuthActions.login(newUser)
 
       // This timeout is to prevent unmounting before the state changes
       setTimeout(() => {
         dispatch(action)
-        history.push(Routes.home)
+        history.push(Routes.tabs.map)
       })
     } catch (e) {
       console.error(e)
@@ -43,14 +47,13 @@ const LoginScreen = () => {
       setIsLoading(false)
     }
   }
-
   return (
     <main className={style.root}>
       <h1 className={style.header}>BixoQuest</h1>
-      <p className={style.subheader}>Entrar com email USP e senha única</p>
+      <p className={style.subheader}>Entrar com número USP e senha única</p>
       <form onSubmit={login} className={style.card}>
-        <input ref={emailRef} placeholder='E-mail address' className={style.input} />
-        <input ref={passwordRef} placeholder='Password' className={style.input} />
+        <input ref={nuspRef} placeholder='Número USP' className={style.input} />
+        <input ref={passwordRef} placeholder='Senha' className={style.input} />
         <button
           disabled={isLoading}
           type='submit'
