@@ -12,8 +12,6 @@ export default function Profile () {
     dispatch(action)
   }
 
-  console.log(country)
-
   return (
     <div>
       <h1>Bem vindo, voce está {country.name ? country.name : 'em pais nenhum'}</h1>
