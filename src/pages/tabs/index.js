@@ -10,6 +10,7 @@ import PersonIcon from '@material-ui/icons/Person'
 import Routes from '../../constants/routes'
 
 import Map from './map'
+import Profile from './profile'
 import Missions from './missions'
 import Header from './header'
 
@@ -40,7 +41,7 @@ export default function TabsScreen () {
       <Switch>
         <Route component={Map} path={Routes.tabs.map} />
         <Route component={Missions} path={Routes.tabs.missions} />
-        <Route component={Map} path={Routes.tabs.profile} />
+        <Route component={Profile} path={Routes.tabs.profile} />
       </Switch>
       <footer className={style.footer}>
         <Tabs
