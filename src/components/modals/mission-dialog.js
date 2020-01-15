@@ -18,13 +18,11 @@ export default function MissionDialog ({
 }) {
   if (!mission) throw new Error('Mission prop is required')
 
-  const { locationReference } = mission
-
   return (
     <Modal open className={style.root} onClose={onRequestClose}>
       <Card className={style.card}>
         <div className={style.title}>Nova missão encontrada.</div>
-        <div className={style.description}>{locationReference}</div>
+        <div className={style.description}>{mission.location_reference}</div>
         <Button onClick={onSubmit} className={style.button} fullWidth variant='contained'>
           ACEITAR
         </Button>
