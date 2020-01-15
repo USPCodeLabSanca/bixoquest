@@ -12,10 +12,11 @@ import Routes from '../../constants/routes'
 import Map from './map'
 import Missions from './missions'
 import Header from './header'
+import Profile from './profile'
 
 const style = {
-  main: 'h-full flex flex-col justify-between',
-  footer: 'flex space-between shadow-lg w-full'
+  main: 'h-full flex flex-col justify-between bg-gray-400',
+  footer: 'flex space-between shadow-lg w-full bg-white'
 }
 
 const TabOrder = [Routes.tabs.missions, Routes.tabs.map, Routes.tabs.profile]
@@ -40,7 +41,7 @@ export default function TabsScreen () {
       <Switch>
         <Route component={Map} path={Routes.tabs.map} />
         <Route component={Missions} path={Routes.tabs.missions} />
-        <Route component={Map} path={Routes.tabs.profile} />
+        <Route component={Profile} path={Routes.tabs.profile} />
       </Switch>
       <footer className={style.footer}>
         <Tabs

@@ -5,7 +5,7 @@ import ArrowDown from '@material-ui/icons/ArrowDropUp'
 import ArrowUp from '@material-ui/icons/ArrowDropDown'
 
 const style = {
-  root: 'h-full px-4 bg-gray-400 overflow-auto'
+  root: 'h-full px-4 overflow-auto'
 }
 
 const cardStyle = {
