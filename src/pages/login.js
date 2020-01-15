@@ -53,7 +53,7 @@ const LoginScreen = () => {
       <p className={style.subheader}>Entrar com número USP e senha única</p>
       <form onSubmit={login} className={style.card}>
         <TextField label='Número USP' inputRef={nuspRef} />
-        <TextField label='Senha' inputRef={passwordRef} />
+        <TextField type='password' label='Senha' inputRef={passwordRef} />
         <Button variant='contained' onClick={login} type='submit' disabled={isLoading} color='secondary'>
           login {isLoading && <CircularProgress size={15} color='inherit' />}
         </Button>
