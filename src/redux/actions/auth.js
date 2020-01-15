@@ -9,6 +9,10 @@ export async function login (user) {
   }
 }
 
+export function logout () {
+  return { type: 'LOGOUT' }
+}
+
 /** @argument { string } token */
 export function updateToken (token) {
   return {

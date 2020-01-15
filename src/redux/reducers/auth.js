@@ -10,6 +10,8 @@ export default function authReducer (state, action) {
     return { ...state, user: action.user }
   } else if (action.type === 'UPDATE_TOKEN') {
     return { ...state, token: action.token }
+  } else if (action.type === 'LOGOUT') {
+    return { ...defaultState }
   } else {
     return state
   }
