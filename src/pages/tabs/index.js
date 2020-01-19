@@ -13,6 +13,7 @@ import Map from './map'
 import Missions from './missions'
 import Header from './header'
 import Profile from './profile'
+import Stickers from './stickers'
 
 const style = {
   main: 'h-full flex flex-col justify-between bg-gray-400',
@@ -42,6 +43,7 @@ export default function TabsScreen () {
         <Route component={Map} path={Routes.tabs.map} />
         <Route component={Missions} path={Routes.tabs.missions} />
         <Route component={Profile} path={Routes.tabs.profile} />
+        <Route component={Stickers} path={Routes.tabs.stickers} />
       </Switch>
       <footer className={style.footer}>
         <Tabs

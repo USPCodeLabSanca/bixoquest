@@ -2,7 +2,8 @@ const routes = {
   tabs: {
     map: '/map',
     missions: '/missions',
-    profile: '/profile'
+    profile: '/profile',
+    stickers: '/stickers'
   },
   login: '/login',
   signup: '/signup'
