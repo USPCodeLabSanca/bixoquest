@@ -15,7 +15,7 @@ const style = {
   root: 'h-full overflow-auto',
   nav: 'flex space-between shadow-lg w-full bg-white',
   center: 'flex justify-center',
-  avatar: { width: '90vw', height: 'auto', marginBottom: '8px', borderRadius: '8px' },
+  avatar: { width: '80vw', height: 'auto', marginBottom: '8px', borderRadius: '8px' },
   avatarClass: 'shadow-lg'
 
 }
@@ -88,8 +88,6 @@ export default function Stickers () {
           onChange={handleChange}
           variant="scrollable"
           scrollButtons="on"
-          indicatorColor="primary"
-          textColor="primary"
           aria-label="scrollable force tabs example"
         >
 
