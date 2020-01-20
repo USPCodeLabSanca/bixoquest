@@ -18,6 +18,10 @@ const Handlers = {
     { 401: 'Desculpe, Suas credenciais são inválidas! Por acaso você errou alguma coisa?' }
   ),
 
+  fetchNearbyMissions: (lat, long) => API.get(`/missions?lat=${lat}&lng=${long}`),
+
+  completeMission: (missionId, lat, lng) => API.post(`/missions/${missionId}/complete`, { lat, lng }),
+  
   getAllMissions: () => API.get('/missions/all')
 }
 
