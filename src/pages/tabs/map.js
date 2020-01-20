@@ -1,40 +1,12 @@
 import React from 'react'
 
-import { connect } from 'react-redux'
 import Paper from '@material-ui/core/Paper'
 
-// OL imports
-import { Map, View } from 'ol'
-import { fromLonLat } from 'ol/proj'
-import { Style, Fill, Icon as IconStyle, Text as TextStyle, Stroke } from 'ol/style'
-import { Point } from 'ol/geom'
-import Feature from 'ol/Feature'
-import { Vector as VectorSource } from 'ol/source'
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
-import OSM from 'ol/source/OSM'
+import { useSelector, useDispatch } from 'react-redux'
+import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet'
 
-import LocationPin from './location-pin.png'
-
-const style = {
-  root: 'bg-tertiary h-full'
-}
-
-const userPositionFeature = new Feature(new Point([0, 0]))
-
-userPositionFeature.setStyle(new Style({
-  image: new IconStyle({
-    scale: 0.1,
-    offset: [0, 25.51],
-    src: LocationPin
-  }),
-  text: new TextStyle({
-    text: 'Você está aqui',
-    fill: new Fill({ color: '#000000' }),
-    stroke: new Stroke({ color: '#000000' }),
-    offsetY: -30,
-    font: '20px arial'
-  })
-}))
+import { fetchNearbyMissions } from '../../redux/actions/missions'
+import MissionDialog from '../../components/modals/mission-dialog'
 
 const resolveErrorText = errorCode => {
   const defaultMessage = 'Ops! um erro desconhecido ocorreu. Por favor, tente novamente'
@@ -62,11 +34,11 @@ const WarningPopup = ({ geolocation }) => {
   const [text, setText] = React.useState(resolveText(geolocation))
 
   React.useEffect(() => {
+    navigator.geolocation.getCurrentPosition(() => {})
     const isOpen = !geolocation.isAvailable || !!geolocation.error
     setIsOpen(isOpen)
     if (isOpen) setText(resolveText(geolocation))
   }, [geolocation])
-
   return (
     <Paper
       className='absolute z-10 p-2 text-center'
@@ -81,44 +53,76 @@ const WarningPopup = ({ geolocation }) => {
   )
 }
 
-function HomePage ({ geolocation }) {
-  const map = React.useRef()
+export default function MapScreen () {
+  const [selectedMission, setSelectedMission] = React.useState(null)
 
-  // Creates the map
-  React.useEffect(() => {
-    map.current = new Map({
-      target: 'map',
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        }),
-        new VectorLayer({
-          source: new VectorSource({
-            features: [userPositionFeature]
-          })
-        })
-      ],
-      view: new View({
-        center: [0, 0],
-        zoom: 0
-      })
-    })
-  }, [])
+  const dispatch = useDispatch()
+  const geolocation = useSelector(state => state.geolocation)
+  const nearbyMissions = useSelector(state => state.missions.nearbyMissions)
 
-  // Updates user position
+  let lat, lng, userPosition
+  if (geolocation.isAvailable) {
+    ({ latitude: lat, longitude: lng } = geolocation.position.coords)
+    lat = -22.007348
+    lng = -47.895196
+    userPosition = [lat, lng]
+  }
+
   React.useEffect(() => {
     if (!geolocation.isAvailable) return
-    const { position: { coords } } = geolocation
-    const center = fromLonLat([coords.longitude, coords.latitude])
-    map.current.setView(new View({ center, zoom: 16 }))
-    userPositionFeature.setGeometry(new Point(center))
-  }, [geolocation])
+    (async () => {
+      const action = await fetchNearbyMissions(lat, lng)
+      dispatch(action)
+    })()
+  }, [geolocation.isAvailable, dispatch, lat, lng])
+
+  function renderMissions () {
+    if (!nearbyMissions) return null
+    return nearbyMissions.map(mission => (
+      <Marker
+        position={[mission.lat, mission.lng]}
+        key={mission._id}
+        onClick={() => setSelectedMission(mission)}
+      />
+    ))
+  }
+
+  function renderMap () {
+    if (!geolocation.isAvailable) return null
+    return (
+      <Map center={userPosition} zoom={18} style={{ height: '100%' }}>
+        <TileLayer
+          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        />
+        <Circle center={userPosition} radius={10} />
+        <Marker position={userPosition}>
+          <Popup>
+            <h1 className='text-lg'>Você está aqui</h1>
+          </Popup>
+        </Marker>
+        {renderMissions()}
+      </Map>
+    )
+  }
+
+  function renderOverlayComponents () {
+    if (selectedMission) {
+      return (
+        <MissionDialog
+          mission={selectedMission}
+          onRequestClose={() => setSelectedMission(null)}
+          onSubmit={() => console.log('submit')}
+        />
+      )
+    }
+  }
 
   return (
-    <div className={style.root} id='map'>
+    <>
+      {renderOverlayComponents()}
       <WarningPopup geolocation={geolocation} />
-    </div>
+      {renderMap()}
+    </>
   )
 }
-
-export default connect(state => ({ geolocation: state.geolocation }), null)(HomePage)
