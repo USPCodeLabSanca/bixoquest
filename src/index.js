@@ -23,7 +23,6 @@ import Login from './pages/login'
 // CSS
 import './main-style.css'
 import './tailwind.build.css'
-import 'ol/ol.css'
 
 initializeAPI({
   baseURL: APIBaseURL,
