@@ -63,8 +63,6 @@ export default function MapScreen () {
   let lat, lng, userPosition
   if (geolocation.isAvailable) {
     ({ latitude: lat, longitude: lng } = geolocation.position.coords)
-    lat = -22.007348
-    lng = -47.895196
     userPosition = [lat, lng]
   }
 
