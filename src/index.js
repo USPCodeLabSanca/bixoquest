@@ -48,7 +48,7 @@ function App () {
           <BrowserRouter>
             <Switch>
               <Route
-                path={[routes.tabs.map, routes.tabs.missions, routes.tabs.profile]}
+                path={[routes.tabs.map, routes.tabs.profile, routes.tabs.missionsTabs.missions, routes.tabs.missionsTabs.stickers]}
                 component={requiresAuthentication(Tabs)}
               />
               <Route

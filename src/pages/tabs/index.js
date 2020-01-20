@@ -10,16 +10,16 @@ import PersonIcon from '@material-ui/icons/Person'
 import Routes from '../../constants/routes'
 
 import Map from './map'
-import Missions from './missions'
 import Header from './header'
 import Profile from './profile'
+import MissionsTabs from './missions_tabs'
 
 const style = {
   main: 'h-full flex flex-col justify-between bg-gray-400',
   footer: 'flex space-between shadow-lg w-full bg-white'
 }
 
-const TabOrder = [Routes.tabs.missions, Routes.tabs.map, Routes.tabs.profile]
+const TabOrder = [Routes.tabs.missionsTabs.missions, Routes.tabs.map, Routes.tabs.profile]
 
 const PathToTabIndex = path => TabOrder.findIndex(s => s === path)
 
@@ -40,8 +40,9 @@ export default function TabsScreen () {
       <Header />
       <Switch>
         <Route component={Map} path={Routes.tabs.map} />
-        <Route component={Missions} path={Routes.tabs.missions} />
         <Route component={Profile} path={Routes.tabs.profile} />
+
+        <Route component={MissionsTabs} path={[Routes.tabs.missionsTabs.missions, Routes.tabs.missionsTabs.stickers]} />
       </Switch>
       <footer className={style.footer}>
         <Tabs
