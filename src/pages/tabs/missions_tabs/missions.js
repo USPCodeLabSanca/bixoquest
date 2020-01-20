@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react'
 
-
+import API from '../../../api'
 
 import Paper from '@material-ui/core/Paper'
 import ArrowDown from '@material-ui/icons/ArrowDropUp'
 import ArrowUp from '@material-ui/icons/ArrowDropDown'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const style = {
-  root: 'h-full px-4 overflow-auto'
+  root: 'h-full px-4 overflow-auto',
+  spinner: 'w-full justify-center flex my-8'
 }
-
-const axios = require('axios')
-
 
 const cardStyle = {
   root: 'pt-2 my-6',
@@ -22,7 +21,6 @@ const cardStyle = {
   statusText: 'flex justify-center items-center w-full text-xs text-center rounded-br-lg text-white',
   statusFinished: 'bg-tertiary'
 }
-
 
 const MissionCard = ({ mission }) => {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -57,27 +55,43 @@ const MissionCard = ({ mission }) => {
   )
 }
 
-
 export default function Missions () {
-
-  const [missions, setMissions] = useState([])
+  const [missions, setMissions] = useState()
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    
-    axios.get('http://localhost:8080/missions/all')
-    .then(res => {
-      const received = res.data
-      
-      setMissions(received.data)
-    })
+    (async () => {
+      setIsLoading(true)
+      try {
+        const { data: { data: missions } } = await API.getAllMissions()
+        setMissions(missions)
+      } catch (e) { console.error(e) } finally {
+        setIsLoading(false)
+      }
+    })()
+  }, [])
 
-  },[])
-  
+  function renderMissions () {
+    if (isLoading) {
+      return (
+        <div className={style.spinner}>
+          <CircularProgress size={30} style={{ color: 'black' }} />
+        </div>
+      )
+    } else if (!missions) {
+      return <p>Ocorreu um erro. Por favor, tente novamente</p>
+    } else if (missions.length === 0) {
+      return <p>Nenhuma missão encontrada</p>
+    } else {
+      return missions.map(
+        mission => <MissionCard mission={mission} key={mission._id} />
+      )
+    }
+  }
 
   return (
     <div className={style.root}>
-      {missions.map((mission) => <MissionCard mission={mission} key={mission.id} /> )}
+      {renderMissions()}
     </div>
   )
 }
-

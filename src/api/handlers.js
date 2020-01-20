@@ -16,7 +16,9 @@ const Handlers = {
     @returns { APIResponse<{{ _id: string, nusp: string, name: string, course: string }}> } */
     (userInfo) => API.post('/auth', userInfo),
     { 401: 'Desculpe, Suas credenciais são inválidas! Por acaso você errou alguma coisa?' }
-  )
+  ),
+
+  getAllMissions: () => API.get('/missions/all')
 }
 
 export default Handlers

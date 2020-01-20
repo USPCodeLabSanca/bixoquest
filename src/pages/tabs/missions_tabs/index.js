@@ -32,21 +32,21 @@ export default function NavScreen () {
 
   return (
     <>
-        <nav className={style.nav}>
-            <Tabs
-            value={tabValue}
-            onChange={handleChange}
-            variant='fullWidth'
-            className='w-full'
-            >
-                <Tab label="Missões" />
-                <Tab label="Livro" />
-            </Tabs>
-        </nav>
-        <Switch>
-            <Route component={Missions} path={Routes.tabs.missionsTabs.missions} />
-            <Route component={Stickers} path={Routes.tabs.missionsTabs.stickers} />
-        </Switch>
+      <nav className={style.nav}>
+        <Tabs
+          value={tabValue}
+          onChange={handleChange}
+          variant='fullWidth'
+          className='w-full'
+        >
+          <Tab label='Missões' />
+          <Tab label='Livro' />
+        </Tabs>
+      </nav>
+      <Switch>
+        <Route component={Missions} path={Routes.tabs.missionsTabs.missions} />
+        <Route component={Stickers} path={Routes.tabs.missionsTabs.stickers} />
+      </Switch>
     </>
   )
 }
