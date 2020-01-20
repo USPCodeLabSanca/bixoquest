@@ -16,7 +16,11 @@ const Handlers = {
     @returns { APIResponse<{{ _id: string, nusp: string, name: string, course: string }}> } */
     (userInfo) => API.post('/auth', userInfo),
     { 401: 'Desculpe, Suas credenciais são inválidas! Por acaso você errou alguma coisa?' }
-  )
+  ),
+
+  fetchNearbyMissions: (lat, long) => API.get(`/missions?lat=${lat}&lng=${long}`),
+
+  completeMission: (missionId, lat, lng) => API.post(`/missions/${missionId}/complete`, { lat, lng })
 }
 
 export default Handlers
