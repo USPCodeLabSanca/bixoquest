@@ -41,8 +41,7 @@ function initializeAPI (config) {
 
   // Updates token if 'Authorization' header is filled
   api.interceptors.response.use(response => {
-    if (!response || !response.data || !response.data.data || !response.data.data.token) return response
-    const token = response.data.data.token
+    const token = response.headers.authorization
     if (token) tokenDispatcher(token)
     return response
   })

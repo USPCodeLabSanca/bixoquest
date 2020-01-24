@@ -4,9 +4,15 @@ import Paper from '@material-ui/core/Paper'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { Map, TileLayer, Marker, Popup, Circle } from 'react-leaflet'
+import { icon, point } from 'leaflet'
 
 import { fetchNearbyMissions } from '../../redux/actions/missions'
 import MissionDialog from '../../components/modals/mission-dialog'
+
+const missionIcon = icon({
+  iconUrl: 'https://cdn0.iconfinder.com/data/icons/game-ui-casual-chunky/533/IconsByAndreaFryer_GameUI_Chunky_Quest-512.png',
+  iconSize: point(40, 40)
+})
 
 const resolveErrorText = errorCode => {
   const defaultMessage = 'Ops! um erro desconhecido ocorreu. Por favor, tente novamente'
@@ -57,6 +63,7 @@ export default function MapScreen () {
   const [selectedMission, setSelectedMission] = React.useState(null)
 
   const dispatch = useDispatch()
+  const finishedMissions = useSelector(state => state.auth.user.completed_missions)
   const geolocation = useSelector(state => state.geolocation)
   const nearbyMissions = useSelector(state => state.missions.nearbyMissions)
 
@@ -74,10 +81,14 @@ export default function MapScreen () {
     })()
   }, [geolocation.isAvailable, dispatch, lat, lng])
 
-  function renderMissions () {
+  function renderMissionMarkers () {
     if (!nearbyMissions) return null
-    return nearbyMissions.map(mission => (
+    const unfinishedMissions = nearbyMissions.filter(
+      mission => !finishedMissions.some(finishedId => finishedId === mission._id)
+    )
+    return unfinishedMissions.map(mission => (
       <Marker
+        icon={missionIcon}
         position={[mission.lat, mission.lng]}
         key={mission._id}
         onClick={() => setSelectedMission(mission)}
@@ -88,7 +99,7 @@ export default function MapScreen () {
   function renderMap () {
     if (!geolocation.isAvailable) return null
     return (
-      <Map center={userPosition} zoom={18} style={{ height: '100%' }}>
+      <Map center={userPosition} zoom={19} maxZoom={19} style={{ height: '100%' }}>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -99,7 +110,7 @@ export default function MapScreen () {
             <h1 className='text-lg'>Você está aqui</h1>
           </Popup>
         </Marker>
-        {renderMissions()}
+        {renderMissionMarkers()}
       </Map>
     )
   }

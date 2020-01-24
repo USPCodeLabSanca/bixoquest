@@ -21,7 +21,7 @@ const Handlers = {
   fetchNearbyMissions: (lat, long) => API.get(`/missions?lat=${lat}&lng=${long}`),
 
   completeMission: (missionId, lat, lng) => API.post(`/missions/${missionId}/complete`, { lat, lng }),
-  
+
   getAllMissions: () => API.get('/missions/all')
 }
 

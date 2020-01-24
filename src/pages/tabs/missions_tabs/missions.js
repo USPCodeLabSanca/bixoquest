@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 
-import API from '../../../api'
+import Moment from 'moment'
 
 import Paper from '@material-ui/core/Paper'
 import ArrowDown from '@material-ui/icons/ArrowDropUp'
 import ArrowUp from '@material-ui/icons/ArrowDropDown'
 import CircularProgress from '@material-ui/core/CircularProgress'
+
+import API from '../../../api'
+import { useSelector } from 'react-redux'
 
 const style = {
   root: 'h-full px-4 overflow-auto',
@@ -18,13 +21,36 @@ const cardStyle = {
   description: 'text-xs my-1 mx-4',
   statusContainer: 'flex',
   statusTime: 'flex justify-center items-center w-full text-xs text-center flex-col',
-  statusText: 'flex justify-center items-center w-full text-xs text-center rounded-br-lg text-white',
-  statusFinished: 'bg-tertiary'
+  statusText: {
+    base: 'flex justify-center items-center w-full text-xs text-center rounded-br text-white',
+    finished: 'bg-tertiary',
+    progress: 'bg-primary',
+    expired: 'bg-red-600'
+  }
 }
 
 const MissionCard = ({ mission }) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const ArrowComponent = isOpen ? ArrowUp : ArrowDown
+  const user = useSelector(state => state.auth.user)
+  const expirationDate = Moment(mission.expirate_at)
+  const hasMissionBeenCompleted = user.completed_missions.some(id => mission._id === id)
+  const isMissionExpired = Moment().isAfter(expirationDate)
+
+  function resolveStatusText () {
+    if (hasMissionBeenCompleted) return 'Concluída'
+    else if (isMissionExpired) return 'Expirada'
+    else return 'Em progresso'
+  }
+
+  function resolveStatusStyle () {
+    const baseStyle = cardStyle.statusText.base
+    let statusStyle
+    if (hasMissionBeenCompleted) statusStyle = cardStyle.statusText.finished
+    else if (isMissionExpired) statusStyle = cardStyle.statusText.expired
+    else statusStyle = cardStyle.statusText.progress
+    return baseStyle + ' ' + statusStyle
+  }
 
   return (
     <Paper className={cardStyle.root} elevation={3}>
@@ -38,11 +64,13 @@ const MissionCard = ({ mission }) => {
             <p className={cardStyle.description}>{mission.description}</p>
             <div className={cardStyle.statusContainer}>
               <div className={cardStyle.statusTime}>
-                <span className='font-bold'>Terminou em:</span>
-                <span>{mission.endTime}</span>
+                <span className='font-bold'>
+                  {isMissionExpired ? 'Terminou' : 'Termina'} em:
+                </span>
+                <span>{expirationDate.format('DD/MM/YYYY - HH[h] mm[m]')}</span>
               </div>
-              <div className={cardStyle.statusText + ' ' + (mission.status === 'finished' ? cardStyle.statusFinished : '')}>
-                {mission.status === 'finished' ? 'Concluida' : 'Em progresso'}
+              <div className={resolveStatusStyle()}>
+                {resolveStatusText()}
               </div>
             </div>
           </>
