@@ -61,6 +61,7 @@ const WarningPopup = ({ geolocation }) => {
 
 export default function MapScreen () {
   const [selectedMission, setSelectedMission] = React.useState(null)
+  const hasMapRendered = React.useRef(false)
 
   const dispatch = useDispatch()
   const finishedMissions = useSelector(state => state.auth.user.completed_missions)
@@ -72,6 +73,8 @@ export default function MapScreen () {
     ({ latitude: lat, longitude: lng } = geolocation.position.coords)
     userPosition = [lat, lng]
   }
+
+  React.useEffect(() => { hasMapRendered.current = true }, [])
 
   React.useEffect(() => {
     if (!geolocation.isAvailable) return
@@ -99,7 +102,13 @@ export default function MapScreen () {
   function renderMap () {
     if (!geolocation.isAvailable) return null
     return (
-      <Map center={userPosition} zoom={19} maxZoom={19} style={{ height: '100%' }}>
+      <Map
+        center={hasMapRendered.current ? undefined : userPosition}
+        zoom={hasMapRendered.current ? undefined : 19}
+        zoomSnap={0.01}
+        maxZoom={19}
+        style={{ height: '100%' }}
+      >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
