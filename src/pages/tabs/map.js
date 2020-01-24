@@ -74,8 +74,6 @@ export default function MapScreen () {
     userPosition = [lat, lng]
   }
 
-  React.useEffect(() => { hasMapRendered.current = true }, [])
-
   React.useEffect(() => {
     if (!geolocation.isAvailable) return
     (async () => {
@@ -101,10 +99,13 @@ export default function MapScreen () {
 
   function renderMap () {
     if (!geolocation.isAvailable) return null
+    const initialProps =
+      !hasMapRendered.current &&
+      (hasMapRendered.current = true) &&
+      { center: userPosition, zoom: 19 }
     return (
       <Map
-        center={hasMapRendered.current ? undefined : userPosition}
-        zoom={hasMapRendered.current ? undefined : 19}
+        {...initialProps}
         zoomSnap={0.01}
         maxZoom={19}
         style={{ height: '100%' }}
