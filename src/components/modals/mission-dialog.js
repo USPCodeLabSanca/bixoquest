@@ -5,11 +5,12 @@ import Card from '@material-ui/core/Card'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import API from '../../api'
+import { completeMission } from '../../redux/actions/missions'
+import { useDispatch } from 'react-redux'
 
 const style = {
   root: 'flex justify-center items-center p-4',
-  card: 'w-full',
+  card: 'w-full max-w-md',
   title: 'text-center bg-gray-700 text-3xl text-white px-2',
   description: 'text-center flex justify-center py-8'
 }
@@ -19,12 +20,14 @@ export default function MissionDialog ({
   mission
 }) {
   const [isLoading, setIsLoading] = React.useState(false)
+  const dispatch = useDispatch()
   if (!mission) throw new Error('Mission prop is required')
 
   async function submit () {
     setIsLoading(true)
     try {
-      await API.completeMission(mission._id, mission.lat, mission.lng)
+      const action = await completeMission(mission._id, mission.lat, mission.lng)
+      dispatch(action)
       onRequestClose()
     } catch (e) { console.error(e) } finally {
       setIsLoading(false)

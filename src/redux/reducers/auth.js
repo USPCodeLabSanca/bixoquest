@@ -12,6 +12,13 @@ export default function authReducer (state, action) {
     return { ...state, token: action.token }
   } else if (action.type === 'LOGOUT') {
     return { ...defaultState }
+  } else if (action.type === 'COMPLETE_MISSION') {
+    return {
+      ...state,
+      user: {
+        completed_missions: [...state.user.completed_missions, action.missionId]
+      }
+    }
   } else {
     return state
   }
