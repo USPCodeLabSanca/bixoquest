@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -33,7 +34,7 @@ const LoginScreen = () => {
       const password = passwordRef.current.value.trim()
       const newUser = { nusp, password }
       const errors = validators.login(newUser)
-      if (errors.length > 0) return window.alert(errors.join('\n'))
+      if (errors.length > 0) return toast.error(errors.join('\n'))
       const action = await AuthActions.login(newUser)
 
       // This timeout is to prevent unmounting before the state changes
