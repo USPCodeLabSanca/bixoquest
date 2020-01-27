@@ -8,6 +8,7 @@ const reducers = combineReducers({
   auth: authReducer,
   geolocation: geolocationReducer,
   missions: missionsReducer,
+  modal: modalsReducer
 })
 
 export default reducers

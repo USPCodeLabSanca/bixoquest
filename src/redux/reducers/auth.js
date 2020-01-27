@@ -21,6 +21,16 @@ export default function authReducer (state, action) {
         available_packs: state.user.available_packs + action.mission.number_of_packs
       }
     }
+  } else if (action.type === 'OPEN_PACK') {
+    return {
+      ...state,
+      user: {
+        ...state.user,
+        available_packs: state.user.available_packs - 1,
+        opened_packs: state.user.opened_packs + 1,
+        stickers: [...state.user.stickers, action.stickerId]
+      }
+    }
   } else {
     return state
   }
