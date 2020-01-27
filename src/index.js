@@ -44,6 +44,7 @@ function App () {
     <ThemeProvider theme={MuiTheme}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+          <ModalRenderer />
           <BrowserRouter>
             <Switch>
               <Route
