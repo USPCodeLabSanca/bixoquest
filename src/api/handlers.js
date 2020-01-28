@@ -22,7 +22,7 @@ const Handlers = {
 
   completeMission: (missionId, lat, lng) => API.post(`/missions/${missionId}/complete`, { lat, lng }),
 
-  getAllMissions: () => API.get('/missions/all')
+  getAllMissions: () => API.get('/missions/all'),
 }
 
 export default Handlers

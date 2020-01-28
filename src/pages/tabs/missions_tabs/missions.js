@@ -1,23 +1,34 @@
 import React, { useState, useEffect } from 'react'
 
 import Moment from 'moment'
+import { useSelector, useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 
 import Paper from '@material-ui/core/Paper'
 import ArrowDown from '@material-ui/icons/ArrowDropUp'
 import ArrowUp from '@material-ui/icons/ArrowDropDown'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Button from '@material-ui/core/Button'
 
 import API from '../../../api'
-import { useSelector } from 'react-redux'
+import * as ModalActions from '../../../redux/actions/modal'
+import * as PackActions from '../../../redux/actions/packs'
+import PackModal from '../../../components/modals/packet'
+import { correctAllMissionCoords } from '../../../lib/coords-corrector'
 
 const style = {
   root: 'h-full px-4 overflow-auto',
   spinner: 'w-full justify-center flex my-8'
 }
 
+const packetsButtonStyle = {
+  margin: '32px 0 0 0'
+}
+
 const cardStyle = {
   root: 'pt-2 my-6',
-  titleContainer: 'flex mx-4 justify-between font-bold',
+  titleContainer: 'flex mx-4 justify-between font-bold cursor-pointer no-touch-highligh',
+  detailsContainer: 'overflow-hidden transition',
   description: 'text-xs my-1 mx-4',
   statusContainer: 'flex',
   statusTime: 'flex justify-center items-center w-full text-xs text-center flex-col',
@@ -30,10 +41,13 @@ const cardStyle = {
 }
 
 const MissionCard = ({ mission }) => {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [detailsHeight, setDetailsHeight] = React.useState('6px')
+  const isOpen = detailsHeight !== '6px'
+  const detailsRef = React.useRef()
   const ArrowComponent = isOpen ? ArrowUp : ArrowDown
   const user = useSelector(state => state.auth.user)
   const expirationDate = Moment(mission.expirate_at)
+  if (!user.completed_missions) user.completed_missions = []
   const hasMissionBeenCompleted = user.completed_missions.some(id => mission._id === id)
   const isMissionExpired = Moment().isAfter(expirationDate)
 
@@ -52,55 +66,65 @@ const MissionCard = ({ mission }) => {
     return baseStyle + ' ' + statusStyle
   }
 
+  function toggle () {
+    if (isOpen) {
+      setDetailsHeight('6px')
+    } else {
+      detailsRef.current.style.height = ''
+      const height = detailsRef.current.clientHeight
+      detailsRef.current.style.height = '6px'
+      setTimeout(() => setDetailsHeight(height + 'px'), 10)
+    }
+  }
+
   return (
     <Paper className={cardStyle.root} elevation={3}>
-      <div className={cardStyle.titleContainer} onClick={() => setIsOpen(s => !s)}>
+      <div className={cardStyle.titleContainer} onClick={toggle}>
         <h2>{mission.title}</h2>
         <ArrowComponent />
       </div>
-      {
-        isOpen ? (
-          <>
-            <p className={cardStyle.description}>{mission.description}</p>
-            <div className={cardStyle.statusContainer}>
-              <div className={cardStyle.statusTime}>
-                <span className='font-bold'>
-                  {isMissionExpired ? 'Terminou' : 'Termina'} em:
-                </span>
-                <span>{expirationDate.format('DD/MM/YYYY - HH[h] mm[m]')}</span>
-              </div>
-              <div className={resolveStatusStyle()}>
-                {resolveStatusText()}
-              </div>
-            </div>
-          </>
-        ) : (
-          // This is just to serve as a 'margin' when the component is closed
-          <div className='h-2' />
-        )
-      }
+      <div ref={detailsRef} className={cardStyle.detailsContainer} style={{ height: detailsHeight }}>
+        <p className={cardStyle.description}>
+          {mission.description}
+        </p>
+        <div className={cardStyle.statusContainer}>
+          <div className={cardStyle.statusTime}>
+            <span className='font-bold'>
+              {isMissionExpired ? 'Terminou' : 'Termina'} em:
+            </span>
+            <span>{expirationDate.format('DD/MM/YYYY - HH[h] mm[m]')}</span>
+          </div>
+          <div className={resolveStatusStyle()}>
+            {resolveStatusText()}
+          </div>
+        </div>
+      </div>
     </Paper>
   )
 }
 
 export default function Missions () {
   const [missions, setMissions] = useState()
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoadingMissions, setIsLoadingMissions] = useState(true)
+  const [isLoadingPack, setIsLoadingPack] = useState(false)
+  const unopenedPackets = useSelector(state => state.auth.user.available_packs)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     (async () => {
-      setIsLoading(true)
+      setIsLoadingMissions(true)
       try {
         const { data: { data: missions } } = await API.getAllMissions()
+        correctAllMissionCoords(missions)
         setMissions(missions)
       } catch (e) { console.error(e) } finally {
-        setIsLoading(false)
+        setIsLoadingMissions(false)
       }
     })()
   }, [])
 
   function renderMissions () {
-    if (isLoading) {
+    if (isLoadingMissions) {
       return (
         <div className={style.spinner}>
           <CircularProgress size={30} style={{ color: 'black' }} />
@@ -117,8 +141,33 @@ export default function Missions () {
     }
   }
 
+  async function openPack () {
+    if (isLoadingPack) return
+    setIsLoadingPack(true)
+    try {
+      const { data: { sticker_id: stickerId } } = await API.openPack()
+      dispatch()
+      dispatch(PackActions.openPack(stickerId))
+      dispatch(ModalActions.setCurrentModal(<PackModal sticker={stickerId} />))
+    } catch (e) { console.error(e) } finally {
+      setIsLoadingPack(false)
+    }
+  }
+
   return (
     <div className={style.root}>
+      <Button
+        variant='contained'
+        fullWidth
+        style={packetsButtonStyle}
+        color='primary'
+        onClick={openPack}
+      >
+        {unopenedPackets
+          ? `ABRIR PACOTE (${unopenedPackets} restante${unopenedPackets > 1 ? 's' : ''})`
+          : 'NENHUM PACOTE'}
+        {isLoadingPack && <CircularProgress size={15} style={{ color: 'white', marginLeft: '8px' }} />}
+      </Button>
       {renderMissions()}
     </div>
   )
