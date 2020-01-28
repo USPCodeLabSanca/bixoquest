@@ -5,15 +5,18 @@ import { ThemeProvider } from '@material-ui/core'
 import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import { ToastContainer, toast } from 'react-toastify'
 
 // Custom
 import MuiTheme from './MuiTheme'
 import routes from './constants/routes'
 import { store, persistor } from './redux/store'
+import { logout as logoutAction } from './redux/actions/auth'
 import { initializeAPI } from './api/base-api'
 import APIBaseURL from './constants/api-url'
 import { updateToken } from './redux/actions/auth'
 import { GeoActions } from './redux/actions'
+import ModalRenderer from './services/modal-renderer'
 import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-checker'
 
 // Pages
@@ -23,12 +26,18 @@ import Login from './pages/login'
 // CSS
 import './main-style.css'
 import './tailwind.build.css'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 initializeAPI({
   baseURL: APIBaseURL,
   tokenSelector: () => store.getState().auth.token,
   tokenDispatcher: newToken => store.dispatch(updateToken(newToken)),
-  onError: message => window.alert(message)
+  onError: message => toast.error(message),
+  onBadToken: () => {
+    toast.error('Parece que sua sessão expirou! Por favor, faça o login de novo')
+    store.dispatch(logoutAction())
+    window.location.pathname = '/login'
+  }
 })
 
 navigator.geolocation.watchPosition(
@@ -44,6 +53,7 @@ function App () {
     <ThemeProvider theme={MuiTheme}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+          <ModalRenderer />
           <BrowserRouter>
             <Switch>
               <Route
@@ -57,6 +67,7 @@ function App () {
               <Redirect to={routes.login} />
             </Switch>
           </BrowserRouter>
+          <ToastContainer hideProgressBar />
         </PersistGate>
       </Provider>
     </ThemeProvider>

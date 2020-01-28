@@ -55,7 +55,7 @@ function initializeAPI (config) {
       if (!response) {
         onError(getDefaultMessage())
       } else {
-        const message = response.errorMessage || getDefaultMessage(response.status)
+        const message = response.errorMessage || getDefaultMessage(response)
         onError(message)
       }
     })
