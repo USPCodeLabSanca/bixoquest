@@ -28,7 +28,7 @@ const missionIconInRange = icon({
 function geoToLatLng (geolocation) {
   if (!geolocation.isAvailable) return [null, null]
   const { latitude, longitude } = geolocation.position.coords
-  return [-22.007406, -47.893972]
+  return [latitude, longitude]
 }
 
 export default function MapScreen () {
