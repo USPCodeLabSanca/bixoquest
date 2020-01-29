@@ -16,7 +16,9 @@ export default function authReducer (state, action) {
     return {
       ...state,
       user: {
-        completed_missions: [...state.user.completed_missions, action.missionId]
+        ...state.user,
+        completed_missions: [...state.user.completed_missions, action.mission._id],
+        available_packs: state.user.available_packs + action.mission.number_of_packs
       }
     }
   } else {
