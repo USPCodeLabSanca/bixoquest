@@ -29,7 +29,7 @@ defaultMessages.SERVICE_UNAVAILABLE = defaultMessages[503]
 
 /** @argument { number } statusCode */
 export function getDefaultMessage (response) {
-  if (response.data && response.data.message) {
+  if (response && response.data && response.data.message) {
     return response.data.message
   } else {
     return defaultMessages[response.status] || defaultMessages.default
