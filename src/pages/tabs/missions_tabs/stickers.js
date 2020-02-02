@@ -1,4 +1,6 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import STICKERS_DATA from '../../../constants/stickers'
 
 import PropTypes from 'prop-types'
 
@@ -15,25 +17,6 @@ const style = {
   avatar: { width: '80vw', height: 'auto', marginBottom: '8px', borderRadius: '8px' },
   avatarClass: 'shadow-lg'
 }
-
-const StickersData = [
-  {
-    sticker_url: 'http://place-puppy.com/200x200',
-    id: 1
-  }, {
-    sticker_url: 'http://place-puppy.com/200x300',
-    id: 2
-  }, {
-    sticker_url: 'http://place-puppy.com/200x400',
-    id: 3
-  }, {
-    sticker_url: 'http://place-puppy.com/200x500',
-    id: 4
-  }, {
-    sticker_url: 'http://place-puppy.com/200x600',
-    id: 5
-  }
-]
 
 function TabPanel (props) {
   const { children, value, index, ...other } = props
@@ -66,6 +49,8 @@ function a11yProps (index) {
 }
 
 export default function Stickers () {
+
+  const user = useSelector(state => state.auth.user)
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
@@ -83,7 +68,7 @@ export default function Stickers () {
           aria-label='scrollable force tabs example'
         >
 
-          {StickersData.map((sticker, index) => <Tab label={index + 1} key={index} {...a11yProps(index)} />)}
+          {user.stickers.map((sticker_id, index) => <Tab label={index + 1} key={index} {...a11yProps(index)} />)}
 
         </Tabs>
 
@@ -92,10 +77,10 @@ export default function Stickers () {
       <div className={style.center}>
 
         {
-          StickersData.map(
-            (sticker, index) =>
+          user.stickers.map(
+            (sticker_id, index) =>
               <TabPanel value={value} index={index} key={index}>
-                <Avatar variant='square' style={style.avatar} className={style.avatarClass} src={sticker.sticker_url}>
+                <Avatar variant='square' style={style.avatar} className={style.avatarClass} src={STICKERS_DATA[sticker_id]}>
                   Sticker
                 </Avatar>
               </TabPanel>
