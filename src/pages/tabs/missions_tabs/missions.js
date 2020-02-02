@@ -1,28 +1,19 @@
 import React, { useState, useEffect } from 'react'
 
 import Moment from 'moment'
-import { useSelector, useDispatch } from 'react-redux'
-import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
 
 import Paper from '@material-ui/core/Paper'
 import ArrowDown from '@material-ui/icons/ArrowDropUp'
 import ArrowUp from '@material-ui/icons/ArrowDropDown'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Button from '@material-ui/core/Button'
 
 import API from '../../../api'
-import * as ModalActions from '../../../redux/actions/modal'
-import * as PackActions from '../../../redux/actions/packs'
-import PackModal from '../../../components/modals/packet'
 import { correctAllMissionCoords } from '../../../lib/coords-corrector'
 
 const style = {
   root: 'h-full px-4 overflow-auto',
   spinner: 'w-full justify-center flex my-8'
-}
-
-const packetsButtonStyle = {
-  margin: '32px 0 0 0'
 }
 
 const cardStyle = {
@@ -106,9 +97,6 @@ const MissionCard = ({ mission }) => {
 export default function Missions () {
   const [missions, setMissions] = useState()
   const [isLoadingMissions, setIsLoadingMissions] = useState(true)
-  const [isLoadingPack, setIsLoadingPack] = useState(false)
-  const unopenedPackets = useSelector(state => state.auth.user.available_packs)
-  const dispatch = useDispatch()
 
   useEffect(() => {
     (async () => {
@@ -141,33 +129,8 @@ export default function Missions () {
     }
   }
 
-  async function openPack () {
-    if (isLoadingPack) return
-    setIsLoadingPack(true)
-    try {
-      const { data: { sticker_id: stickerId } } = await API.openPack()
-      dispatch()
-      dispatch(PackActions.openPack(stickerId))
-      dispatch(ModalActions.setCurrentModal(<PackModal sticker={stickerId} />))
-    } catch (e) { console.error(e) } finally {
-      setIsLoadingPack(false)
-    }
-  }
-
   return (
     <div className={style.root}>
-      <Button
-        variant='contained'
-        fullWidth
-        style={packetsButtonStyle}
-        color='primary'
-        onClick={openPack}
-      >
-        {unopenedPackets
-          ? `ABRIR PACOTE (${unopenedPackets} restante${unopenedPackets > 1 ? 's' : ''})`
-          : 'NENHUM PACOTE'}
-        {isLoadingPack && <CircularProgress size={15} style={{ color: 'white', marginLeft: '8px' }} />}
-      </Button>
       {renderMissions()}
     </div>
   )

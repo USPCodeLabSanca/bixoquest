@@ -1,18 +1,27 @@
 import React from 'react'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Modal from '@material-ui/core/Modal'
+import NavigateNext from '@material-ui/icons/NavigateNext'
+import Close from '@material-ui/icons/Close'
 
-import { closeModal } from '../../redux/actions/modal'
-
+import * as ModalActions from '../../redux/actions/modal'
+import * as PackActions from '../../redux/actions/packs'
+import API from '../../api'
 import Pack from '../../images/pack.png'
 
 const style = {
-  root: 'w-screen h-screen flex justify-center items-center px-16 py-32 absolute top-0 left-0',
+  header: 'bg-white rounded-lg px-2 shadow-lg flex items-center',
+  textContainer: '',
+  textLarge: 'text-center text-lg',
+  textSmall: 'text-center text-sm relative',
+
+  root: 'w-full h-full flex flex-col justify-between items-center px-4 py-6 fixed top-0 left-0',
   scene: 'w-full h-full flex flex-col justify-center items-center',
   card: 'flex outline-none w-full h-full user-select-none absolute justify-center items-center transition cursor-pointer',
-  image: 'w-full h-full object-contain'
+  image: 'w-full h-full object-contain',
+  nextButton: 'bg-white p-2 rounded-full shadow-xl'
 }
 
 const sleep = time => new Promise(resolve => setTimeout(resolve, time))
@@ -105,19 +114,32 @@ class Vector {
   }
 }
 
-const Content = React.forwardRef((props, ref) => {
+const Content = React.forwardRef(({
+  onOpen = () => {},
+  onFailure = () => {}
+}, ref) => {
   const cardRef = React.useRef()
-  const imageRef = React.useRef()
+  const backImageRef = React.useRef()
+  const frontImageRef = React.useRef()
+  const dispatch = useDispatch()
 
   const env = React.useRef({
     velocity: new Vector(0, 0),
     angle: new Vector(0, 0),
     currentBright: 0,
     targetBright: 0,
-    reachedHeaven: false,
+    isOpeningPack: false,
+    currentFace: 'back',
+    isFlippingPack: false,
     isMounted: false
   })
 
+  // Function 'exports'
+  React.useImperativeHandle(ref, () => ({
+    reset: flipPack
+  }))
+
+  // Initialization
   React.useEffect(() => {
     env.current.isMounted = true
     document.addEventListener('mousedown', mouseDown)
@@ -128,50 +150,101 @@ const Content = React.forwardRef((props, ref) => {
     }
   }, [])
 
-  async function goToHeaven () {
-    if (env.current.reachedHeaven) return
-    console.log('reached heaven')
-    env.current.reachedHeaven = true
+  async function openPackAnimation () {
+    if (env.current.isOpeningPack) return
+    env.current.isOpeningPack = true
     env.current.targetBright = 3000
-    imageRef.current.style.transition = 'filter 5000ms, background-color 1000ms'
+    frontImageRef.current.style.backgroundColor = 'white'
+    backImageRef.current.style.transition = 'filter 5000ms, background-color 1000ms'
+    frontImageRef.current.style.transition = 'filter 5000ms, background-color 1000ms'
     await sleep(0)
-    imageRef.current.style.filter = 'blur(10px) grayscale(100%) brightness(10)'
-    imageRef.current.style.backgroundColor = 'white'
+    if (!env.current.isMounted) return
+    frontImageRef.current.style.filter = 'blur(10px) grayscale(100%) brightness(10)'
+    backImageRef.current.style.filter = 'blur(10px) grayscale(100%) brightness(10)'
+    backImageRef.current.style.backgroundColor = 'white'
+    try {
+      const { data: { sticker_id: stickerId } } = await API.openPack()
+      dispatch(PackActions.openPack(stickerId))
+    } catch (e) {
+      console.error(e)
+      onFailure()
+      return
+    }
     await sleep(1000)
-    imageRef.current.style.transition = 'filter 2000ms, background-color 2000ms'
-    imageRef.current.style.backgroundImage = 'url(http://place-puppy.com/200x200)'
-    imageRef.current.style.backgroundSize = 'cover'
-    imageRef.current.style.filter = 'blur(0px) grayscale(0%) brightness(1)'
+    if (!env.current.isMounted) return
+    env.current.currentFace = 'front'
+    frontImageRef.current.style.backgroundImage = 'url(http://place-puppy.com/200x200)'
+    frontImageRef.current.style.filter = 'blur(0px) grayscale(0%) brightness(1)'
+    await sleep(1500)
+    if (!env.current.isMounted) return
+    backImageRef.current.style.backgroundColor = 'transparent'
+    onOpen()
+  }
+
+  async function flipPack () {
+    env.current.isFlippingPack = true
+    cardRef.current.style.transition = '1000ms'
+    backImageRef.current.style.transition = '0ms'
+    await sleep(0)
+    if (!env.current.isMounted) return
+    backImageRef.current.style.filter = 'blur(0px) grayscale(0%) brightness(1)'
+    backImageRef.current.style.backgroundColor = 'transparent'
+    cardRef.current.style.transform = 'rotateX(0deg) rotateY(0deg)'
+    await sleep(250)
+    frontImageRef.current.style.backgroundColor = 'transparent'
+    await sleep(750)
+    if (!env.current.isMounted) return
+    env.current = {
+      velocity: new Vector(0, 0),
+      angle: new Vector(0, 0),
+      currentBright: 0,
+      targetBright: 0,
+      isOpeningPack: false,
+      currentFace: 'back',
+      isFlippingPack: true,
+      isMounted: true
+    }
+    cardRef.current.style.transition = '0ms'
+    await sleep(0)
+    if (!env.current.isMounted) return
+    cardRef.current.style.transform = 'rotateX(0) rotateY(0deg)'
+    env.current.isFlippingPack = false
   }
 
   function frameVelocity () {
-    const { angle, velocity } = env.current
+    const { angle, velocity, currentFace } = env.current
     angle.mutate.add(velocity)
     velocity.mutate.subtract(angle.scale(0.03))
     velocity.mutate.scale(0.95)
-    cardRef.current.style.transform = `rotateX(${angle.x}deg) rotateY(${angle.y}deg)`
+    let { x, y } = angle
+    if (currentFace === 'front') y += 180
+    console.log('UPDATE angle')
+    cardRef.current.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`
   }
 
   function frameBrightness () {
-    const { targetBright, currentBright, reachedHeaven } = env.current
-    if (reachedHeaven) return // the browser can take care of it from now on
+    const { targetBright, currentBright, isOpeningPack } = env.current
+    if (isOpeningPack) return // the browser can take care of it from now on
 
     env.current.targetBright--
     if (targetBright < 0) env.current.targetBright = 0
     const delta = Math.min(Math.abs(currentBright - targetBright), 4)
     env.current.currentBright += currentBright > targetBright ? -delta : delta
-    imageRef.current.style.filter = `blur(0px) grayscale(${currentBright / 8}%) brightness(${currentBright / 160 + 1})`
+    backImageRef.current.style.filter = `blur(0px) grayscale(${currentBright / 8}%) brightness(${currentBright / 160 + 1})`
 
-    if (env.current.currentBright > 250) goToHeaven()
+    if (env.current.currentBright > 250) openPackAnimation()
   }
 
   function frame () {
-    const { isMounted } = env.current
+    const { isMounted, isFlippingPack } = env.current
+    if (!isMounted) return console.log('UNMOUNT')
 
-    frameVelocity()
-    frameBrightness()
+    if (!isFlippingPack) {
+      frameVelocity()
+      frameBrightness()
+    }
 
-    if (isMounted) window.requestAnimationFrame(frame)
+    window.requestAnimationFrame(frame)
   }
 
   function mouseDown (event) {
@@ -182,10 +255,11 @@ const Content = React.forwardRef((props, ref) => {
 
     const touchForce = (angle.magnitude + velocity.magnitude * 100) / 100
     const deltaVelocity = diffVector.scale(Math.abs(touchForce) > 1 ? 10 / touchForce : 10)
-    if (!env.current.reachedHeaven) env.current.targetBright += 60
+    if (!env.current.isOpeningPack) env.current.targetBright += 60
 
     deltaVelocity.mutate.transpose()
     deltaVelocity.x *= -1
+    console.log('NEW angle')
     velocity.mutate.add(deltaVelocity)
   }
 
@@ -199,15 +273,34 @@ const Content = React.forwardRef((props, ref) => {
         <div
           draggable={false}
           className={style.image}
-          ref={imageRef}
+          ref={backImageRef}
           style={{
             outline: 'none',
             userSelect: 'none',
             backgroundImage: `url(${Pack})`,
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
-            width: '244px',
-            height: '420px'
+            width: '183px',
+            height: '315px',
+            backfaceVisibility: 'hidden',
+            position: 'absolute'
+          }}
+        />
+        <div
+          draggable={false}
+          className={style.image}
+          ref={frontImageRef}
+          style={{
+            outline: 'none',
+            userSelect: 'none',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            backgroundColor: 'white',
+            width: '183px',
+            height: '315px',
+            backfaceVisibility: 'hidden',
+            transform: 'rotateX(180deg) rotateZ(180deg)',
+            position: 'absolute'
           }}
         />
       </div>
@@ -216,13 +309,61 @@ const Content = React.forwardRef((props, ref) => {
 })
 
 export default function PacketsModal () {
+  const [isPackOpen, setIsPackOpen] = React.useState(false)
+  const dispatch = useDispatch()
+  const availablePacks = useSelector(state => state.auth.user.available_packs)
+  const cardRef = React.useRef()
+
   function requestClose () {
+    dispatch(ModalActions.closeModal())
+  }
+
+  function failure () {
+    requestClose()
+  }
+
+  function close (event) {
+    event.stopPropagation()
+    requestClose()
+  }
+
+  function next (event) {
+    event.stopPropagation()
+    setIsPackOpen(false)
+    cardRef.current.reset()
+  }
+
+  function openPack () {
+    setIsPackOpen(true)
   }
 
   return (
-    <Modal open onClose={requestClose} className={style.root}>
-      <div style={{ outline: 'none' }}>
-        <Content />
+    <Modal
+      open
+      style={{ zIndex: 100000 }}
+      onEscapeKeyDown={requestClose}
+    >
+      <div className={style.root} style={{ outline: 'none' }}>
+        <div className={style.header} style={{ zIndex: 9999999 }}>
+          <div className={style.textContainer}>
+            <div className={style.textLarge}>Você possui {availablePacks} pacotes</div>
+            <div className={style.textSmall} style={{ top: '-6px' }}>
+              {availablePacks > 0 ? 'Clique nele para abrir' : ''}
+            </div>
+          </div>
+          <div className='ml-2 text-xl' onClick={close}>
+            <Close fontSize='large' />
+          </div>
+        </div>
+        <div style={{ zIndex: -1 }} className='fixed top-0 left-0 w-full h-full flex justify-center items-center'>
+          {availablePacks > -1 && <Content ref={cardRef} onOpen={openPack} onFailure={failure} />}
+        </div>
+        {
+          isPackOpen &&
+            <div className={style.nextButton} onClick={next}>
+              <NavigateNext fontSize='large' />
+            </div>
+        }
       </div>
     </Modal>
   )
