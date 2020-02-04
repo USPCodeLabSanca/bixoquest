@@ -62,3 +62,11 @@ body, html, #root {
   outline: none !important;
   -webkit-tap-highlight-color: transparent !important;
 }
+
+.h-content {
+  height: max-content;
+}
+
+.w-content {
+  width: max-content;
+}

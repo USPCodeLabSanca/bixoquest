@@ -9,7 +9,8 @@ const routes = {
     }
   },
   login: '/login',
-  signup: '/signup'
+  signup: '/signup',
+  giveCards: '/give-cards'
 }
 
 export default routes

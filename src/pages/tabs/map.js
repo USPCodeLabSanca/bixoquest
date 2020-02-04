@@ -2,8 +2,8 @@ import React from 'react'
 
 // Material-ui imports
 import Fab from '@material-ui/core/Fab'
-import Button from '@material-ui/core/Button'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
+import SwapVert from '@material-ui/icons/SwapVert'
 import Receipt from '@material-ui/icons/Receipt'
 
 // Library imports
@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Marker, Circle, Popup } from 'react-leaflet'
 import { icon, point } from 'leaflet'
 import { getDistance } from 'geolib'
+import { useHistory } from 'react-router-dom'
 
 // Redux actions imports
 import * as MissionActions from '../../redux/actions/missions'
@@ -20,6 +21,7 @@ import * as ModalActions from '../../redux/actions/modal'
 import Map from '../../components/map'
 import MissionDialog from '../../components/modals/mission-dialog'
 import PackModal from '../../components/modals/packet'
+import QrCodeModal from '../../components/modals/qr-code'
 
 // Images imports
 import QuestionMark from '../../images/question-mark.png'
@@ -27,6 +29,7 @@ import ExclamationMark from '../../images/exclamation-mark.png'
 
 // MISC imports
 import MISSION_RANGE from '../../constants/missions-range'
+import Routes from '../../constants/routes'
 
 const missionIconOutOfRange = icon({
   iconUrl: QuestionMark,
@@ -54,10 +57,14 @@ function geoToLatLng (geolocation) {
 
 export default function MapScreen () {
   const dispatch = useDispatch()
+  const history = useHistory()
   const finishedMissions = useSelector(state => state.auth.user.completed_missions)
   const geolocation = useSelector(state => state.geolocation)
   const nearbyMissions = useSelector(state => state.missions.nearbyMissions)
   const availablePacks = useSelector(state => state.auth.user.available_packs)
+
+  const showQrCode = ModalActions.useModal(() => <QrCodeModal />)
+  const showPack = ModalActions.useModal(() => <PackModal />)
 
   const userPosition = geoToLatLng(geolocation)
 
@@ -93,8 +100,8 @@ export default function MapScreen () {
     )
   }
 
-  function openModal () {
-    dispatch(ModalActions.setCurrentModal(<PackModal />))
+  function giveCards () {
+    history.push(Routes.giveCards)
   }
 
   function resolveMissionMarker (mission) {
@@ -118,13 +125,16 @@ export default function MapScreen () {
   return (
     <>
       <div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
+        <Fab size='small' style={style.fab} onClick={giveCards}>
+          <SwapVert />
+        </Fab>
         {
           availablePacks > 0 &&
-            <Fab size='small' style={style.fab} onClick={openModal}>
+            <Fab size='small' style={style.fab} onClick={showPack}>
               <Receipt />
             </Fab>
         }
-        <Fab size='small' style={style.fab}>
+        <Fab size='small' style={style.fab} onClick={showQrCode}>
           <PhotoCamera />
         </Fab>
       </div>

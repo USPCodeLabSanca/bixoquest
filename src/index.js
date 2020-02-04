@@ -21,6 +21,7 @@ import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-che
 // Pages
 import Tabs from './pages/tabs'
 import Login from './pages/login'
+import GiveCards from './pages/give-cards'
 
 // CSS
 import './main-style.css'
@@ -62,6 +63,10 @@ function App () {
               <Route
                 path={routes.login}
                 component={requiresNoAuthentication(Login)}
+              />
+              <Route
+                path={routes.giveCards}
+                component={requiresAuthentication(GiveCards)}
               />
               <Redirect to={routes.login} />
             </Switch>
