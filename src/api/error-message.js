@@ -31,8 +31,10 @@ defaultMessages.SERVICE_UNAVAILABLE = defaultMessages[503]
 export function getDefaultMessage (response) {
   if (response && response.data && response.data.message) {
     return response.data.message
-  } else {
+  } else if (response) {
     return defaultMessages[response.status] || defaultMessages.default
+  } else {
+    return defaultMessages.undefined
   }
 }
 

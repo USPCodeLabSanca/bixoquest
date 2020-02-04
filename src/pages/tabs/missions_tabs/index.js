@@ -31,7 +31,7 @@ export default function NavScreen () {
   }
 
   return (
-    <>
+    <div className='w-full h-full'>
       <nav className={style.nav}>
         <Tabs
           value={tabValue}
@@ -47,6 +47,6 @@ export default function NavScreen () {
         <Route component={Missions} path={Routes.tabs.missionsTabs.missions} />
         <Route component={Stickers} path={Routes.tabs.missionsTabs.stickers} />
       </Switch>
-    </>
+    </div>
   )
 }

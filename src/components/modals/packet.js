@@ -218,7 +218,6 @@ const Content = React.forwardRef(({
     velocity.mutate.scale(0.95)
     let { x, y } = angle
     if (currentFace === 'front') y += 180
-    console.log('UPDATE angle')
     cardRef.current.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`
   }
 
@@ -237,7 +236,7 @@ const Content = React.forwardRef(({
 
   function frame () {
     const { isMounted, isFlippingPack } = env.current
-    if (!isMounted) return console.log('UNMOUNT')
+    if (!isMounted) return
 
     if (!isFlippingPack) {
       frameVelocity()
@@ -259,7 +258,6 @@ const Content = React.forwardRef(({
 
     deltaVelocity.mutate.transpose()
     deltaVelocity.x *= -1
-    console.log('NEW angle')
     velocity.mutate.add(deltaVelocity)
   }
 
@@ -295,7 +293,7 @@ const Content = React.forwardRef(({
             userSelect: 'none',
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
-            backgroundColor: 'white',
+            backgroundColor: 'transparent',
             width: '183px',
             height: '315px',
             backfaceVisibility: 'hidden',
