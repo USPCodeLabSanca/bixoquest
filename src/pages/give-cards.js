@@ -1,8 +1,8 @@
 import React from 'react'
 
 import Close from '@material-ui/icons/Close'
-import ChevronRight from '@material-ui/icons/ChevronRight'
-import ChevronLeft from '@material-ui/icons/ChevronLeft'
+import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp'
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown'
 import Button from '@material-ui/core/Button'
 import Spinner from '@material-ui/core/CircularProgress'
 import { useHistory } from 'react-router-dom'
@@ -10,40 +10,42 @@ import { toast } from 'react-toastify'
 import QrCodeGen from 'qrcode.react'
 
 const style = {
-  root: 'w-full h-full p-4 bg-primary flex flex-col',
-  header: 'w-full h-8 flex justify-between text-white items-center uppercase font-bold mb-8',
-  headerText: 'w-full text-center absolute left-0',
+  root: 'w-full h-full flex flex-col',
+  header: 'w-full h-12 flex justify-end text-white items-center uppercase font-bold mb-8 bg-gray-100 shadow-lg',
+  headerButton: 'w-16 h-full justify-center items-center flex',
   backArrowContainer: 'z-10 w-16 h-16 rounded-full flex justify-center items-center absolute left-0',
   main: 'h-full overflow-auto',
   footer: 'flex',
-  footerButtonContainer: 'px-2 w-full h-full',
+  footerButtonContainer: 'p-2 w-full h-full',
   prevButton: { width: '100%', justifySelf: 'flex-start' },
   nextButton: { width: '100%', justifySelf: 'flex-end' }
 }
 
 const selectStyle = {
-  root: 'w-full h-24 flex items-center shadow-xl bg-gray-400 my-4',
-  image: 'h-full w-16 flex justify-center items-center border bg-white',
-  controlsContainer: 'flex flex-col h-full w-full items-center justify-between pl-2 pr-4',
-  controlsInnerContainer: 'flex h-full w-full justify-center items-center relative',
-  multiplier: 'self-start text-3xl',
-  title: 'text-white text-center text-xl'
+  root: 'flex items-center shadow',
+  image: 'flex justify-center items-center bg-gray-500',
+  controlsContainer: 'flex h-full w-full items-center justify-between pl-2 pr-4',
+  controlsInnerContainer: 'flex flex-col h-full justify-center items-center',
+  amountSelectedText: 'text-2xl border border-black rounded-lg h-16 w-16 flex items-center justify-center',
+  multiplier: 'text-3xl h-full flex flex-col justify-end items-end',
+  title: 'text-center text-xl mb-4 px-4'
 }
 
 const confirmStyle = {
   root: 'h-full w-full flex flex-wrap content-start',
   cardContainer: 'flex mx-4 my-2 h-content',
-  image: 'w-16 h-24 bg-white flex justify-center items-center text-center',
-  multiplier: 'flex flex-col justify-end items-center text-white px-2',
-  title: 'text-white text-center text-xl w-full h-content'
+  image: 'w-16 h-24 bg-gray-500 flex justify-center items-center text-center',
+  multiplier: 'flex flex-col justify-end items-center px-2',
+  title: 'text-center text-xl w-full h-content mb-4 px-4'
 }
 
 const codeStyle = {
-  root: 'h-full w-full py-4',
+  root: 'h-full w-full flex flex-col justify-between',
+  title: 'text-center text-lg w-full h-content px-4',
   container: 'h-full w-full flex justify-center items-center',
   code: {
-    width: '100%',
-    height: '100%'
+    position: 'absolute',
+    zIndex: 99999
   }
 }
 
@@ -67,15 +69,17 @@ function CardItemToSelect ({
 
   const amountText = amountOwned > 1 ? 'x' + amountOwned : ''
   return (
-    <div className={selectStyle.root}>
-      <div className={selectStyle.image}>{stickerId}</div>
+    <div className={selectStyle.root} style={{ height: 151 }}>
+      <div className={selectStyle.image} style={{ height: 151, width: 106.47 }}>
+        {stickerId}
+      </div>
       <div className={selectStyle.controlsContainer}>
-        <div className={selectStyle.controlsInnerContainer} style={{ top: 22 }}>
-          <ChevronLeft fontSize='large' onClick={down} />
-          <div className='px-4 text-2xl'>{amountSelected}</div>
-          <ChevronRight fontSize='large' onClick={up} />
-        </div>
         <div className={selectStyle.multiplier}>{amountText}</div>
+        <div className={selectStyle.controlsInnerContainer} style={{ top: 22 }}>
+          <KeyboardArrowUp fontSize='large' onClick={up} />
+          <div className={selectStyle.amountSelectedText}>{amountSelected}</div>
+          <KeyboardArrowDown fontSize='large' onClick={down} />
+        </div>
       </div>
     </div>
   )
@@ -120,7 +124,7 @@ function QrCode ({ selectedCards }) {
       )
     } else {
       return (
-        <QrCodeGen value={token} size={window.innerWidth - 32} />
+        <QrCodeGen value={token} size={window.innerWidth - 32} style={codeStyle.code} />
       )
     }
   }
@@ -174,7 +178,7 @@ function GiveCards () {
     CardsDB.forEach(card => { uniquedCards[card] = (uniquedCards[card] || 0) + 1 })
     return (
       <div>
-        <div className={selectStyle.title}>Selecione as cartas que você quer compartilhar</div>
+        <div className={selectStyle.title}>Selecione as cartas que você quer doar</div>
         {
           Object.entries(uniquedCards)
             .filter(([id, amount]) => amount > 1)
@@ -208,7 +212,10 @@ function GiveCards () {
 
   function renderQrCode () {
     return (
-      <QrCode selectedCards={selectedCards} />
+      <div className={codeStyle.root}>
+        <div className={codeStyle.title}>A pessoa que receberá essa doação deve escanear esse QRCode através da funcionalidade de câmera do BixoQuest</div>
+        <QrCode selectedCards={selectedCards} />
+      </div>
     )
   }
 
@@ -221,10 +228,9 @@ function GiveCards () {
   return (
     <div className={style.root}>
       <header className={style.header}>
-        <div className={style.backArrowContainer} onClick={leaveScreen}>
-          <Close />
+        <div className={style.headerButton} onClick={leaveScreen}>
+          <Close fontSize='large' style={{ color: 'black' }} />
         </div>
-        <div className={style.headerText}>Compartilhar cartas</div>
       </header>
       <main className={style.main}>
         {contentRenderer()}
@@ -234,7 +240,7 @@ function GiveCards () {
           {step > 0 && <Button style={style.prevButton} onClick={prevStep} variant='contained'>Voltar</Button>}
         </div>
         <div className={style.footerButtonContainer}>
-          {step < 2 && <Button style={style.nextButton} onClick={nextStep} variant='contained'>Continuar</Button>}
+          {step < 2 && <Button style={style.nextButton} onClick={nextStep} variant='contained' color='secondary'>Continuar</Button>}
         </div>
       </footer>
     </div>
