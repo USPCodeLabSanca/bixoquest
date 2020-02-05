@@ -70,3 +70,7 @@ body, html, #root {
 .w-content {
   width: max-content;
 }
+
+.opacity-15 {
+  opacity: 0.15;
+}
