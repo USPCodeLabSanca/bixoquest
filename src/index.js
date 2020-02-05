@@ -45,6 +45,9 @@ navigator.geolocation.watchPosition(
   error => {
     store.dispatch(GeoActions.unavailable(error))
     console.error(error)
+  },
+  {
+    enableHighAccuracy: true
   }
 )
 
