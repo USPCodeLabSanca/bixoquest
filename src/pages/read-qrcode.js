@@ -5,7 +5,11 @@ import Close from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import JWTDecode from 'jwt-decode'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import API from '../api'
+import { Button } from '@material-ui/core'
+import { receiveDonation } from '../redux/actions/stickers'
+import { useDispatch } from 'react-redux'
 
 const style = {
   root: 'w-full h-full flex flex-col',
@@ -24,6 +28,7 @@ function QrCodeScan () {
   const [isSendingCode, setIsSendingCode] = React.useState(false)
   const [qrCodeBackendResponse, setQrCodeBackendResponse] = React.useState(null)
   const [qrCodePayload, setQrCodePayload] = React.useState(null)
+  const dispatch = useDispatch()
   const history = useHistory()
 
   function error () {
@@ -34,10 +39,12 @@ function QrCodeScan () {
   async function onScan (token) {
     if (!token || isSendingCode || qrCodeBackendResponse) return
     setIsSendingCode(true)
+    const payload = JWTDecode(token)
+    setQrCodePayload(payload)
     try {
-      const { data: payload } = await API.sendQrCodeToken(token)
-      setQrCodeBackendResponse(payload)
-      setQrCodePayload(JWTDecode(token))
+      const { data: { data: response } } = await API.sendQrCodeToken(token)
+      setQrCodeBackendResponse(response)
+      if (!payload.isMission) dispatch(receiveDonation(payload.stickers))
     } catch (e) { console.error(e) } finally {
       setIsSendingCode(false)
     }
@@ -48,11 +55,31 @@ function QrCodeScan () {
   }
 
   function renderDonation () {
-    console.log(qrCodeBackendResponse, qrCodePayload)
-    return null
+    const donatedCards = qrCodePayload.stickers
+    const uniquedCards = {}
+    donatedCards.forEach(card => { uniquedCards[card] = (uniquedCards[card] || 0) + 1 })
+    const Sticker = ({ stickerId, amount }) => (
+      <div className='flex mx-4 my-2 h-content'>
+        <div className='w-16 h-24 bg-gray-500 flex justify-center items-center text-center'>{stickerId}</div>
+        <div className='flex flex-col justify-end items-center px-2'>x{amount}</div>
+      </div>
+    )
+    return (
+      <div className='h-full w-full flex flex-wrap content-start'>
+        <h1 className={style.scanTitle}>Você recebeu uma doação de {qrCodeBackendResponse.donatorName}</h1>
+        {Object.entries(uniquedCards).map(([stickerId, amount]) =>
+          <Sticker
+            amount={amount}
+            stickerId={stickerId}
+            key={stickerId}
+          />
+        )}
+      </div>
+    )
   }
 
   function renderMissionCompletetion () {
+    console.log(qrCodeBackendResponse, qrCodePayload)
     return null
   }
 
@@ -71,12 +98,29 @@ function QrCodeScan () {
   }
 
   function renderContent () {
-    if (!qrCodeBackendResponse) {
-      return renderQrCodeReader()
-    } else if (qrCodeBackendResponse.donatorName) {
-      return renderDonation()
+    if (isSendingCode) {
+      return (
+        <div className='w-full h-full flex justify-center items-center'>
+          <CircularProgress size={50} style={{ color: 'black' }} />
+        </div>
+      )
+    } else if (qrCodeBackendResponse) {
+      if (qrCodePayload.isMission) {
+        return renderMissionCompletetion()
+      } else {
+        return renderDonation()
+      }
+    } else if (qrCodePayload) {
+      return (
+        <div className='w-full h-full flex flex-col justify-center items-center'>
+          <h1 className='text-xl p-4 text-center'>Houve um erro ao ler este QRCode</h1>
+          <Button variant='contained' onClick={() => setQrCodePayload(null)}>
+            Tentar novamente
+          </Button>
+        </div>
+      )
     } else {
-      return renderMissionCompletetion()
+      return renderQrCodeReader()
     }
   }
 

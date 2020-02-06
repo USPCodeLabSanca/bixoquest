@@ -31,6 +31,14 @@ export default function authReducer (state, action) {
         stickers: [...state.user.stickers, action.stickerId]
       }
     }
+  } else if (action.type === 'RECEIVE_DONATION') {
+    return {
+      ...state,
+      user: {
+        ...state.user,
+        stickers: [...state.user.stickers, ...action.stickers]
+      }
+    }
   } else {
     return state
   }
