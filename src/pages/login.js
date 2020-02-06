@@ -12,7 +12,7 @@ import Routes from '../constants/routes'
 import validators from '../lib/validators'
 
 const style = {
-  root: 'flex flex-col items-center text-center px-4 bg-primary h-full text-white',
+  root: 'flex flex-col items-center text-center px-4 pb-4 bg-primary h-full text-white overflow-auto',
   header: 'text-6xl mt-16',
   subheader: 'text-2xl mb-8',
   card: 'bg-white shadow-lg rounded-lg grid row-gap-6 w-full p-6'
