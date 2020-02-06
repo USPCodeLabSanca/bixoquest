@@ -21,7 +21,6 @@ import * as ModalActions from '../../redux/actions/modal'
 import Map from '../../components/map'
 import MissionDialog from '../../components/modals/mission-dialog'
 import PackModal from '../../components/modals/packet'
-import QrCodeModal from '../../components/modals/qr-code'
 
 // Images imports
 import QuestionMark from '../../images/question-mark.png'
@@ -63,7 +62,6 @@ export default function MapScreen () {
   const nearbyMissions = useSelector(state => state.missions.nearbyMissions)
   const availablePacks = useSelector(state => state.auth.user.available_packs)
 
-  const showQrCode = ModalActions.useModal(() => <QrCodeModal />)
   const showPack = ModalActions.useModal(() => <PackModal />)
 
   const userPosition = geoToLatLng(geolocation)
@@ -104,6 +102,10 @@ export default function MapScreen () {
     history.push(Routes.giveCards)
   }
 
+  function readQrCode () {
+    history.push(Routes.qrcodeReader)
+  }
+
   function resolveMissionMarker (mission) {
     if (
       getDistance(
@@ -134,7 +136,7 @@ export default function MapScreen () {
               <Receipt />
             </Fab>
         }
-        <Fab size='small' style={style.fab} onClick={showQrCode}>
+        <Fab size='small' style={style.fab} onClick={readQrCode}>
           <PhotoCamera />
         </Fab>
       </div>
