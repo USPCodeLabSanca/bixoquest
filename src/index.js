@@ -22,6 +22,7 @@ import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-che
 import Tabs from './pages/tabs'
 import Login from './pages/login'
 import GiveCards from './pages/give-cards'
+import QrCodeReader from './pages/read-qrcode'
 
 // CSS
 import './main-style.css'
@@ -67,6 +68,10 @@ function App () {
               <Route
                 path={routes.giveCards}
                 component={requiresAuthentication(GiveCards)}
+              />
+              <Route
+                path={routes.qrcodeReader}
+                component={requiresAuthentication(QrCodeReader)}
               />
               <Redirect to={routes.login} />
             </Switch>

@@ -8,6 +8,8 @@ import Spinner from '@material-ui/core/CircularProgress'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import QrCodeGen from 'qrcode.react'
+import { useSelector } from 'react-redux'
+import API from '../api'
 
 const style = {
   root: 'w-full h-full flex flex-col',
@@ -105,8 +107,11 @@ function QrCode ({ selectedCards }) {
   async function fetchToken () {
     setIsFetchingToken(true)
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      const token = 'Oi jorginho, eu sou o dolynho, o seu amiguinho'
+      const cards = []
+      Object.entries(selectedCards).forEach(([id, amount]) => {
+        for (let i = 0; i < amount; i++) cards.push(+id)
+      })
+      const { data: token } = await API.fetchDonationToken({ stickers: cards })
       setToken(token)
     } catch (e) { console.error(e) } finally {
       setIsFetchingToken(false)
@@ -138,13 +143,13 @@ function QrCode ({ selectedCards }) {
   )
 }
 
-const CardsDB = [0, 0, 0, 0, 4, 2, 5, 7, 7, 10, 32, 21, 12]
 const SELECT_STEP = 0
 const CONFIRM_STEP = 1
 const SCAN_STEP = 2
 
 function GiveCards () {
   const history = useHistory()
+  const userStickers = useSelector(state => state.auth.user.stickers)
   const [selectedCards, setSelectedCards] = React.useState({})
   const [step, setStep] = React.useState(0)
 
@@ -175,7 +180,7 @@ function GiveCards () {
 
   function renderSelectCards () {
     const uniquedCards = {}
-    CardsDB.forEach(card => { uniquedCards[card] = (uniquedCards[card] || 0) + 1 })
+    userStickers.forEach(card => { uniquedCards[card] = (uniquedCards[card] || 0) + 1 })
     return (
       <div>
         <div className={selectStyle.title}>Selecione as cartas que você quer doar</div>
