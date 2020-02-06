@@ -10,26 +10,10 @@ const style = {
 }
 
 function QrCodeReaderModal ({ onScan }) {
-  const dispatch = useDispatch()
-
-  function requestClose () {
-    dispatch(closeModal())
-  }
-
-  function error () {
-    toast.error('Erro ao tentar ler o QrCode')
-    requestClose()
-  }
 
   return (
     <Modal>
       <div className={style.root}>
-        <QrReader
-          delay={300}
-          style={{ width: '100%' }}
-          onError={error}
-          onScan={onScan}
-        />
       </div>
     </Modal>
   )

@@ -24,7 +24,11 @@ const Handlers = {
 
   getAllMissions: () => API.get('/missions/all'),
 
-  openPack: () => API.post('/packs/open')
+  openPack: () => API.post('/packs/open'),
+
+  fetchDonationToken: (info) => API.post('/stickers/donate', info),
+
+  sendQrCodeToken: (token) => API.post('/qrcode/scan', { token })
 }
 
 export default Handlers

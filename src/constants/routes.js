@@ -10,7 +10,8 @@ const routes = {
   },
   login: '/login',
   signup: '/signup',
-  giveCards: '/give-cards'
+  giveCards: '/give-cards',
+  qrcodeReader: '/read-qrcode'
 }
 
 export default routes

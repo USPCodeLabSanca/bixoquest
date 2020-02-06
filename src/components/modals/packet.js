@@ -163,7 +163,7 @@ const Content = React.forwardRef(({
     backImageRef.current.style.filter = 'blur(10px) grayscale(100%) brightness(10)'
     backImageRef.current.style.backgroundColor = 'white'
     try {
-      const { data: { sticker_id: stickerId } } = await API.openPack()
+      const { data: { data: { sticker_id: stickerId } } } = await API.openPack()
       dispatch(PackActions.openPack(stickerId))
     } catch (e) {
       console.error(e)
