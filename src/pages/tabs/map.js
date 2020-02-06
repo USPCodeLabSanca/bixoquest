@@ -21,7 +21,6 @@ import * as ModalActions from '../../redux/actions/modal'
 import Map from '../../components/map'
 import MissionDialog from '../../components/modals/mission-dialog'
 import PackModal from '../../components/modals/packet'
-import QrCodeModal from '../../components/modals/qr-code'
 
 // Images imports
 import QuestionMark from '../../images/question-mark.png'
