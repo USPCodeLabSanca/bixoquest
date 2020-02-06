@@ -53,7 +53,7 @@ const LoginScreen = () => {
       <h1 className={style.header}>BixoQuest</h1>
       <p className={style.subheader}>Entrar com número USP e senha única</p>
       <form onSubmit={login} className={style.card}>
-        <TextField label='Número USP' inputRef={nuspRef} />
+        <TextField type='number' label='Número USP' inputRef={nuspRef} />
         <TextField type='password' label='Senha' inputRef={passwordRef} />
         <Button variant='contained' onClick={login} type='submit' disabled={isLoading} color='secondary'>
           login {isLoading && <CircularProgress size={15} color='inherit' />}
