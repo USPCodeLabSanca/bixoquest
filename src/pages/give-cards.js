@@ -111,7 +111,7 @@ function QrCode ({ selectedCards }) {
       Object.entries(selectedCards).forEach(([id, amount]) => {
         for (let i = 0; i < amount; i++) cards.push(+id)
       })
-      const { data: token } = await API.fetchDonationToken({ stickers: cards })
+      const { data: { data: token } } = await API.fetchDonationToken({ stickers: cards })
       setToken(token)
     } catch (e) { console.error(e) } finally {
       setIsFetchingToken(false)
