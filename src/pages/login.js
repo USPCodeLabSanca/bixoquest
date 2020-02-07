@@ -12,7 +12,7 @@ import Routes from '../constants/routes'
 import validators from '../lib/validators'
 
 const style = {
-  root: 'flex flex-col items-center text-center px-4 bg-primary h-full text-white',
+  root: 'flex flex-col items-center text-center px-4 pb-4 bg-primary h-full text-white overflow-auto',
   header: 'text-6xl mt-16',
   subheader: 'text-2xl mb-8',
   card: 'bg-white shadow-lg rounded-lg grid row-gap-6 w-full p-6'
@@ -53,7 +53,7 @@ const LoginScreen = () => {
       <h1 className={style.header}>BixoQuest</h1>
       <p className={style.subheader}>Entrar com número USP e senha única</p>
       <form onSubmit={login} className={style.card}>
-        <TextField label='Número USP' inputRef={nuspRef} />
+        <TextField type='number' label='Número USP' inputRef={nuspRef} />
         <TextField type='password' label='Senha' inputRef={passwordRef} />
         <Button variant='contained' onClick={login} type='submit' disabled={isLoading} color='secondary'>
           login {isLoading && <CircularProgress size={15} color='inherit' />}
