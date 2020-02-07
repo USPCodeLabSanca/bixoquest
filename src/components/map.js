@@ -15,7 +15,6 @@ function WarningToast () {
   }
 
   React.useEffect(() => {
-    navigator.geolocation.getCurrentPosition(() => {})
     const isOpen = !geolocation.isAvailable || !!geolocation.error
     setIsOpen(isOpen)
     if (isOpen) setText(resolveText(geolocation))

@@ -14,8 +14,8 @@ import { store, persistor } from './redux/store'
 import { logout as logoutAction, updateToken } from './redux/actions/auth'
 import { initializeAPI } from './api/base-api'
 import APIBaseURL from './constants/api-url'
-import { GeoActions } from './redux/actions'
 import ModalRenderer from './services/modal-renderer'
+import GeolocationWatcher from './services/geolocation-watcher'
 import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-checker'
 
 // Pages
@@ -41,23 +41,13 @@ initializeAPI({
   }
 })
 
-navigator.geolocation.watchPosition(
-  pos => store.dispatch(GeoActions.setPosition(pos)),
-  error => {
-    store.dispatch(GeoActions.unavailable(error))
-    console.error(error)
-  },
-  {
-    enableHighAccuracy: true
-  }
-)
-
 function App () {
   return (
     <ThemeProvider theme={MuiTheme}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ModalRenderer />
+          <GeolocationWatcher />
           <BrowserRouter>
             <Switch>
               <Route
