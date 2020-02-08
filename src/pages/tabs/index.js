@@ -15,8 +15,9 @@ import Profile from './profile'
 import MissionsTabs from './missions_tabs'
 
 const style = {
-  main: 'h-full flex flex-col justify-between bg-gray-400',
-  footer: 'flex space-between shadow-lg w-full bg-white'
+  root: 'h-full flex-col flex bg-gray-400',
+  main: 'h-full overflow-y-auto',
+  footer: 'flex space-between bg-white shadow-lg w-full bg-white'
 }
 
 const TabOrder = [Routes.tabs.missionsTabs.missions, Routes.tabs.map, Routes.tabs.profile]
@@ -36,14 +37,18 @@ export default function TabsScreen () {
   }
 
   return (
-    <main className={style.main}>
+    <div className={style.root}>
       <Header />
-      <Switch>
-        <Route component={Map} path={Routes.tabs.map} />
-        <Route component={Profile} path={Routes.tabs.profile} />
-
-        <Route component={MissionsTabs} path={[Routes.tabs.missionsTabs.missions, Routes.tabs.missionsTabs.stickers]} />
-      </Switch>
+      <main className={style.main}>
+        <Switch>
+          <Route component={Map} path={Routes.tabs.map} />
+          <Route component={Profile} path={Routes.tabs.profile} />
+          <Route component={MissionsTabs} path={[
+            Routes.tabs.missionsTabs.missions,
+            Routes.tabs.missionsTabs.stickers
+          ]} />
+        </Switch>
+      </main>
       <footer className={style.footer}>
         <Tabs
           value={tabValue}
@@ -56,6 +61,6 @@ export default function TabsScreen () {
           <Tab icon={<PersonIcon />} />
         </Tabs>
       </footer>
-    </main>
+    </div>
   )
 }
