@@ -10,12 +10,11 @@ import PersonIcon from '@material-ui/icons/Person'
 import Routes from '../../constants/routes'
 
 import Map from './map'
-import Header from './header'
 import Profile from './profile'
 import MissionsTabs from './missions_tabs'
 
 const style = {
-  root: 'h-full flex-col flex bg-gray-400',
+  root: 'h-full flex-col flex bg-light-gray',
   main: 'h-full overflow-y-auto',
   footer: 'flex space-between bg-white shadow-lg w-full bg-white'
 }
@@ -38,7 +37,6 @@ export default function TabsScreen () {
 
   return (
     <div className={style.root}>
-      <Header />
       <main className={style.main}>
         <Switch>
           <Route component={Map} path={Routes.tabs.map} />

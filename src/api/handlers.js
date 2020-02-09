@@ -9,6 +9,8 @@ import { withCustomError } from './error-message'
   data: T
 }>> } APIResponse */
 
+const silentHandler = handler => withCustomError(handler, () => '_NO_ERROR_MESSAGE')
+
 const Handlers = {
 
   login: withCustomError(
@@ -28,7 +30,12 @@ const Handlers = {
 
   fetchDonationToken: (info) => API.post('/stickers/donate', info),
 
-  sendQrCodeToken: (token) => API.post('/qrcode/scan', { token })
+  sendQrCodeToken: (token) => API.post('/qrcode/scan', { token }),
+
+}
+
+export const silentHandlers = {
+  getUser: silentHandler(() => API.get('/user'))
 }
 
 export default Handlers

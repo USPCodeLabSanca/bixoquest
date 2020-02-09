@@ -43,10 +43,10 @@ export default function MissionDialog ({
   return (
     <Modal open className={style.root}>
       <Card className={style.card}>
-        <div className={style.title}>Nova missão encontrada.</div>
+        <div className={style.title}>Missão Concluida</div>
         <div className={style.description}>{mission.location_reference}</div>
         <Button onClick={submit} className={style.button} fullWidth variant='contained'>
-          ACEITAR
+          OK
           {isLoading && <CircularProgress style={{ margin: '0 8px', color: 'black' }} size={20} />}
         </Button>
       </Card>

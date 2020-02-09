@@ -16,6 +16,7 @@ import { initializeAPI } from './api/base-api'
 import APIBaseURL from './constants/api-url'
 import ModalRenderer from './services/modal-renderer'
 import GeolocationWatcher from './services/geolocation-watcher'
+import UserInfoFetcher from './services/user-info-fetcher'
 import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-checker'
 
 // Pages
@@ -48,6 +49,7 @@ function App () {
         <PersistGate loading={null} persistor={persistor}>
           <ModalRenderer />
           <GeolocationWatcher />
+          <UserInfoFetcher />
           <BrowserRouter>
             <Switch>
               <Route

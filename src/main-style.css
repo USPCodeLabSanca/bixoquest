@@ -1,7 +1,9 @@
 :root {
-  --color-primary: #45AAF2;
-  --color-secondary: #FA8231;
+  --color-primary: #62B9DA;
+  --color-secondary: #FAB227;
   --color-tertiary: #26DE81;
+  --color-light-gray: #F1F1F1;
+  --color-dark-gray: #CECECE;
 }
 
 body, html, #root {
@@ -34,6 +36,14 @@ body, html, #root {
 
 .bg-tertiary {
   background-color: var(--color-tertiary);
+}
+
+.bg-light-gray {
+  background-color: var(--color-light-gray);
+}
+
+.bg-dark-gray {
+  background-color: var(--color-dark-gray);
 }
 
 .text-tertiary {
