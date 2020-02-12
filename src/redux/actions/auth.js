@@ -1,4 +1,4 @@
-import API from '../../api'
+import API, { silentAPI } from '../../api'
 
 /** @argument {{ email: string, password: string }} user */
 export async function login (user) {
@@ -7,6 +7,18 @@ export async function login (user) {
     type: 'SET_USER',
     user: response.data.data
   }
+}
+
+export async function updateUser () {
+  const { data: { data: user } } = await silentAPI.getUser()
+  return {
+    type: 'SET_USER',
+    user: user
+  }
+}
+
+export function logout () {
+  return { type: 'LOGOUT' }
 }
 
 /** @argument { string } token */

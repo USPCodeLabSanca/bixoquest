@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux'
 import authReducer from './auth'
 import geolocationReducer from './geolocation'
-import countryReducer from './country'
+import missionsReducer from './missions'
+import modalsReducer from './modal'
 
 const reducers = combineReducers({
   auth: authReducer,
-  country: countryReducer,
-  geolocation: geolocationReducer
+  geolocation: geolocationReducer,
+  missions: missionsReducer,
+  modal: modalsReducer
 })
 
 export default reducers

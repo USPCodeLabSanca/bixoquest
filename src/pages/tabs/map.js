@@ -1,124 +1,150 @@
 import React from 'react'
 
-import { connect } from 'react-redux'
-import Paper from '@material-ui/core/Paper'
+// Material-ui imports
+import Fab from '@material-ui/core/Fab'
+import PhotoCamera from '@material-ui/icons/PhotoCamera'
+import SwapVert from '@material-ui/icons/SwapVert'
+import Receipt from '@material-ui/icons/Receipt'
 
-// OL imports
-import { Map, View } from 'ol'
-import { fromLonLat } from 'ol/proj'
-import { Style, Fill, Icon as IconStyle, Text as TextStyle, Stroke } from 'ol/style'
-import { Point } from 'ol/geom'
-import Feature from 'ol/Feature'
-import { Vector as VectorSource } from 'ol/source'
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer'
-import OSM from 'ol/source/OSM'
+// Library imports
+import { useSelector, useDispatch } from 'react-redux'
+import { Marker, Circle, Popup } from 'react-leaflet'
+import { icon, point } from 'leaflet'
+import { getDistance } from 'geolib'
+import { useHistory } from 'react-router-dom'
 
-import LocationPin from './location-pin.png'
+// Redux actions imports
+import * as MissionActions from '../../redux/actions/missions'
+import * as ModalActions from '../../redux/actions/modal'
+
+// Components imports
+import Map from '../../components/map'
+import MissionDialog from '../../components/modals/mission-dialog'
+import PackModal from '../../components/modals/packet'
+
+// Images imports
+import QuestionMark from '../../images/question-mark.png'
+import ExclamationMark from '../../images/exclamation-mark.png'
+
+// MISC imports
+import MISSION_RANGE from '../../constants/missions-range'
+import Routes from '../../constants/routes'
+
+const missionIconOutOfRange = icon({
+  iconUrl: QuestionMark,
+  iconSize: point(40, 40)
+})
+
+const missionIconInRange = icon({
+  iconUrl: ExclamationMark,
+  iconSize: point(40, 40)
+})
 
 const style = {
-  root: 'bg-tertiary h-full'
-}
-
-const userPositionFeature = new Feature(new Point([0, 0]))
-
-userPositionFeature.setStyle(new Style({
-  image: new IconStyle({
-    scale: 0.1,
-    offset: [0, 25.51],
-    src: LocationPin
-  }),
-  text: new TextStyle({
-    text: 'Você está aqui',
-    fill: new Fill({ color: '#000000' }),
-    stroke: new Stroke({ color: '#000000' }),
-    offsetY: -30,
-    font: '20px arial'
-  })
-}))
-
-const resolveErrorText = errorCode => {
-  const defaultMessage = 'Ops! um erro desconhecido ocorreu. Por favor, tente novamente'
-  const errorMessages = {
-    // More details about the errors [here](https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPositionError)
-    // User denied permission
-    1: 'Parece que este site não tem aceeso à sua localização. Por favor, verifique se as permissões estão corretas',
-    // Position unavailable
-    2: 'Tivemos um problema ao buscar sua posição. Por favor, recarregue a página e tente novamente',
-    // timeout
-    3: 'Tivemos um problema ao buscar sua posição. Por favor, recarregue a página e tente novamente'
+  actionButtonsContainer: 'absolute bottom-0 right-0 mr-4 mb-16 flex flex-col',
+  fab: {
+    margin: '8px 0',
+    outline: 'none'
   }
-  return errorMessages[errorCode] || defaultMessage
 }
 
-const resolveText = geolocation => {
-  const loadingText = 'Buscando sua posição...'
-  if (geolocation.isAvailable) return 'Sucesso!'
-  else if (geolocation.error) return resolveErrorText(geolocation.error.code)
-  else return loadingText
+function geoToLatLng (geolocation) {
+  if (!geolocation.isAvailable) return [null, null]
+  const { latitude, longitude } = geolocation.position.coords
+  return [latitude, longitude]
 }
 
-const WarningPopup = ({ geolocation }) => {
-  const [isOpen, setIsOpen] = React.useState(false)
-  const [text, setText] = React.useState(resolveText(geolocation))
+export default function MapScreen () {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const finishedMissions = useSelector(state => state.auth.user.completed_missions)
+  const geolocation = useSelector(state => state.geolocation)
+  const nearbyMissions = useSelector(state => state.missions.nearbyMissions)
+  const availablePacks = useSelector(state => state.auth.user.available_packs)
 
-  React.useEffect(() => {
-    const isOpen = !geolocation.isAvailable || !!geolocation.error
-    setIsOpen(isOpen)
-    if (isOpen) setText(resolveText(geolocation))
-  }, [geolocation])
+  const showPack = ModalActions.useModal(() => <PackModal />)
 
-  return (
-    <Paper
-      className='absolute z-10 p-2 text-center'
-      elevation={3}
-      style={Object.assign(
-        { top: 64, left: 32, right: 32, transition: '1000ms' },
-        isOpen ? {} : { top: -100 }
-      )}
-    >
-      {text}
-    </Paper>
-  )
-}
+  const userPosition = geoToLatLng(geolocation)
 
-function HomePage ({ geolocation }) {
-  const map = React.useRef()
-
-  // Creates the map
-  React.useEffect(() => {
-    map.current = new Map({
-      target: 'map',
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        }),
-        new VectorLayer({
-          source: new VectorSource({
-            features: [userPositionFeature]
-          })
-        })
-      ],
-      view: new View({
-        center: [0, 0],
-        zoom: 0
-      })
-    })
-  }, [])
-
-  // Updates user position
   React.useEffect(() => {
     if (!geolocation.isAvailable) return
-    const { position: { coords } } = geolocation
-    const center = fromLonLat([coords.longitude, coords.latitude])
-    map.current.setView(new View({ center, zoom: 16 }))
-    userPositionFeature.setGeometry(new Point(center))
-  }, [geolocation])
+    MissionActions.fetchNearbyMissions(...userPosition).then(dispatch)
+  }, [geolocation.isAvailable, ...userPosition])
+
+  function inRangeMissonMarker (mission) {
+    return (
+      <Marker
+        zIndexOffset={10000}
+        key={mission._id}
+        icon={missionIconInRange}
+        position={[mission.lat, mission.lng]}
+        onClick={() => dispatch(ModalActions.setCurrentModal(<MissionDialog mission={mission} />))}
+      />
+    )
+  }
+
+  function outOfRangeMissonMarker (mission) {
+    return (
+      <Marker
+        zIndexOffset={10000}
+        key={mission._id}
+        icon={missionIconOutOfRange}
+        position={[mission.lat, mission.lng]}
+      >
+        <Popup>
+          Venha até aqui para completar essa missão
+        </Popup>
+      </Marker>
+    )
+  }
+
+  function giveCards () {
+    history.push(Routes.giveCards)
+  }
+
+  function readQrCode () {
+    history.push(Routes.qrcodeReader)
+  }
+
+  function resolveMissionMarker (mission) {
+    if (
+      getDistance(
+        { latitude: mission.lat, longitude: mission.lng },
+        { latitude: userPosition[0], longitude: userPosition[1] }
+      ) < MISSION_RANGE
+    ) return inRangeMissonMarker(mission)
+    return outOfRangeMissonMarker(mission)
+  }
+
+  function renderMissionMarkers () {
+    if (!nearbyMissions) return null
+    const unfinishedMissions = nearbyMissions.filter(
+      mission => !finishedMissions.some(finishedId => finishedId === mission._id)
+    )
+    return unfinishedMissions.map(resolveMissionMarker)
+  }
 
   return (
-    <div className={style.root} id='map'>
-      <WarningPopup geolocation={geolocation} />
-    </div>
+    <>
+      <div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
+        <Fab size='small' style={style.fab} onClick={giveCards}>
+          <SwapVert />
+        </Fab>
+        {
+          availablePacks > 0 &&
+            <Fab size='small' style={style.fab} onClick={showPack}>
+              <Receipt />
+            </Fab>
+        }
+        <Fab size='small' style={style.fab} onClick={readQrCode}>
+          <PhotoCamera />
+        </Fab>
+      </div>
+      <Map initialConfiguration={{ center: userPosition, zoom: 19 }}>
+        <Circle center={userPosition} radius={MISSION_RANGE} />
+        <Marker position={userPosition} />
+        {renderMissionMarkers()}
+      </Map>
+    </>
   )
 }
-
-export default connect(state => ({ geolocation: state.geolocation }), null)(HomePage)

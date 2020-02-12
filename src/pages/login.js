@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { toast } from 'react-toastify'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -11,7 +12,7 @@ import Routes from '../constants/routes'
 import validators from '../lib/validators'
 
 const style = {
-  root: 'flex flex-col items-center text-center px-4 bg-primary h-full text-white',
+  root: 'flex flex-col items-center text-center px-4 pb-4 bg-primary h-full text-white overflow-auto',
   header: 'text-6xl mt-16',
   subheader: 'text-2xl mb-8',
   card: 'bg-white shadow-lg rounded-lg grid row-gap-6 w-full p-6'
@@ -33,7 +34,7 @@ const LoginScreen = () => {
       const password = passwordRef.current.value.trim()
       const newUser = { nusp, password }
       const errors = validators.login(newUser)
-      if (errors.length > 0) return window.alert(errors.join('\n'))
+      if (errors.length > 0) return toast.error(errors.join('\n'))
       const action = await AuthActions.login(newUser)
 
       // This timeout is to prevent unmounting before the state changes
@@ -52,8 +53,8 @@ const LoginScreen = () => {
       <h1 className={style.header}>BixoQuest</h1>
       <p className={style.subheader}>Entrar com número USP e senha única</p>
       <form onSubmit={login} className={style.card}>
-        <TextField label='Número USP' inputRef={nuspRef} />
-        <TextField label='Senha' inputRef={passwordRef} />
+        <TextField type='number' label='Número USP' inputRef={nuspRef} />
+        <TextField type='password' label='Senha' inputRef={passwordRef} />
         <Button variant='contained' onClick={login} type='submit' disabled={isLoading} color='secondary'>
           login {isLoading && <CircularProgress size={15} color='inherit' />}
         </Button>

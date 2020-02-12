@@ -1,7 +1,9 @@
 :root {
-  --color-primary: #45AAF2;
-  --color-secondary: #FA8231;
+  --color-primary: #62B9DA;
+  --color-secondary: #FAB227;
   --color-tertiary: #26DE81;
+  --color-light-gray: #F1F1F1;
+  --color-dark-gray: #CECECE;
 }
 
 body, html, #root {
@@ -36,6 +38,14 @@ body, html, #root {
   background-color: var(--color-tertiary);
 }
 
+.bg-light-gray {
+  background-color: var(--color-light-gray);
+}
+
+.bg-dark-gray {
+  background-color: var(--color-dark-gray);
+}
+
 .text-tertiary {
   color: var(--color-tertiary);
 }
@@ -50,4 +60,27 @@ body, html, #root {
 
 .grid {
   display: grid;
+}
+
+.no-touch-highligh {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none !important;
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+.h-content {
+  height: max-content;
+}
+
+.w-content {
+  width: max-content;
+}
+
+.opacity-15 {
+  opacity: 0.15;
 }

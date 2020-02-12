@@ -1,11 +1,17 @@
 const routes = {
   tabs: {
     map: '/map',
-    missions: '/missions',
-    profile: '/profile'
+    profile: '/profile',
+
+    missionsTabs: {
+      missions: '/missions',
+      stickers: '/stickers'
+    }
   },
   login: '/login',
-  signup: '/signup'
+  signup: '/signup',
+  giveCards: '/give-cards',
+  qrcodeReader: '/read-qrcode'
 }
 
 export default routes
