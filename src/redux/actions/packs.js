@@ -1,6 +1,6 @@
-export function openPack (packId) {
+export function openPack (stickerId) {
   return {
     type: 'OPEN_PACK',
-    packId
+    stickerId
   }
 }
