@@ -8,14 +8,16 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import Avatar from '@material-ui/core/Avatar'
+import Grid from '@material-ui/core/Grid';
 
 const style = {
   root: 'h-full overflow-auto',
   nav: 'flex space-between shadow-lg w-full bg-white',
   center: 'flex justify-center',
-  avatar: { width: '80vw', height: 'auto', marginBottom: '8px', borderRadius: '8px' },
-  avatarClass: 'shadow-lg'
+  pagina: { width: '210px', height: '297px', zoom: '1.5', marginBottom: '8px' },
+  paginaClass: 'shadow-lg',
+  sticker: { height: '33.4%', backgroundImage: `url(${STICKERS_DATA.placeholder})`, backgroundColor: '#23b14d', border: '0.5px solid white', color: 'white', padding: '3px' },
+  discoveredSticker: {backgroundColor: 'transparent', backgroundImage: 'none', border: 'none'}
 }
 
 function TabPanel (props) {
@@ -68,7 +70,7 @@ export default function Stickers () {
           aria-label='scrollable force tabs example'
         >
 
-          {user.stickers.map((sticker_id, index) => <Tab label={index + 1} key={index} {...a11yProps(index)} />)}
+          {STICKERS_DATA.pages.map((page_image, index) => <Tab label={index + 1} key={index} {...a11yProps(index)} />)}
 
         </Tabs>
 
@@ -77,12 +79,20 @@ export default function Stickers () {
       <div className={style.center}>
 
         {
-          user.stickers.map(
-            (sticker_id, index) =>
+          STICKERS_DATA.pages.map(
+            (page_image, index) =>
               <TabPanel value={value} index={index} key={index}>
-                <Avatar variant='square' style={style.avatar} className={style.avatarClass} src={STICKERS_DATA[sticker_id]}>
-                  Sticker
-                </Avatar>
+                
+                <Grid container className={style.paginaClass} style={ { ...style.pagina, ...{backgroundImage: `url(${ page_image })`}  }} direction="row" justify="center" alignItems="center">
+
+                    { [...Array(9)].map( (x, i) => 
+
+                      <Grid container item xs={4} style={ { ...style.sticker, ...(user.stickers.includes((i+1) + (index*9) + "") ? style.discoveredSticker : {} ) } } direction="row" alignItems="flex-end"> { (i+1) + (index*9) } </Grid>
+
+                     ) }
+
+                </Grid>
+
               </TabPanel>
           )
         }
