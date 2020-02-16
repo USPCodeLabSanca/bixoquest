@@ -87,8 +87,8 @@ export function withCustomError (handler, customError) {
       const response = await handler(...handlerArgs)
       return response
     } catch (response) {
-      const message = customErrorHandler(response, customError)
-      if (message) response.errorMessage = message
+      const errorMessage = customErrorHandler(response, customError)
+      if (errorMessage && response) response.errorMessage = errorMessage
       throw response
     }
   }

@@ -12,14 +12,6 @@ import { withCustomError } from './error-message'
 const silentHandler = handler => withCustomError(handler, () => '_NO_ERROR_MESSAGE')
 
 const Handlers = {
-
-  login: withCustomError(
-    /** @argument {{ nusp: string, password: string }} userInfo
-    @returns { APIResponse<{{ _id: string, nusp: string, name: string, course: string }}> } */
-    (userInfo) => API.post('/auth', userInfo),
-    { 401: 'Desculpe, Suas credenciais são inválidas! Por acaso você errou alguma coisa?' }
-  ),
-
   fetchNearbyMissions: (lat, long) => API.get(`/missions?lat=${lat}&lng=${long}`),
 
   completeMission: (missionId, lat, lng) => API.post(`/missions/${missionId}/complete`, { lat, lng }),
@@ -35,6 +27,8 @@ const Handlers = {
 }
 
 export const silentHandlers = {
+  login: silentHandler(() => API.get('/auth/success', { withCredentials: true, headers: { 'Access-Control-Allow-Credentials': true } })),
+
   getUser: silentHandler(() => API.get('/user'))
 }
 

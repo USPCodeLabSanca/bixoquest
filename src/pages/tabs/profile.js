@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 
+import backendURL from '../../constants/api-url'
 import { setCurrentModal } from '../../redux/actions/modal'
 import * as AuthActions from '../../redux/actions/auth'
 import FoundABugModal from '../../components/modals/found-a-bug'
@@ -34,6 +35,7 @@ export default function ProfilePage () {
 
   function logout () {
     dispatch(AuthActions.logout())
+    window.location.href = backendURL + 'auth/logout'
   }
 
   function foundABug () {
