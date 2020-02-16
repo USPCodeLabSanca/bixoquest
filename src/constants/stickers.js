@@ -1,8 +1,18 @@
 //Array of stickers
-export default [
-    'http://place-puppy.com/200x200',
-    'http://place-puppy.com/200x300',
-    'http://place-puppy.com/200x400',
-    'http://place-puppy.com/200x500',
-    'http://place-puppy.com/200x600',
-]
+const stickers_data = {
+
+    placeholder: 'http://place-puppy.com/70x100',
+
+    pages: [
+
+        'http://place-puppy.com/210x297',
+        'http://place-puppy.com/210x297',
+        'http://place-puppy.com/210x297',
+        'http://place-puppy.com/210x297',
+        'http://place-puppy.com/210x297',
+
+    ]
+
+}
+
+export default stickers_data
