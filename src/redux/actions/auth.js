@@ -2,7 +2,7 @@ import API, { silentAPI } from '../../api'
 
 /** @argument {{ email: string, password: string }} user */
 export async function login () {
-  const { data: { user, token } } = await silentAPI.login()
+  const { data: { data: { user, token } } } = await silentAPI.login()
   return {
     type: 'SET_USER',
     user,
