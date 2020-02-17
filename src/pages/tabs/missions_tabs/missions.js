@@ -97,8 +97,10 @@ const MissionCard = ({ mission }) => {
       }
     }
 
-    if (isMissionExpired) return null
-    if (!hasMissionStarted) return null
+    if (!hasMissionBeenCompleted) {
+      if (isMissionExpired) return null
+      if (!hasMissionStarted) return null
+    }
     return (
       <>
         <p className={cardStyle.description + ' mt-4'}>
