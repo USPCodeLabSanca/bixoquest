@@ -118,7 +118,9 @@ export default function MapScreen () {
 
   function renderMissionMarkers () {
     if (!nearbyMissions) return null
-    const unfinishedMissions = nearbyMissions.filter(
+    const unfinishedMissions = nearbyMissions
+    .filter(mission => mission.type === 'location')
+    .filter(
       mission => !finishedMissions.some(finishedId => finishedId === mission._id)
     )
     return unfinishedMissions.map(resolveMissionMarker)

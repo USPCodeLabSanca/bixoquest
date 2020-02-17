@@ -15,7 +15,7 @@ const style = {
   root: 'p-4 h-full',
   card: 'w-full flex flex-col justify-center items-center p-4',
   avatar: { width: '30vw', height: '30vw', marginBottom: '8px' },
-  userName: 'text-2xl',
+  userName: 'text-2xl text-center',
   userCourse: '',
   logoutButton: {
     margin: '16px 0',
