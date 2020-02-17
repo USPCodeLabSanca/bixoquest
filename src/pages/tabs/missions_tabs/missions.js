@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
 
 import Moment from 'moment'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import Paper from '@material-ui/core/Paper'
 import ArrowDown from '@material-ui/icons/ArrowDropUp'
 import ArrowUp from '@material-ui/icons/ArrowDropDown'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 
+import { completeKeyMission } from '../../../redux/actions/missions'
 import API from '../../../api'
 import { correctAllMissionCoords } from '../../../lib/coords-corrector'
+import { toast } from 'react-toastify'
 
 const style = {
   root: 'h-full px-4 overflow-auto',
@@ -33,10 +37,13 @@ const cardStyle = {
 
 const MissionCard = ({ mission }) => {
   const [detailsHeight, setDetailsHeight] = React.useState('6px')
+  const [isSendingPassword, setIsSendingPassword] = React.useState(false)
   const isOpen = detailsHeight !== '6px'
   const detailsRef = React.useRef()
+  const passwordRef = React.useRef()
   const ArrowComponent = isOpen ? ArrowUp : ArrowDown
   const user = useSelector(state => state.auth.user)
+  const dispatch = useDispatch()
   const expirationDate = Moment(mission.expirate_at)
   if (!user.completed_missions) user.completed_missions = []
   const hasMissionBeenCompleted = user.completed_missions.some(id => mission._id === id)
@@ -68,6 +75,40 @@ const MissionCard = ({ mission }) => {
     }
   }
 
+  function renderPassword () {
+    if (!mission.type === 'password' || hasMissionBeenCompleted) return null
+
+    async function sendPassword () {
+      const password = passwordRef.current.value.trim().toLowerCase()
+      if (!password) return toast.error('Você deve fornecer uma senha')
+      try {
+        setIsSendingPassword(true)
+        const action = await completeKeyMission(mission, password)
+        dispatch(action)
+        toast.success('Senha correta!')
+        toggle()
+      } catch (e) { console.log(e) } finally {
+        setIsSendingPassword(false)
+      }
+    }
+
+    return (
+      <>
+        <p className={cardStyle.description + ' mt-4'}>
+          Esta é uma missão de senha. Insira a senha correta para completar-la
+        </p>
+        <div className='mx-4 mb-4'>
+          <div className='my-2'>
+            <TextField variant='standard' fullWidth inputRef={passwordRef} />
+          </div>
+          <Button variant='contained' fullWidth onClick={sendPassword} color='secondary'>
+            enviar {isSendingPassword && <CircularProgress size={15} style={{ marginLeft: '8px', color: 'white' }} />}
+          </Button>
+        </div>
+      </>
+    )
+  }
+
   return (
     <Paper className={cardStyle.root} elevation={3}>
       <div className={cardStyle.titleContainer} onClick={toggle}>
@@ -78,6 +119,7 @@ const MissionCard = ({ mission }) => {
         <p className={cardStyle.description}>
           {mission.description}
         </p>
+        {renderPassword()}
         <div className={cardStyle.statusContainer}>
           <div className={cardStyle.statusTime}>
             <span className='font-bold'>

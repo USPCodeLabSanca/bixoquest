@@ -14,7 +14,11 @@ const silentHandler = handler => withCustomError(handler, () => '_NO_ERROR_MESSA
 const Handlers = {
   fetchNearbyMissions: (lat, long) => API.get(`/missions?lat=${lat}&lng=${long}`),
 
-  completeMission: (missionId, lat, lng) => API.post(`/missions/${missionId}/complete`, { lat, lng }),
+  completeLocationMission: (missionId, lat, lng) => API.post(`/missions/${missionId}/complete`, { lat, lng }),
+
+  completeQRCodeMission: (missionId, qrcode) => API.post(`/missions/${missionId}/complete`, { qrcode }),
+
+  completeKeyMission: (missionId, key) => API.post(`/missions/${missionId}/complete`, { key }),
 
   getAllMissions: () => API.get('/missions/all'),
 

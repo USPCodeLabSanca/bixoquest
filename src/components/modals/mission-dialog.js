@@ -6,7 +6,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { toast } from 'react-toastify'
 
 import Modal, { ModalActions } from '../modal'
-import { completeMission } from '../../redux/actions/missions'
+import { completeLocationMission } from '../../redux/actions/missions'
 import { useDispatch, useSelector } from 'react-redux'
 
 const style = {
@@ -30,7 +30,7 @@ export default function MissionDialog ({
     try {
       if (!geolocation) throw new Error('how are you here without a geolocation?')
       const { latitude, longitude } = geolocation.position.coords
-      const action = await completeMission(mission, latitude, longitude)
+      const action = await completeLocationMission(mission, latitude, longitude)
       // const action = await completeMission(mission, -22.007336, -47.895105)
       dispatch(action)
       dispatch(ModalActions.closeModal())

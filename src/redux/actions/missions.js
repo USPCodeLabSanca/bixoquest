@@ -12,8 +12,24 @@ export async function fetchNearbyMissions (lat, lng) {
   }
 }
 
-export async function completeMission (mission, lat, lng) {
-  await API.completeMission(mission._id, lat, lng)
+export async function completeLocationMission (mission, lat, lng) {
+  await API.completeLocationMission(mission._id, lat, lng)
+  return {
+    type: 'COMPLETE_MISSION',
+    mission
+  }
+}
+
+export async function completeQRCodeMission (mission, qrcode) {
+  await API.completeQRCodeMission(mission._id, qrcode)
+  return {
+    type: 'COMPLETE_MISSION',
+    mission
+  }
+}
+
+export async function completeKeyMission (mission, key) {
+  await API.completeKeyMission(mission._id, key)
   return {
     type: 'COMPLETE_MISSION',
     mission
