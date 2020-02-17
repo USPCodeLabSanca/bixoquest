@@ -6,6 +6,7 @@ import Modal from '@material-ui/core/Modal'
 import NavigateNext from '@material-ui/icons/NavigateNext'
 import Close from '@material-ui/icons/Close'
 
+import StickersImages from '../../constants/stickers'
 import * as ModalActions from '../../redux/actions/modal'
 import * as PackActions from '../../redux/actions/packs'
 import API from '../../api'
@@ -162,8 +163,10 @@ const Content = React.forwardRef(({
     frontImageRef.current.style.filter = 'blur(10px) grayscale(100%) brightness(10)'
     backImageRef.current.style.filter = 'blur(10px) grayscale(100%) brightness(10)'
     backImageRef.current.style.backgroundColor = 'white'
+    let stickerId
     try {
-      const { data: { data: { sticker_id: stickerId } } } = await API.openPack()
+      const { data: { data: { sticker_id } } } = await API.openPack()
+      stickerId = sticker_id
       dispatch(PackActions.openPack(stickerId))
     } catch (e) {
       console.error(e)
@@ -173,7 +176,7 @@ const Content = React.forwardRef(({
     await sleep(1000)
     if (!env.current.isMounted) return
     env.current.currentFace = 'front'
-    frontImageRef.current.style.backgroundImage = 'url(http://place-puppy.com/200x200)'
+    frontImageRef.current.style.backgroundImage = `url(${StickersImages.stickers[stickerId]})`
     frontImageRef.current.style.filter = 'blur(0px) grayscale(0%) brightness(1)'
     await sleep(1500)
     if (!env.current.isMounted) return
@@ -276,7 +279,7 @@ const Content = React.forwardRef(({
             outline: 'none',
             userSelect: 'none',
             backgroundImage: `url(${Pack})`,
-            backgroundSize: 'contain',
+            backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             width: '183px',
             height: '315px',
@@ -291,7 +294,7 @@ const Content = React.forwardRef(({
           style={{
             outline: 'none',
             userSelect: 'none',
-            backgroundSize: 'contain',
+            backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundColor: 'transparent',
             width: '183px',

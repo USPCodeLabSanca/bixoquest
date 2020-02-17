@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import QrCodeGen from 'qrcode.react'
 import { useSelector } from 'react-redux'
+import StickersImages from '../constants/stickers'
 import API from '../api'
 
 const style = {
@@ -25,7 +26,7 @@ const style = {
 
 const selectStyle = {
   root: 'flex items-center shadow',
-  image: 'flex justify-center items-center bg-gray-500',
+  image: 'flex justify-start items-end bg-gray-500 text-white text-2xl',
   controlsContainer: 'flex h-full w-full items-center justify-between pl-2 pr-4',
   controlsInnerContainer: 'flex flex-col h-full justify-center items-center',
   amountSelectedText: 'text-2xl border border-black rounded-lg h-16 w-16 flex items-center justify-center',
@@ -36,7 +37,7 @@ const selectStyle = {
 const confirmStyle = {
   root: 'h-full w-full flex flex-wrap content-start',
   cardContainer: 'flex mx-4 my-2 h-content',
-  image: 'w-16 h-24 bg-gray-500 flex justify-center items-center text-center',
+  image: 'w-16 h-24 bg-gray-500 flex justify-start items-end text-white text-xl',
   multiplier: 'flex flex-col justify-end items-center px-2',
   title: 'text-center text-xl w-full h-content mb-4 px-4'
 }
@@ -72,8 +73,8 @@ function CardItemToSelect ({
   const amountText = amountOwned > 1 ? 'x' + amountOwned : ''
   return (
     <div className={selectStyle.root} style={{ height: 151 }}>
-      <div className={selectStyle.image} style={{ height: 151, width: 106.47 }}>
-        {stickerId}
+      <div className={selectStyle.image} style={{ height: 151, width: 106.47, backgroundImage: `url(${StickersImages.stickers[stickerId]})`, backgroundSize: 'cover' }}>
+        {stickerId + 1}
       </div>
       <div className={selectStyle.controlsContainer}>
         <div className={selectStyle.multiplier}>{amountText}</div>
@@ -90,7 +91,9 @@ function CardItemToSelect ({
 function CardItemToConfirm ({ stickerId, amount }) {
   return (
     <div className={confirmStyle.cardContainer}>
-      <div className={confirmStyle.image}>{stickerId}</div>
+      <div className={confirmStyle.image} style={{backgroundImage: `url(${StickersImages.stickers[stickerId]})`, backgroundSize: 'cover' }}>
+        {Number(stickerId) + 1}
+      </div>
       <div className={confirmStyle.multiplier}>x{amount}</div>
     </div>
   )
@@ -181,22 +184,25 @@ function GiveCards () {
   function renderSelectCards () {
     const uniquedCards = {}
     userStickers.forEach(card => { uniquedCards[card] = (uniquedCards[card] || 0) + 1 })
+    const uniqueCardsArray = Object.entries(uniquedCards).filter(([id, amount]) => amount > 1)
     return (
       <div>
-        <div className={selectStyle.title}>Selecione as cartas que você quer doar</div>
+        <div className={selectStyle.title}>{
+          uniqueCardsArray.length === 0
+            ? 'Você não tem nenhuma carta repetida.\n Você só pode doar cartas repetidas.'
+            : 'Selecione as cartas que você quer doar'
+        }</div>
         {
-          Object.entries(uniquedCards)
-            .filter(([id, amount]) => amount > 1)
-            .map(([id, amount]) =>
-              <CardItemToSelect
-                stickerId={+id}
-                amountOwned={+amount}
-                amountSelected={selectedCards[id]}
-                onUp={() => selectCard(id)}
-                onDown={() => unselectCard(id)}
-                key={id}
-              />
-            )
+          uniqueCardsArray.map(([id, amount]) =>
+            <CardItemToSelect
+              stickerId={+id}
+              amountOwned={+amount}
+              amountSelected={selectedCards[id]}
+              onUp={() => selectCard(id)}
+              onDown={() => unselectCard(id)}
+              key={id}
+            />
+          )
         }
       </div>
     )

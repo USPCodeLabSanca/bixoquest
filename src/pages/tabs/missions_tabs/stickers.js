@@ -14,7 +14,7 @@ const style = {
   root: 'h-full overflow-auto',
   nav: 'flex space-between shadow-lg w-full bg-white',
   center: 'flex justify-center',
-  pagina: { width: '210px', height: '297px', zoom: '1.5', marginBottom: '8px' },
+  pagina: { width: '210px', height: '297px', zoom: '1.5', marginBottom: '8px', backgroundSize: 'contain' },
   paginaClass: 'shadow-lg',
   sticker: { height: '33.4%', backgroundImage: `url(${STICKERS_DATA.placeholder})`, backgroundColor: '#23b14d', border: '0.5px solid white', color: 'white', padding: '3px' },
   discoveredSticker: {backgroundColor: 'transparent', backgroundImage: 'none', border: 'none'}
@@ -59,6 +59,7 @@ export default function Stickers () {
     setValue(newValue)
   }
 
+  console.log(user.stickers)
   return (
     <div className={style.root}>
       <nav className={style.nav}>
@@ -82,17 +83,35 @@ export default function Stickers () {
           STICKERS_DATA.pages.map(
             (page_image, index) =>
               <TabPanel value={value} index={index} key={index}>
-                
-                <Grid container className={style.paginaClass} style={ { ...style.pagina, ...{backgroundImage: `url(${ page_image })`}  }} direction="row" justify="center" alignItems="center">
+                <Grid
+                  container
+                  className={style.paginaClass}
+                  style={{
+                    ...style.pagina,
+                    ...{backgroundImage: `url(${ page_image })`}
+                  }}
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  { [...Array(9)].map( (x, i) =>
 
-                    { [...Array(9)].map( (x, i) => 
+                    <Grid
+                      container
+                      item
+                      xs={4}
+                      style={{
+                        ...style.sticker,
+                        ...(user.stickers.includes(i + (index*9)) ? style.discoveredSticker : {} )
+                      }}
+                      direction="row"
+                      alignItems="flex-end"
+                    >
+                      { (i+1) + (index*9) }
+                    </Grid>
 
-                      <Grid container item xs={4} style={ { ...style.sticker, ...(user.stickers.includes((i+1) + (index*9) + "") ? style.discoveredSticker : {} ) } } direction="row" alignItems="flex-end"> { (i+1) + (index*9) } </Grid>
-
-                     ) }
-
+                    ) }
                 </Grid>
-
               </TabPanel>
           )
         }
