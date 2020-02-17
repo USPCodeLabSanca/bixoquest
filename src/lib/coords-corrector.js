@@ -6,12 +6,12 @@ This is to adjust for that
 export function correctCoords (coords) {
   if (coords instanceof Array) {
     const [lat, lng] = coords
-    return [lat + 0.000026, lng + 0.000072]
+    return [lat, lng]
   } else {
     const { lat, lng } = coords
     return {
-      lat: lat + 0.000026,
-      lng: lng + 0.000072
+      lat: lat,
+      lng: lng
     }
   }
 }
