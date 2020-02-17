@@ -43,7 +43,7 @@ export default function MissionDialog ({
   return (
     <Modal open className={style.root}>
       <Card className={style.card}>
-        <div className={style.title}>Missão Concluida</div>
+        <div className={style.title}>Missão Concluída</div>
         <div className={style.description}>{mission.location_reference}</div>
         <Button onClick={submit} className={style.button} fullWidth variant='contained'>
           OK

@@ -56,7 +56,7 @@ const MissionCard = ({ mission }) => {
     if (hasMissionBeenCompleted) return 'Concluída'
     else if (isMissionExpired) return 'Expirada'
     else if (!hasMissionStarted) return 'Em breve...'
-    else return 'Em progresso'
+    else return 'Disponível'
   }
 
   function resolveStatusStyle () {
@@ -85,7 +85,7 @@ const MissionCard = ({ mission }) => {
 
     async function sendPassword () {
       const password = passwordRef.current.value.trim().toLowerCase()
-      if (!password) return toast.error('Você deve fornecer uma senha')
+      if (!password) return toast.error('Você deve fornecer uma senha.')
       try {
         setIsSendingPassword(true)
         const action = await completeKeyMission(mission, password)

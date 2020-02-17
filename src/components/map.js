@@ -11,7 +11,7 @@ function WarningToast () {
   function resolveText (geolocation) {
     if (geolocation.isAvailable) return 'Sucesso!'
     else if (geolocation.error) return geolocation.error.message
-    else return 'Buscando sua posição...'
+    else return 'Buscando sua localização...'
   }
 
   React.useEffect(() => {

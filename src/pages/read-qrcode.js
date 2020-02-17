@@ -34,7 +34,7 @@ function QrCodeScan () {
   const history = useHistory()
 
   function error () {
-    toast.error('Erro ao tentar abrir a câmera')
+    toast.error('Erro ao tentar abrir a câmera.')
     history.goBack()
   }
 
@@ -94,7 +94,7 @@ function QrCodeScan () {
   function renderQrCodeReader () {
     return (
       <div>
-        <h1 className={style.scanTitle}>Leia um QrCode de missão ou de doação para prosseguir</h1>
+        <h1 className={style.scanTitle}>Leia um QRCode de missão ou de doação para prosseguir.</h1>
         <QrReader
           delay={300}
           style={{ width: '100%' }}
@@ -121,7 +121,7 @@ function QrCodeScan () {
     } else if (qrCodePayload) {
       return (
         <div className='w-full h-full flex flex-col justify-center items-center'>
-          <h1 className='text-xl p-4 text-center'>Houve um erro ao ler este QRCode</h1>
+          <h1 className='text-xl p-4 text-center'>Houve um erro ao ler este QRCode.</h1>
           <Button variant='contained' onClick={() => setQrCodePayload(null)}>
             Tentar novamente
           </Button>

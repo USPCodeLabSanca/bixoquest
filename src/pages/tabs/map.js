@@ -92,7 +92,7 @@ export default function MapScreen () {
         position={[mission.lat, mission.lng]}
       >
         <Popup>
-          Venha até aqui para completar essa missão
+          Venha até aqui para completar essa missão.
         </Popup>
       </Marker>
     )

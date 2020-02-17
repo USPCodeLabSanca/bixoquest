@@ -35,7 +35,7 @@ function FoundABugModal () {
             ficar sabendo!
           </P>
           <P>
-            Mande um E-mail para ucl-sanca@icmc.com.br com o assunto 'bug bixoquest'.
+            Mande um E-mail para uclsanca@icmc.com.br com o assunto '[Bug BixoQuest]'.
             Deixe uma breve descrição do seu bug na área de mensagem, e se você puder,
             um screenshot da sua tela.
           </P>

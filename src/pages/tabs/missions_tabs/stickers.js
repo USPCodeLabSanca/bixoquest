@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import STICKERS_DATA from '../../../constants/stickers'
 
 import PropTypes from 'prop-types'

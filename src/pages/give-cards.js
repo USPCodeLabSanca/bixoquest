@@ -126,7 +126,7 @@ function QrCode ({ selectedCards }) {
     if (!token) {
       return (
         <div className='text-white text-center'>
-          Houve um problema gerando o QrCode
+          Houve um problema ao gerar o QRCode.
           <Button variant='contained' onClick={fetchToken}>Tentar novamente</Button>
         </div>
       )
@@ -173,7 +173,7 @@ function GiveCards () {
   function nextStep () {
     if (step === SELECT_STEP) {
       if (Object.values(selectedCards).length === 0) {
-        return toast.error('Voce deve selecionar pelo menos uma carta para continuar')
+        return toast.error('Você deve selecionar pelo menos uma carta para continuar.')
       }
     }
     setStep(Math.min(2, step + 1))

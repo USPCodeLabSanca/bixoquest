@@ -1,20 +1,20 @@
 /** Constant that contains the default messages for each status code. */
 const defaultMessages = {
   // default
-  default: 'Ocorreu um erro desconhecido',
+  default: 'Ocorreu um erro desconhecido.',
 
   // network error
-  undefined: 'Erro de conexão! Verifique a sua internet',
+  undefined: 'Erro de conexão! Verifique a sua internet.',
 
   // 400
-  400: 'Parece que algo que você me enviou está incorreto! Por favor, tente novamente',
-  401: 'Vishe! Sua sessâo expirou! Por favor, faça login novamente',
+  400: 'Parece que algo que você me enviou está incorreto! Por favor, tente novamente.',
+  401: 'Vish! Sua sessâo expirou! Por favor, faça login novamente.',
   403: 'Você não tem acesso a esse recurso! O que você está tentando fazer?',
-  404: 'Opa! esse recurso não existe! Parece que seu link está quebrado',
+  404: 'Opa! esse recurso não existe! Parece que seu link está quebrado.',
 
   // 500
   500: 'Nosso servidor quebrou! Nos perdoe! D:',
-  503: 'Parece que nosso servidor não está diposnível. Por favor, tente novamente mais tarde'
+  503: 'Parece que nosso servidor não está diposnível. Por favor, tente novamente mais tarde.'
 }
 
 defaultMessages.NETWORK_ERROR = defaultMessages[undefined]

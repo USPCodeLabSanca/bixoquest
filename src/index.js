@@ -36,7 +36,7 @@ initializeAPI({
   tokenDispatcher: newToken => store.dispatch(updateToken(newToken)),
   onError: message => toast.error(message),
   onBadToken: () => {
-    toast.error('Parece que sua sessão expirou! Por favor, faça o login de novo')
+    toast.error('Parece que sua sessão expirou! Por favor, faça o login novamente.')
     store.dispatch(logoutAction())
     window.location.pathname = '/login'
   }
