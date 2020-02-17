@@ -31,7 +31,8 @@ const cardStyle = {
     base: 'flex justify-center items-center w-full text-xs text-center rounded-br text-white',
     finished: 'bg-tertiary',
     progress: 'bg-primary',
-    expired: 'bg-red-600'
+    expired: 'bg-red-600',
+    soon: 'bg-yellow-400'
   }
 }
 
@@ -44,14 +45,17 @@ const MissionCard = ({ mission }) => {
   const ArrowComponent = isOpen ? ArrowUp : ArrowDown
   const user = useSelector(state => state.auth.user)
   const dispatch = useDispatch()
+  const startDate = Moment(mission.available_at)
   const expirationDate = Moment(mission.expirate_at)
   if (!user.completed_missions) user.completed_missions = []
   const hasMissionBeenCompleted = user.completed_missions.some(id => mission._id === id)
   const isMissionExpired = Moment().isAfter(expirationDate)
+  const hasMissionStarted = Moment().isAfter(startDate)
 
   function resolveStatusText () {
     if (hasMissionBeenCompleted) return 'Concluída'
     else if (isMissionExpired) return 'Expirada'
+    else if (!hasMissionStarted) return 'Em breve...'
     else return 'Em progresso'
   }
 
@@ -60,6 +64,7 @@ const MissionCard = ({ mission }) => {
     let statusStyle
     if (hasMissionBeenCompleted) statusStyle = cardStyle.statusText.finished
     else if (isMissionExpired) statusStyle = cardStyle.statusText.expired
+    else if (!hasMissionStarted) statusStyle = cardStyle.statusText.soon
     else statusStyle = cardStyle.statusText.progress
     return baseStyle + ' ' + statusStyle
   }
@@ -92,6 +97,8 @@ const MissionCard = ({ mission }) => {
       }
     }
 
+    if (isMissionExpired) return null
+    if (!hasMissionStarted) return null
     return (
       <>
         <p className={cardStyle.description + ' mt-4'}>
