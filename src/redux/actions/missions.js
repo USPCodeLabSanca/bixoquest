@@ -20,7 +20,7 @@ export async function completeLocationMission (mission, lat, lng) {
   }
 }
 
-export async function completeQRCodeMission (mission) {
+export function completeQRCodeMission (mission) {
   return {
     type: 'COMPLETE_MISSION',
     mission

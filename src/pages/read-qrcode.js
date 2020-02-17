@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import JWTDecode from 'jwt-decode'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import API from '../api'
+import Routes from '../constants/routes'
 import { Button } from '@material-ui/core'
 import { receiveDonation } from '../redux/actions/stickers'
 import { completeQRCodeMission } from '../redux/actions/missions'
@@ -41,13 +42,16 @@ function QrCodeScan () {
     if (!token || isSendingCode || qrCodeBackendResponse) return
     setIsSendingCode(true)
     const payload = JWTDecode(token)
-    console.log(payload)
     setQrCodePayload(payload)
     try {
       const { data: { data: response } } = await API.sendQrCodeToken(token)
       setQrCodeBackendResponse(response)
-      if (payload.isMission === true) dispatch(receiveDonation(payload.stickers))
-      else if (payload.isMission === false) dispatch(completeQRCodeMission(response))
+      if (payload.isMission === false) dispatch(receiveDonation(payload.stickers))
+      else if (payload.isMission === true) {
+        dispatch(completeQRCodeMission(response))
+        toast.success('Missão completada com sucesso!')
+        history.push(Routes.tabs.map)
+      }
       else return toast.error('Você deve ler um QRCode gerado pela organização do BixoQuest!')
     } catch (e) { console.error(e) } finally {
       setIsSendingCode(false)

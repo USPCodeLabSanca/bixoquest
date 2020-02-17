@@ -76,7 +76,7 @@ const MissionCard = ({ mission }) => {
   }
 
   function renderPassword () {
-    if (!mission.type === 'password' || hasMissionBeenCompleted) return null
+    if (mission.type !== 'key' || hasMissionBeenCompleted) return null
 
     async function sendPassword () {
       const password = passwordRef.current.value.trim().toLowerCase()
