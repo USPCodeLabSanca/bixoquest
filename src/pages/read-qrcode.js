@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import API from '../api'
 import { Button } from '@material-ui/core'
 import { receiveDonation } from '../redux/actions/stickers'
+import { completeQRCodeMission } from '../redux/actions/missions'
 import { useDispatch } from 'react-redux'
 
 const style = {
@@ -40,11 +41,14 @@ function QrCodeScan () {
     if (!token || isSendingCode || qrCodeBackendResponse) return
     setIsSendingCode(true)
     const payload = JWTDecode(token)
+    console.log(payload)
     setQrCodePayload(payload)
     try {
       const { data: { data: response } } = await API.sendQrCodeToken(token)
       setQrCodeBackendResponse(response)
-      if (!payload.isMission) dispatch(receiveDonation(payload.stickers))
+      if (payload.isMission === true) dispatch(receiveDonation(payload.stickers))
+      else if (payload.isMission === false) dispatch(completeQRCodeMission(response))
+      else return toast.error('Você deve ler um QRCode gerado pela organização do BixoQuest!')
     } catch (e) { console.error(e) } finally {
       setIsSendingCode(false)
     }

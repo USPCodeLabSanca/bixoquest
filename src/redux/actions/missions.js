@@ -20,8 +20,7 @@ export async function completeLocationMission (mission, lat, lng) {
   }
 }
 
-export async function completeQRCodeMission (mission, qrcode) {
-  await API.completeQRCodeMission(mission._id, qrcode)
+export async function completeQRCodeMission (mission) {
   return {
     type: 'COMPLETE_MISSION',
     mission

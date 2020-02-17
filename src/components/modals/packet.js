@@ -331,7 +331,8 @@ export default function PacketsModal () {
   function next (event) {
     event.stopPropagation()
     setIsPackOpen(false)
-    cardRef.current.reset()
+    if (availablePacks === 0) requestClose()
+    else cardRef.current.reset()
   }
 
   function openPack () {
