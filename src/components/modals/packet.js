@@ -177,10 +177,11 @@ const Content = React.forwardRef(({
     if (!env.current.isMounted) return
     env.current.currentFace = 'front'
     frontImageRef.current.style.backgroundImage = `url(${StickersImages.stickers[stickerId]})`
+    backImageRef.current.style.backgroundColor = 'transparent'
+    backImageRef.current.style.opacity = '0'
     frontImageRef.current.style.filter = 'blur(0px) grayscale(0%) brightness(1)'
     await sleep(1500)
     if (!env.current.isMounted) return
-    backImageRef.current.style.backgroundColor = 'transparent'
     onOpen()
   }
 
@@ -192,8 +193,11 @@ const Content = React.forwardRef(({
     if (!env.current.isMounted) return
     backImageRef.current.style.filter = 'blur(0px) grayscale(0%) brightness(1)'
     backImageRef.current.style.backgroundColor = 'transparent'
+    backImageRef.current.style.opacity = '0'
     cardRef.current.style.transform = 'rotateX(0deg) rotateY(0deg)'
     await sleep(250)
+    backImageRef.current.style.opacity = '1'
+    frontImageRef.current.style.backgroundImage = ''
     frontImageRef.current.style.backgroundColor = 'transparent'
     await sleep(750)
     if (!env.current.isMounted) return
