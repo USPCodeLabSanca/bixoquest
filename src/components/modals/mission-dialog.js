@@ -40,8 +40,13 @@ export default function MissionDialog ({
     }
   }
 
+  function close () {
+    if (isLoading) return
+    dispatch(ModalActions.closeModal())
+  }
+
   return (
-    <Modal open className={style.root}>
+    <Modal open className={style.root} onClose={close}>
       <Card className={style.card}>
         <div className={style.title}>Missão Concluída</div>
         <div className={style.description}>{mission.location_reference}</div>

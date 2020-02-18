@@ -5,9 +5,12 @@ import { useDispatch } from 'react-redux'
 
 import * as ModalActions from '../redux/actions/modal'
 
-function CustomModal ({ ...props }) {
+function CustomModal ({ onClose, ...props }) {
   const dispatch = useDispatch()
-  return <Modal open onClose={() => dispatch(ModalActions.closeModal())} {...props} />
+  function close () {
+    dispatch(ModalActions.closeModal())
+  }
+  return <Modal open onClose={onClose || close} {...props} />
 }
 
 export default CustomModal
