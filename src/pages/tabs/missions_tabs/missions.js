@@ -154,6 +154,10 @@ export default function Missions () {
       setIsLoadingMissions(true)
       try {
         const { data: { data: missions } } = await API.getAllMissions()
+        missions.sort(
+          (a, b) => {
+            return a.expirate_at<b.expirate_at ? -1 : a.expirate_at>b.expirate_at ? 1 : 0;
+        })
         correctAllMissionCoords(missions)
         setMissions(missions)
       } catch (e) { console.error(e) } finally {
@@ -174,10 +178,7 @@ export default function Missions () {
     } else if (missions.length === 0) {
       return <p>Nenhuma missão encontrada</p>
     } else {
-      return missions.sort(
-        (a, b) => {
-          return a.expirationDate>b.expirationDate ? -1 : a.expirationDate<b.expirationDate ? 1 : 0;
-        }).map(
+      return missions.reverse().map(
         mission => <MissionCard mission={mission} key={mission._id} />
       )
     }
