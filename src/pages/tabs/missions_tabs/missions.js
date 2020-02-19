@@ -162,6 +162,10 @@ export default function Missions () {
       setIsLoadingMissions(true)
       try {
         const { data: { data: missions } } = await API.getAllMissions()
+        missions.sort(
+          (a, b) => {
+            return a.expirate_at<b.expirate_at ? -1 : a.expirate_at>b.expirate_at ? 1 : 0;
+        })
         correctAllMissionCoords(missions)
         setMissions(missions)
       } catch (e) { console.error(e) } finally {
