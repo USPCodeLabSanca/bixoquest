@@ -30,7 +30,7 @@ const cardStyle = {
   statusContainer: 'flex',
   statusTime: 'flex justify-center items-center w-full text-xs text-center flex-col',
   statusText: {
-    base: 'flex justify-center items-center w-full text-xs text-center rounded-br text-white',
+    base: 'flex flex-col justify-center items-center w-full text-xs text-center text-white',
     finished: 'bg-tertiary',
     progress: 'bg-primary',
     expired: 'bg-red-600',
@@ -132,13 +132,13 @@ const MissionCard = ({ mission }) => {
         </p>
         {renderPassword()}
         <div className={cardStyle.statusContainer}>
-          <div className={resolveStatusStyle()}>
+          <div className={resolveStatusStyle() + ' rounded-bl'}>
             <span className='font-bold'>
               {hasMissionStarted ? 'Começou' : 'Começa'} em:
             </span>
             <span>{startDate.format('DD/MM/YYYY - HH[h] mm[m]')}</span>
           </div>
-          <div className={resolveStatusStyle()}>
+          <div className={resolveStatusStyle() + ' rounded-br'}>
             <span className='font-bold'>
               {isMissionExpired ? 'Terminou' : 'Termina'} em:
             </span>
@@ -197,7 +197,7 @@ export default function Missions () {
         return 'pending'
       }
       const renderMission = mission => <MissionCard mission={mission} key={mission._id} />
-      const compareMissions = (a, b) => b.expirate_at - a.expirate_at
+      const compareMissions = (a, b) => a.expirate_at - b.expirate_at
 
       const filteredMissions = {
         finished: [],
@@ -227,8 +227,8 @@ export default function Missions () {
       <Button
         color='secondary'
         fullWidth
-        style={{ margin: '0.5rem 0 1rem 0' }}
-        disabled={availablePacks > 0}
+        style={{ margin: '1rem 0' }}
+        disabled={availablePacks === 0}
         onClick={openPack}
         variant='contained'
       >
