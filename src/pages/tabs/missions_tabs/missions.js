@@ -174,7 +174,7 @@ export default function Missions () {
     } else if (missions.length === 0) {
       return <p>Nenhuma missão encontrada</p>
     } else {
-      return missions.map(
+      return missions.reverse().map(
         mission => <MissionCard mission={mission} key={mission._id} />
       )
     }
