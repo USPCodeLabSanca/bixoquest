@@ -174,7 +174,10 @@ export default function Missions () {
     } else if (missions.length === 0) {
       return <p>Nenhuma missão encontrada</p>
     } else {
-      return missions.reverse().map(
+      return missions.sort(
+        (a, b) => {
+          return a.expirationDate>b.expirationDate ? -1 : a.expirationDate<b.expirationDate ? 1 : 0;
+        }).map(
         mission => <MissionCard mission={mission} key={mission._id} />
       )
     }
