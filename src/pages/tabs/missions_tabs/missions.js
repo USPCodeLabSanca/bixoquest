@@ -14,7 +14,7 @@ import { completeKeyMission } from '../../../redux/actions/missions'
 import API from '../../../api'
 import { correctAllMissionCoords } from '../../../lib/coords-corrector'
 import { toast } from 'react-toastify'
-import { ModalActions } from '../../../components/modal'
+import * as ModalActions from '../../../redux/actions/modal'
 import PacketsModal from '../../../components/modals/packet'
 
 const style = {
@@ -156,6 +156,7 @@ export default function Missions () {
 
   const user = useSelector(state => state.auth.user)
   const availablePacks = useSelector(state => state.auth.user.available_packs)
+  const openPackModal = ModalActions.useModal(() => <PacketsModal />)
 
   useEffect(() => {
     (async () => {
@@ -186,8 +187,8 @@ export default function Missions () {
     } else if (missions.length === 0) {
       return <p>Nenhuma missão encontrada</p>
     } else {
-      const isMissionExpired = mission => Moment().isAfter(mission.expirationDate)
-      const hasMissionStarted = mission => Moment().isAfter(mission.startDate)
+      const isMissionExpired = mission => Moment().isAfter(mission.expirate_at)
+      const hasMissionStarted = mission => Moment().isAfter(mission.available_at)
       const hasMissionBeenCompleted = mission => user.completed_missions.some(id => mission._id === id)
       const missionStatus = mission => {
         if (hasMissionBeenCompleted(mission)) return 'finished'
@@ -196,7 +197,7 @@ export default function Missions () {
         return 'pending'
       }
       const renderMission = mission => <MissionCard mission={mission} key={mission._id} />
-      const compareMissions = (a, b) => a.expirate_at - b.expirate_at
+      const compareMissions = (a, b) => b.expirate_at - a.expirate_at
 
       const filteredMissions = {
         finished: [],
@@ -218,7 +219,7 @@ export default function Missions () {
   }
 
   function openPack () {
-    ModalActions.useModal(() => <PacketsModal />)
+    openPackModal()
   }
 
   return (
@@ -226,9 +227,10 @@ export default function Missions () {
       <Button
         color='secondary'
         fullWidth
-        style={{ margin: '0 0 2rem 0' }}
+        style={{ margin: '0.5rem 0 1rem 0' }}
         disabled={availablePacks > 0}
         onClick={openPack}
+        variant='contained'
       >
         Abrir pacotes ({availablePacks})
       </Button>
