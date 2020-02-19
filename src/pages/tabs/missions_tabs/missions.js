@@ -14,6 +14,8 @@ import { completeKeyMission } from '../../../redux/actions/missions'
 import API from '../../../api'
 import { correctAllMissionCoords } from '../../../lib/coords-corrector'
 import { toast } from 'react-toastify'
+import { ModalActions } from '../../../components/modal'
+import PacketsModal from '../../../components/modals/packet'
 
 const style = {
   root: 'h-full px-4 overflow-auto',
@@ -84,7 +86,7 @@ const MissionCard = ({ mission }) => {
     if (mission.type !== 'key' || hasMissionBeenCompleted) return null
 
     async function sendPassword () {
-      const password = passwordRef.current.value.trim().toLowerCase()
+      const password = passwordRef.current.value.trim().toLowerCase().replace(/ /g, '')
       if (!password) return toast.error('Você deve fornecer uma senha.')
       try {
         setIsSendingPassword(true)
@@ -130,14 +132,17 @@ const MissionCard = ({ mission }) => {
         </p>
         {renderPassword()}
         <div className={cardStyle.statusContainer}>
-          <div className={cardStyle.statusTime}>
+          <div className={resolveStatusStyle()}>
+            <span className='font-bold'>
+              {hasMissionStarted ? 'Começou' : 'Começa'} em:
+            </span>
+            <span>{startDate.format('DD/MM/YYYY - HH[h] mm[m]')}</span>
+          </div>
+          <div className={resolveStatusStyle()}>
             <span className='font-bold'>
               {isMissionExpired ? 'Terminou' : 'Termina'} em:
             </span>
             <span>{expirationDate.format('DD/MM/YYYY - HH[h] mm[m]')}</span>
-          </div>
-          <div className={resolveStatusStyle()}>
-            {resolveStatusText()}
           </div>
         </div>
       </div>
@@ -148,6 +153,9 @@ const MissionCard = ({ mission }) => {
 export default function Missions () {
   const [missions, setMissions] = useState()
   const [isLoadingMissions, setIsLoadingMissions] = useState(true)
+
+  const user = useSelector(state => state.auth.user)
+  const availablePacks = useSelector(state => state.auth.user.available_packs)
 
   useEffect(() => {
     (async () => {
@@ -174,14 +182,52 @@ export default function Missions () {
     } else if (missions.length === 0) {
       return <p>Nenhuma missão encontrada</p>
     } else {
-      return missions.reverse().map(
-        mission => <MissionCard mission={mission} key={mission._id} />
-      )
+      const isMissionExpired = mission => Moment().isAfter(mission.expirationDate)
+      const hasMissionStarted = mission => Moment().isAfter(mission.startDate)
+      const hasMissionBeenCompleted = mission => user.completed_missions.some(id => mission._id === id)
+      const missionStatus = mission => {
+        if (hasMissionBeenCompleted(mission)) return 'finished'
+        if (isMissionExpired(mission)) return 'expired'
+        if (!hasMissionStarted(mission)) return 'notStarted'
+        return 'pending'
+      }
+      const renderMission = mission => <MissionCard mission={mission} key={mission._id} />
+      const compareMissions = (a, b) => a.expirate_at - b.expirate_at
+
+      const filteredMissions = {
+        finished: [],
+        expired: [],
+        notStarted: [],
+        pending: []
+      }
+
+      missions.forEach(mission => filteredMissions[missionStatus(mission)].push(mission))
+      const mapMissions = missions => missions.sort(compareMissions).map(renderMission)
+
+      return <>
+        {mapMissions(filteredMissions.pending)}
+        {mapMissions(filteredMissions.notStarted)}
+        {mapMissions(filteredMissions.finished)}
+        {mapMissions(filteredMissions.expired)}
+      </>
     }
+  }
+
+  function openPack () {
+    ModalActions.useModal(() => <PacketsModal />)
   }
 
   return (
     <div className={style.root}>
+      <Button
+        color='secondary'
+        fullWidth
+        style={{ margin: '0 0 2rem 0' }}
+        disabled={availablePacks > 0}
+        onClick={openPack}
+      >
+        Abrir pacotes ({availablePacks})
+      </Button>
       {renderMissions()}
     </div>
   )
