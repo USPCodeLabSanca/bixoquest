@@ -227,7 +227,7 @@ export default function Missions () {
       <Button
         color='secondary'
         fullWidth
-        style={{ margin: '1rem 0' }}
+        style={{ margin: '1rem 0 0 0' }}
         disabled={availablePacks === 0}
         onClick={openPack}
         variant='contained'

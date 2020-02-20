@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import JWTDecode from 'jwt-decode'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import API from '../api'
+import StickersImages from '../constants/stickers'
 import Routes from '../constants/routes'
 import { Button } from '@material-ui/core'
 import { receiveDonation } from '../redux/actions/stickers'
@@ -68,7 +69,7 @@ function QrCodeScan () {
     donatedCards.forEach(card => { uniquedCards[card] = (uniquedCards[card] || 0) + 1 })
     const Sticker = ({ stickerId, amount }) => (
       <div className='flex mx-4 my-2 h-content'>
-        <div className='w-16 h-24 bg-gray-500 flex justify-center items-center text-center'>{stickerId}</div>
+        <div className='w-16 h-24 bg-gray-500 flex items-end' style={{backgroundImage: `url(${StickersImages.stickers[stickerId]})`, backgroundSize: 'cover' }}>{stickerId}</div>
         <div className='flex flex-col justify-end items-center px-2'>x{amount}</div>
       </div>
     )

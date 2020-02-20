@@ -163,7 +163,9 @@ function GiveCards () {
 
   function unselectCard (cardId) {
     const newCardValue = Math.max(0, (selectedCards[cardId] || 0) - 1)
-    setSelectedCards({ ...selectedCards, [cardId]: newCardValue })
+    const newSelectedCards = { ...selectedCards, [cardId]: newCardValue }
+    if (newCardValue === 0) delete newSelectedCards[cardId]
+    setSelectedCards(newSelectedCards)
   }
 
   function leaveScreen () {
