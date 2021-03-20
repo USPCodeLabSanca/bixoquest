@@ -1,6 +1,5 @@
 import React from 'react'
 
-import QrReader from 'react-qr-reader'
 import Close from '@material-ui/icons/Close'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -96,12 +95,12 @@ function QrCodeScan () {
     return (
       <div>
         <h1 className={style.scanTitle}>Leia um QRCode de missão ou de doação para prosseguir.</h1>
-        <QrReader
+        {/* <QrReader
           delay={300}
           style={{ width: '100%' }}
           onError={error}
           onScan={onScan}
-        />
+        /> */}
       </div>
     )
   }

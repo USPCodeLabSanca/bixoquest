@@ -1,5 +1,5 @@
 import React from 'react'
-import { Map, TileLayer } from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import Paper from '@material-ui/core/Paper'
 import { useSelector } from 'react-redux'
 
@@ -71,7 +71,7 @@ export default function CustomMap ({
       <WarningToast />
       {
         geolocation.isAvailable &&
-          <Map
+          <MapContainer
             center={center}
             zoom={zoom}
             zoomSnap={0.01}
@@ -83,7 +83,7 @@ export default function CustomMap ({
               url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             />
             {children}
-          </Map>
+          </MapContainer>
       }
     </>
   )
