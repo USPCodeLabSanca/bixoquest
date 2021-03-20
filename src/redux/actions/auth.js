@@ -1,4 +1,4 @@
-import API, { silentAPI } from '../../api'
+import { silentAPI } from '../../api'
 
 /** @argument {{ email: string, password: string }} user */
 export async function login () {

@@ -54,13 +54,6 @@ const MissionCard = ({ mission }) => {
   const isMissionExpired = Moment().isAfter(expirationDate)
   const hasMissionStarted = Moment().isAfter(startDate)
 
-  function resolveStatusText () {
-    if (hasMissionBeenCompleted) return 'Concluída'
-    else if (isMissionExpired) return 'Expirada'
-    else if (!hasMissionStarted) return 'Em breve...'
-    else return 'Disponível'
-  }
-
   function resolveStatusStyle () {
     const baseStyle = cardStyle.statusText.base
     let statusStyle

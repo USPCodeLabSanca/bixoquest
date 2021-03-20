@@ -1,7 +1,9 @@
 import storage from 'redux-persist/lib/storage'
 
-export default {
+const ReduxPersistConfig = {
   storage,
   key: 'root',
   whitelist: ['auth']
 }
+
+export default ReduxPersistConfig;
