@@ -54,7 +54,7 @@ export default function CustomMap ({
   children
 }) {
   const geolocation = useSelector(state => state.geolocation)
-  const [center, setCenter] = React.useState(isPointValid(initialCenter) && initialCenter)
+  const [center, setCenter] = React.useState((isPointValid(initialCenter) && initialCenter) || undefined)
   const [zoom, setZoom] = React.useState(exist(initialZoom) && initialZoom)
 
   React.useEffect(() => {
@@ -70,17 +70,17 @@ export default function CustomMap ({
     <>
       <WarningToast />
       {
-        geolocation.isAvailable &&
+        geolocation.isAvailable && center && zoom &&
           <MapContainer
             center={center}
             zoom={zoom}
             zoomSnap={0.01}
-            maxZoom={19} // Map cannot have more than 19 zoom without breaking
+            maxZoom={18} // Map cannot have more than 18 zoom without breaking
             style={{ height: '100%' }}
           >
             <TileLayer
-              attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {children}
           </MapContainer>

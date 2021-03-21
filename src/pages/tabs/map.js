@@ -142,7 +142,7 @@ export default function MapScreen () {
           <PhotoCamera />
         </Fab>
       </div>
-      <Map initialConfiguration={{ center: userPosition, zoom: 19 }}>
+      <Map initialConfiguration={{ center: userPosition, zoom: 18 }}>
         <Circle center={userPosition} radius={MISSION_RANGE} />
         <Marker position={userPosition} />
         {renderMissionMarkers()}
