@@ -1,10 +1,10 @@
-name: React CI/CD
+name: React Dev CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: [dev]
   pull_request:
-    branches: [main]
+    branches: [dev]
 
 jobs:
   build:
@@ -21,9 +21,9 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
 
           script: |
-            cd bixoquest
+            cd bixoquest-dev
             cd bixoquest
             git stash
-            git pull origin main
+            git pull origin dev
             npm install
             npm run build
