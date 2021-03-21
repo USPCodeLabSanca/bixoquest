@@ -1,3 +1,16 @@
-import * as authValidators from './auth'
+import { toast } from 'react-toastify';
+export * from './auth'
 
-export default { ...authValidators }
+/**
+ * Shows an error toast to every error provided
+ * @param { string[] } errors
+ */
+export function toastifyErrors (errors) {
+	if (!errors || errors.length === 0) return;
+
+	const errorElements = errors.map((error, index) => (
+		<span key={index}>{error}<br /></span>
+	));
+
+	toast.error(<>{errorElements}</>);
+}

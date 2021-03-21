@@ -14,3 +14,12 @@ export const nusp = nusp => {
   if (nusp.match(/\D/)) return 'O Número USP deve conter apenas números.'
   return null
 }
+
+export const email = email => {
+  const emailValidatorRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  if (email === null || email === undefined) return 'O email é obrigatório.'
+  if (!email) return 'O email não pode ser vazio.'
+  if (typeof email !== 'string') return 'O email deve ser uma string.'
+  if (!emailValidatorRegex.test(email.toLowerCase())) return 'Este e-mail é invalido'
+  return null
+}

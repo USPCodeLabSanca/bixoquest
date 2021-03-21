@@ -28,10 +28,11 @@ const Handlers = {
 
   sendQrCodeToken: (token) => API.post('/qrcode/scan', { token }),
 
+  login: (email, password) => API.post('/auth/login', { email, password }),
 }
 
 export const silentHandlers = {
-  login: silentHandler(() => API.get('/auth/success', { withCredentials: true, headers: { 'Access-Control-Allow-Credentials': true } })),
+  tryAuthenticateWithUSPCookie: silentHandler(() => API.get('/auth/success', { withCredentials: true, headers: { 'Access-Control-Allow-Credentials': true } })),
 
   getUser: silentHandler(() => API.get('/user'))
 }

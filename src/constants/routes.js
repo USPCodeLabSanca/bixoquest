@@ -10,6 +10,7 @@ const routes = {
   },
   login: '/login',
   signup: '/signup',
+  forgotPassword: '/forgot-password',
   giveCards: '/give-cards',
   qrcodeReader: '/read-qrcode'
 }

@@ -1,12 +1,19 @@
-import { silentAPI } from '../../api'
+import API, { silentAPI } from '../../api'
 
-/** @argument {{ email: string, password: string }} user */
-export async function login () {
-  const { data: { data: { user, token } } } = await silentAPI.login()
+export async function tryAuthenticateWithUSPCookie () {
+  const { data: { data: { user, token } } } = await silentAPI.tryAuthenticateWithUSPCookie()
   return {
     type: 'SET_USER',
     user,
     token
+  }
+}
+
+export async function login (email, password) {
+  const { data: { user } } = await API.login(email, password)
+  return {
+    type: 'SET_USER',
+    user,
   }
 }
 
