@@ -16,7 +16,6 @@ import { initializeAPI } from './api/base-api'
 import APIBaseURL from './constants/api-url'
 import ModalRenderer from './services/modal-renderer'
 import GeolocationWatcher from './services/geolocation-watcher'
-import UserInfoFetcher from './services/user-info-fetcher'
 import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-checker'
 
 // Pages
@@ -35,11 +34,6 @@ initializeAPI({
   tokenSelector: () => store.getState().auth.token,
   tokenDispatcher: newToken => store.dispatch(updateToken(newToken)),
   onError: message => toast.error(message),
-  onBadToken: () => {
-    toast.error('Parece que sua sessão expirou! Por favor, faça o login novamente.')
-    store.dispatch(logoutAction())
-    window.location.pathname = '/login'
-  }
 })
 
 function App () {
@@ -49,7 +43,6 @@ function App () {
         <PersistGate loading={null} persistor={persistor}>
           <ModalRenderer />
           <GeolocationWatcher />
-          <UserInfoFetcher />
           <BrowserRouter>
             <Switch>
               <Route
