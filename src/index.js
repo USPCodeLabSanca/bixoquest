@@ -26,7 +26,6 @@ import QrCodeReader from './pages/read-qrcode'
 
 // CSS
 import './main-style.css'
-import './tailwind.build.css'
 import 'react-toastify/dist/ReactToastify.min.css'
 
 initializeAPI({
