@@ -1,4 +1,4 @@
-import * as validators from './fields'
+import * as validators from './fields';
 
 /**
  * Validates a login (email and password)
@@ -6,9 +6,5 @@ import * as validators from './fields'
  * @param {string} password
  * @returns {string[]}
  */
-export const validateLogin = (email, password) => (
-  [
-    validators.email(email),
-    validators.password(password)
-  ].filter(e => e)
-)
+export const validateLogin = (email, password) =>
+	[validators.email(email), validators.password(password)].filter(e => e);
