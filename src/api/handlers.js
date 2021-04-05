@@ -31,6 +31,9 @@ const Handlers = {
 	sendQrCodeToken: token => API.post('/qrcode/scan', { token }),
 
 	login: (email, password) => API.post('/auth/login', { email, password }),
+
+	signup: (name, email, password, course) =>
+		API.post('/auth/signup', { name, email, password, course }),
 };
 
 export const silentHandlers = {

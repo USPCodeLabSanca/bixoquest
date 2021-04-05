@@ -23,6 +23,16 @@ export async function login(email, password) {
 	};
 }
 
+export async function signup(name, email, password, course) {
+	const {
+		data: { user },
+	} = await API.signup(name, email, password, course);
+	return {
+		type: 'SET_USER',
+		user,
+	};
+}
+
 export async function updateUser() {
 	const {
 		data: { data: user },
