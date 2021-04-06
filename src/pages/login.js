@@ -33,7 +33,7 @@ const LoginScreen = () => {
 	React.useEffect(() => {
 		(async () => {
 			try {
-        setIsLoggingIn(true);
+				setIsLoggingIn(true);
 				dispatch(await tryAuthenticateWithUSPCookie());
 			} catch (error) {
 				console.error(error);
@@ -49,13 +49,12 @@ const LoginScreen = () => {
 		const password = event.target.password.value.trim();
 
 		const problems = validateLogin(email, password);
-		console.log(problems);
 		if (problems.length > 0) return toastifyErrors(problems);
 
 		setIsLoggingIn(true);
 		try {
 			dispatch(await loginAction(email, password));
-		} catch (error) {
+		} finally {
 			setIsLoggingIn(false);
 		}
 	}
@@ -86,9 +85,9 @@ const LoginScreen = () => {
 					</div>
 				</form>
 			</div>
-      <Backdrop style={{zIndex:50}} open={isLoggingIn}>
-        <CircularProgress size={50} style={{ color: 'white' }} />
-      </Backdrop>
+			<Backdrop style={{ zIndex: 50 }} open={isLoggingIn}>
+				<CircularProgress size={50} style={{ color: 'white' }} />
+			</Backdrop>
 		</main>
 	);
 };
