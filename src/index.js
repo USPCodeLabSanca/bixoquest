@@ -11,7 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import MuiTheme from './MuiTheme';
 import routes from './constants/routes';
 import { store, persistor } from './redux/store';
-import { logout as logoutAction, updateToken } from './redux/actions/auth';
+import { updateToken } from './redux/actions/auth';
 import { initializeAPI } from './api/base-api';
 import APIBaseURL from './constants/api-url';
 import ModalRenderer from './services/modal-renderer';
@@ -21,6 +21,7 @@ import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-che
 // Pages
 import Tabs from './pages/tabs';
 import Login from './pages/login';
+import Signup from './pages/signup';
 import GiveCards from './pages/give-cards';
 import QrCodeReader from './pages/read-qrcode';
 
@@ -54,6 +55,7 @@ function App() {
 								component={requiresAuthentication(Tabs)}
 							/>
 							<Route path={routes.login} component={requiresNoAuthentication(Login)} />
+							<Route path={routes.signup} component={requiresNoAuthentication(Signup)} />
 							<Route path={routes.giveCards} component={requiresAuthentication(GiveCards)} />
 							<Route path={routes.qrcodeReader} component={requiresAuthentication(QrCodeReader)} />
 							<Redirect to={routes.login} />
