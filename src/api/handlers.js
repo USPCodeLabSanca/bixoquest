@@ -32,8 +32,7 @@ const Handlers = {
 
 	login: (email, password) => API.post('/auth/login', { email, password }),
 
-	signup: (name, email, password, course) =>
-		API.post('/auth/signup', { name, email, password, course }),
+	signup: newUser => API.post('/auth/signup', newUser),
 };
 
 export const silentHandlers = {
