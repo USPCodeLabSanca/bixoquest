@@ -3,22 +3,20 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@material-ui/core/Backdrop';
 
-import backendURL from '../constants/api-url';
-import { tryAuthenticateWithUSPCookie, signup as signupAction } from '../redux/actions/auth';
-import * as ModalActions from '../redux/actions/modal';
+import { signup as signupAction } from '../redux/actions/auth';
 import * as validators from '../lib/validators/fields';
-import Modal from '../components/modal';
 import TextField from '@material-ui/core/TextField';
 import { Link } from 'react-router-dom';
 import routes from '../constants/routes';
-import { validateLogin, toastifyErrors } from '../lib/validators';
+import { toastifyErrors } from '../lib/validators';
 
 const style = {
-	root: 'flex flex-col justify-center text-center px-4 pb-4 bg-primary h-full',
+	root: 'flex flex-col justify-center items-center text-center px-4 pb-4 bg-primary h-full',
 	header: 'text-4xl mb-4',
 	subheader: 'text-md',
-	card: 'bg-white shadow-lg rounded-lg w-full p-6',
+	card: 'bg-white shadow-lg rounded-lg w-full p-6 max-w-lg',
 	form: 'flex flex-col gap-y-4',
 	linksContainer: 'flex flex-col items-start text-xs gap-y-2',
 };
@@ -76,6 +74,9 @@ const SignupScreen = () => {
 					</div>
 				</form>
 			</div>
+      <Backdrop style={{zIndex:50}} open={isSigningUp}>
+        <CircularProgress size={50} style={{ color: 'white' }} />
+      </Backdrop>
 		</main>
 	);
 };
