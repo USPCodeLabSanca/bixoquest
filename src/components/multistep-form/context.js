@@ -35,7 +35,7 @@ const MultistepProvider = ({ maxStage, ...props }) => {
 		const oldFormStep = getHashMarker('form-step');
 
 		if (!oldFormStep) {
-			writeHashMarker('form-step', '0');
+			writeHashMarker('form-step', stage);
 			return;
 		} else {
 			setStage(Number(oldFormStep));

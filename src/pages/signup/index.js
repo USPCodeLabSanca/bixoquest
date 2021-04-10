@@ -11,7 +11,7 @@ import SignupOtherInfo from './steps/1-other-info';
 import SignupCharacterSelect from './steps/2-character';
 
 const style = {
-	root: 'flex flex-col justify-center items-center text-center px-4 pb-4 bg-primary h-full',
+	root: 'flex flex-col justify-center items-center text-center p-4 bg-primary min-h-full',
 	header: 'text-4xl mb-4',
 	subheader: 'text-md',
 	card: 'bg-white shadow-lg rounded-lg w-full p-6 max-w-lg',
