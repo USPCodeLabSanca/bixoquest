@@ -9,9 +9,9 @@ const classes = {
 };
 
 function SignupCharacterSelect() {
-	const { prevStage, updateFormValue, submit } = useMultistep();
+	const { prevStage, updateFormValue, submit, formValue } = useMultistep();
 
-	const [currentChar, setCurrentChar] = React.useState({
+	const character = formValue.character || {
 		skin: 0,
 		cheek: 0,
 		clothBottom: 0,
@@ -20,16 +20,14 @@ function SignupCharacterSelect() {
 		feet: 0,
 		hair: 0,
 		mouth: 0,
-	});
+	};
 
-	/**
-	 * Função chamada quando o usuário tentar ir para o próximo passo. Ela deve ser responsável
-	 * por extrair e validar os dados do usuário.
-	 */
+	function handleCharUpdate(character) {
+		updateFormValue({ character });
+	}
+
 	function handleSubmit() {
-		// TODO - Ler esses dados do usuário
-		const data = { characterModel: 'some-model-here' };
-
+		const data = { character };
 		updateFormValue(data);
 		submit();
 	}
@@ -39,7 +37,7 @@ function SignupCharacterSelect() {
 			<h1 className={classes.title}>Crie o seu personagem</h1>
 			{React.useMemo(
 				() => (
-					<CharacterEditor onChange={setCurrentChar} />
+					<CharacterEditor initialCharacter={character} onChange={handleCharUpdate} />
 				),
 				[],
 			)}

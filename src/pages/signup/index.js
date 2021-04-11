@@ -1,10 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
 import MultistepForm from '../../components/multistep-form';
 
 import routes from '../../constants/routes';
+import { signup as signupAction } from '../../redux/actions/auth';
 
 import SignupEmailPassword from './steps/0-email-password';
 import SignupOtherInfo from './steps/1-other-info';
@@ -20,9 +22,10 @@ const style = {
 };
 
 const SignupScreen = () => {
+	const dispatch = useDispatch();
+
 	async function handleSubmit(data) {
-		// TODO - send user data to the backend, and create the user
-		console.log('Dados de usuário submetidos:', data);
+		dispatch(await signupAction(data));
 	}
 
 	return (
