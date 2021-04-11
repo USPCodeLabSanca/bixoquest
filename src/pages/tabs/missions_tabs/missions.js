@@ -47,10 +47,10 @@ const MissionCard = ({ mission }) => {
 	const ArrowComponent = isOpen ? ArrowUp : ArrowDown;
 	const user = useSelector(state => state.auth.user);
 	const dispatch = useDispatch();
-	const startDate = Moment(mission.available_at);
-	const expirationDate = Moment(mission.expirate_at);
-	if (!user.completed_missions) user.completed_missions = [];
-	const hasMissionBeenCompleted = user.completed_missions.some(id => mission._id === id);
+	const startDate = Moment(mission.availableAt);
+	const expirationDate = Moment(mission.expirateAt);
+	if (!user.completedMissions) user.completedMissions = [];
+	const hasMissionBeenCompleted = user.completedMissions.some(id => mission._id === id);
 	const isMissionExpired = Moment().isAfter(expirationDate);
 	const hasMissionStarted = Moment().isAfter(startDate);
 
@@ -83,8 +83,7 @@ const MissionCard = ({ mission }) => {
 			if (!password) return toast.error('Você deve fornecer uma senha.');
 			try {
 				setIsSendingPassword(true);
-				const action = await completeKeyMission(mission, password);
-				dispatch(action);
+				dispatch(await completeKeyMission(mission, password));
 				toast.success('Senha correta!');
 				toggle();
 			} catch (e) {
@@ -150,17 +149,16 @@ export default function Missions() {
 	const [missions, setMissions] = useState();
 	const [isLoadingMissions, setIsLoadingMissions] = useState(true);
 
+	console.log(useSelector(state => state.auth.user));
 	const user = useSelector(state => state.auth.user);
-	const availablePacks = useSelector(state => state.auth.user.available_packs);
+	const availablePacks = useSelector(state => state.auth.user.availablePacks);
 	const openPackModal = ModalActions.useModal(() => <PacketsModal />);
 
 	useEffect(() => {
 		(async () => {
 			setIsLoadingMissions(true);
 			try {
-				const {
-					data: { data: missions },
-				} = await API.getAllMissions();
+				const { data: missions } = await API.getAllMissions();
 				missions.sort((a, b) => {
 					return a.expirate_at < b.expirate_at ? -1 : a.expirate_at > b.expirate_at ? 1 : 0;
 				});
@@ -186,10 +184,10 @@ export default function Missions() {
 		} else if (missions.length === 0) {
 			return <p>Nenhuma missão encontrada</p>;
 		} else {
-			const isMissionExpired = mission => Moment().isAfter(mission.expirate_at);
-			const hasMissionStarted = mission => Moment().isAfter(mission.available_at);
+			const isMissionExpired = mission => Moment().isAfter(mission.expirateAt);
+			const hasMissionStarted = mission => Moment().isAfter(mission.availableAt);
 			const hasMissionBeenCompleted = mission =>
-				user.completed_missions.some(id => mission._id === id);
+				user.completedMissions.some(id => mission._id === id);
 			const missionStatus = mission => {
 				if (hasMissionBeenCompleted(mission)) return 'finished';
 				if (isMissionExpired(mission)) return 'expired';
@@ -197,7 +195,7 @@ export default function Missions() {
 				return 'pending';
 			};
 			const renderMission = mission => <MissionCard mission={mission} key={mission._id} />;
-			const compareMissions = (a, b) => a.expirate_at - b.expirate_at;
+			const compareMissions = (a, b) => a.expirateAt - b.expirateAt;
 
 			const filteredMissions = {
 				finished: [],

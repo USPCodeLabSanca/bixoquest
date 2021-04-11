@@ -2,9 +2,7 @@ import API from '../../api';
 import { correctAllMissionCoords } from '../../lib/coords-corrector';
 
 export async function fetchNearbyMissions(lat, lng) {
-	const {
-		data: { data: missions },
-	} = await API.fetchNearbyMissions(lat, lng);
+	const { data: missions } = await API.fetchNearbyMissions(lat, lng);
 
 	correctAllMissionCoords(missions);
 

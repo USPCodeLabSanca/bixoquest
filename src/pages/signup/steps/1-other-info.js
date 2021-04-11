@@ -35,6 +35,8 @@ function SignupOtherInfo() {
 	}
 
 	function handleFormSubmit(event) {
+		event.preventDefault();
+
 		const data = getDataFromFormEvent(event);
 		const problems = validateData(data);
 		if (problems.length > 0) return toastifyErrors(problems);

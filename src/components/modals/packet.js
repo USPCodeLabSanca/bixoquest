@@ -164,11 +164,8 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 		let stickerId;
 		try {
 			const {
-				data: {
-					data: { sticker_id },
-				},
+				data: { stickerId },
 			} = await API.openPack();
-			stickerId = sticker_id;
 			dispatch(PackActions.openPack(stickerId));
 		} catch (e) {
 			console.error(e);
@@ -320,7 +317,7 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 export default function PacketsModal() {
 	const [isPackOpen, setIsPackOpen] = React.useState(false);
 	const dispatch = useDispatch();
-	const availablePacks = useSelector(state => state.auth.user.available_packs);
+	const availablePacks = useSelector(state => state.auth.user.availablePacks);
 	const cardRef = React.useRef();
 
 	function requestClose() {

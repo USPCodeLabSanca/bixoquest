@@ -19,8 +19,8 @@ export default function authReducer(state, action) {
 			...state,
 			user: {
 				...state.user,
-				completed_missions: [...state.user.completed_missions, action.mission._id],
-				available_packs: state.user.available_packs + action.mission.number_of_packs,
+				completedMissions: [...state.user.completedMissions, action.mission._id],
+				availablePacks: state.user.availablePacks + action.mission.numberOfPacks,
 			},
 		};
 	} else if (action.type === 'OPEN_PACK') {
@@ -28,7 +28,7 @@ export default function authReducer(state, action) {
 			...state,
 			user: {
 				...state.user,
-				available_packs: state.user.available_packs - 1,
+				availablePacks: state.user.availablePacks - 1,
 				opened_packs: state.user.opened_packs + 1,
 				stickers: [...state.user.stickers, action.stickerId],
 			},
