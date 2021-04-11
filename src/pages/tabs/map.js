@@ -8,7 +8,7 @@ import Receipt from '@material-ui/icons/Receipt';
 
 // Library imports
 import { useSelector, useDispatch } from 'react-redux';
-import { Marker, Circle, Popup } from 'react-leaflet';
+import { Marker, Circle, Popup, ImageOverlay } from 'react-leaflet';
 import { icon, point } from 'leaflet';
 import { getDistance } from 'geolib';
 import { useHistory } from 'react-router-dom';
@@ -30,6 +30,9 @@ import ExclamationMark from '../../images/exclamation-mark.png';
 import MISSION_RANGE from '../../constants/missions-range';
 import Routes from '../../constants/routes';
 
+import { makeCharacterPNG } from '../../lib/make-character-png';
+import { usePlayers } from './playersContext';
+
 const missionIconOutOfRange = icon({
 	iconUrl: QuestionMark,
 	iconSize: point(40, 40),
@@ -48,6 +51,9 @@ const style = {
 	},
 };
 
+const IMAGE_WIDTH = 14;
+const IMAGE_HEIGHT = 9;
+
 function geoToLatLng(geolocation) {
 	if (!geolocation.isAvailable) return [null, null];
 	const { latitude, longitude } = geolocation.position.coords;
@@ -55,6 +61,7 @@ function geoToLatLng(geolocation) {
 }
 
 export default function MapScreen() {
+	const { players } = usePlayers();
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const finishedMissions = useSelector(state => state.auth.user.completed_missions);
@@ -139,10 +146,20 @@ export default function MapScreen() {
 				</Fab>
 			</div>
 			<Map initialConfiguration={{ center: userPosition, zoom: 18 }}>
-				<Circle center={userPosition} radius={MISSION_RANGE} />
-				<Marker position={userPosition} />
+				{players.map(player => (
+					<ImageOverlay
+						key={player.name}
+						bounds={[
+							[userPosition[0] - IMAGE_WIDTH / 30000, userPosition[1] - IMAGE_HEIGHT / 30000],
+							[userPosition[0] + IMAGE_WIDTH / 30000, userPosition[1] + IMAGE_HEIGHT / 30000],
+						]}
+						url={player.characterPNG}
+					/>
+				))}
 				{renderMissionMarkers()}
 			</Map>
 		</>
 	);
 }
+
+// https://image.flaticon.com/icons/png/512/185/185992.png

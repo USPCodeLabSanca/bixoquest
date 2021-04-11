@@ -12,6 +12,7 @@ import Routes from '../../constants/routes';
 import Map from './map';
 import Profile from './profile';
 import MissionsTabs from './missions_tabs';
+import { PlayersContextProvider } from './playersContext';
 
 const style = {
 	root: 'h-full flex-col flex bg-light-gray',
@@ -36,24 +37,26 @@ export default function TabsScreen() {
 	};
 
 	return (
-		<div className={style.root}>
-			<main className={style.main}>
-				<Switch>
-					<Route component={Map} path={Routes.tabs.map} />
-					<Route component={Profile} path={Routes.tabs.profile} />
-					<Route
-						component={MissionsTabs}
-						path={[Routes.tabs.missionsTabs.missions, Routes.tabs.missionsTabs.stickers]}
-					/>
-				</Switch>
-			</main>
-			<footer className={style.footer}>
-				<Tabs value={tabValue} onChange={handleChange} variant="fullWidth" className="w-full">
-					<Tab icon={<BookIcon />} />
-					<Tab icon={<HomeIcon />} />
-					<Tab icon={<PersonIcon />} />
-				</Tabs>
-			</footer>
-		</div>
+		<PlayersContextProvider>
+			<div className={style.root}>
+				<main className={style.main}>
+					<Switch>
+						<Route component={Map} path={Routes.tabs.map} />
+						<Route component={Profile} path={Routes.tabs.profile} />
+						<Route
+							component={MissionsTabs}
+							path={[Routes.tabs.missionsTabs.missions, Routes.tabs.missionsTabs.stickers]}
+						/>
+					</Switch>
+				</main>
+				<footer className={style.footer}>
+					<Tabs value={tabValue} onChange={handleChange} variant="fullWidth" className="w-full">
+						<Tab icon={<BookIcon />} />
+						<Tab icon={<HomeIcon />} />
+						<Tab icon={<PersonIcon />} />
+					</Tabs>
+				</footer>
+			</div>
+		</PlayersContextProvider>
 	);
 }
