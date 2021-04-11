@@ -7,18 +7,19 @@ import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import backendURL from '../../constants/api-url';
-import { setCurrentModal } from '../../redux/actions/modal';
 import * as AuthActions from '../../redux/actions/auth';
-import FoundABugModal from '../../components/modals/found-a-bug';
 
 const style = {
 	root: 'p-4 h-full',
-	card: 'w-full flex flex-col justify-center items-center p-4',
-	avatar: { width: '30vw', height: '30vw', marginBottom: '8px' },
+	card: 'w-6/12 flex flex-col justify-center items-center p-4',
+	friendCards: 'space-x-1 flex flex-row',
+	avatar: { width: '15vw', height: '15vw', marginBottom: '8px' },
 	userName: 'text-2xl text-center',
 	userCourse: '',
+	userYear: '',
 	logoutButton: {
 		margin: '16px 0',
 		backgroundColor: '#718096',
@@ -36,39 +37,59 @@ const style = {
 	},
 };
 
+const classes = {
+	title: 'text-xl pb-8',
+};
+
+
 export default function ProfilePage() {
 	const user = useSelector(state => state.auth.user);
 	const dispatch = useDispatch();
+	let friendsList=[{user}, {user}, {user}];
+	console.log(friendsList)
 
 	function logout() {
 		dispatch(AuthActions.logout());
 		window.location.href = backendURL + 'auth/logout';
 	}
 
-	function foundABug() {
-		dispatch(setCurrentModal(<FoundABugModal />));
-	}
-
 	function findFriends() {
 		console.log("procurar amiguinhos");
 	}
 
+	function notificationFriends() {
+		console.log("ver novas solicitações de amizades");
+	}
+
 	return (
 		<div className={style.root}>
-			<Card className={style.card}>
-				<Avatar style={style.avatar} />
-				<div className={style.userName}>{user.name}</div>
-				<div className={style.userCourse}>{user.course}</div>
-			</Card>
-			<Button variant="contained" fullWidth style={style.generalButton} onClick={foundABug}>
-				Achou um bug?
-			</Button>
+			<h1 className={classes.title}>Meus amigos</h1>
+			<div className={style.friendCards}>
+				<Card className={style.card}>
+					<Avatar style={style.avatar} />
+					<div className={style.userName}>{user.name}</div>
+					<div className={style.userCourse}>{user.course}</div>
+				</Card>
+			{/*		
+				{friendsList.forEach((friend, i) => { 
+					<Card className={style.card}>
+						<Avatar style={style.avatar} />
+						<div className={style.userName}>{friend.user.name}</div>
+						<div className={style.userCourse}>{friend.user.course}</div>
+					</Card>
+					console.log("card ", i)
+				 })}
+				*/}
+			</div>
 			<Button variant="contained" fullWidth style={style.logoutButton} onClick={logout}>
 				SAIR
 			</Button>
 			<div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
 				<Fab size="small" style={style.fab} onClick={findFriends}>
-						<GroupAddIcon />
+					<GroupAddIcon />
+				</Fab>
+				<Fab size="small" style={style.fab} onClick={notificationFriends}>
+					<NotificationsIcon />
 				</Fab>
 			</div>
 		</div>
