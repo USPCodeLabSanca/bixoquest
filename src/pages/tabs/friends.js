@@ -1,16 +1,13 @@
 import React from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Fab from '@material-ui/core/Fab';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
-import backendURL from '../../constants/api-url';
-import * as AuthActions from '../../redux/actions/auth';
 
 const style = {
 	root: 'p-4 h-full',
@@ -44,14 +41,8 @@ const classes = {
 
 export default function ProfilePage() {
 	const user = useSelector(state => state.auth.user);
-	const dispatch = useDispatch();
 	let friendsList=[{user}, {user}, {user}];
 	console.log(friendsList)
-
-	function logout() {
-		dispatch(AuthActions.logout());
-		window.location.href = backendURL + 'auth/logout';
-	}
 
 	function findFriends() {
 		console.log("procurar amiguinhos");
@@ -81,9 +72,7 @@ export default function ProfilePage() {
 				 })}
 				*/}
 			</div>
-			<Button variant="contained" fullWidth style={style.logoutButton} onClick={logout}>
-				SAIR
-			</Button>
+
 			<div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
 				<Fab size="small" style={style.fab} onClick={findFriends}>
 					<GroupAddIcon />
