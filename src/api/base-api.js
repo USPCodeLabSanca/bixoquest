@@ -42,10 +42,12 @@ function initializeAPI(config) {
 	// Updates token if 'Authorization' header is filled
 	api.interceptors.response.use(response => {
 		let token = response.headers.authorization;
-		if (token.startsWith('Bearer') || token.startsWith('bearer')) {
-			token = token.substr('Bearer '.length);
+		if (token) {
+			if (token.startsWith('Bearer') || token.startsWith('bearer')) {
+				token = token.substr('Bearer '.length);
+			}
+			tokenDispatcher(token);
 		}
-		if (token) tokenDispatcher(token);
 		return response;
 	});
 

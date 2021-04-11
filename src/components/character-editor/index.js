@@ -16,10 +16,10 @@ const classes = {
 	selectorRoot: `border flex flex-col`,
 	selectorTitle: `text-center px-2`,
 	selectorArrowContainer: `flex`,
-	selectorArrowNumber: `w-full`,
+	selectorArrowNumber: `w-full text-center`,
 };
 
-export default function CharacterEditor({ onChange = () => {} }) {
+export default function CharacterEditor({ onChange = () => {}, initialCharacter = {} }) {
 	const [currentChar, setCurrentChar] = React.useState({
 		skin: 0,
 		cheek: 0,
@@ -29,6 +29,7 @@ export default function CharacterEditor({ onChange = () => {} }) {
 		feet: 0,
 		hair: 0,
 		mouth: 0,
+		...initialCharacter,
 	});
 
 	useEffectUpdate(() => {

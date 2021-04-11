@@ -35,6 +35,8 @@ const Handlers = {
 	signup: withCustomError(newUser => API.post('/auth/signup', newUser), {
 		401: 'Este e-mail já está sendo utilizado',
 	}),
+
+	edit: newUser => API.put('/user', newUser),
 };
 
 export const silentHandlers = {

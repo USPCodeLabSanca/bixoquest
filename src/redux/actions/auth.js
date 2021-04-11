@@ -23,6 +23,14 @@ export async function login(email, password) {
 	};
 }
 
+export async function editProfile(newUser) {
+	const { data: user } = await API.edit(newUser);
+	return {
+		type: 'SET_USER',
+		user,
+	};
+}
+
 export async function signup(newUser) {
 	const {
 		data: { user },
