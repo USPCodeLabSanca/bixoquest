@@ -49,6 +49,7 @@ function App() {
 								path={[
 									routes.tabs.map,
 									routes.tabs.profile,
+									routes.tabs.friends,
 									routes.tabs.missionsTabs.missions,
 									routes.tabs.missionsTabs.stickers,
 								]}

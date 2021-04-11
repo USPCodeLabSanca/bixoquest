@@ -6,11 +6,13 @@ import Tab from '@material-ui/core/Tab';
 import BookIcon from '@material-ui/icons/ImportContacts';
 import HomeIcon from '@material-ui/icons/Home';
 import PersonIcon from '@material-ui/icons/Person';
+import GroupIcon from '@material-ui/icons/Group';
 
 import Routes from '../../constants/routes';
 
 import Map from './map';
 import Profile from './profile';
+import Friends from './friends';
 import MissionsTabs from './missions_tabs';
 
 const style = {
@@ -19,7 +21,7 @@ const style = {
 	footer: 'flex space-between bg-white shadow-lg w-full bg-white',
 };
 
-const TabOrder = [Routes.tabs.missionsTabs.missions, Routes.tabs.map, Routes.tabs.profile];
+const TabOrder = [Routes.tabs.missionsTabs.missions, Routes.tabs.map, Routes.tabs.profile, Routes.tabs.friends];
 
 const PathToTabIndex = path => TabOrder.findIndex(s => s === path);
 
@@ -41,6 +43,7 @@ export default function TabsScreen() {
 				<Switch>
 					<Route component={Map} path={Routes.tabs.map} />
 					<Route component={Profile} path={Routes.tabs.profile} />
+					<Route component={Friends} path={Routes.tabs.friends} />
 					<Route
 						component={MissionsTabs}
 						path={[Routes.tabs.missionsTabs.missions, Routes.tabs.missionsTabs.stickers]}
@@ -52,6 +55,7 @@ export default function TabsScreen() {
 					<Tab icon={<BookIcon />} />
 					<Tab icon={<HomeIcon />} />
 					<Tab icon={<PersonIcon />} />
+					<Tab icon={<GroupIcon />} />
 				</Tabs>
 			</footer>
 		</div>
