@@ -52,6 +52,7 @@ function isPointValid(point) {
 export default function CustomMap({
 	initialConfiguration: { center: initialCenter, zoom: initialZoom },
 	children,
+	...props
 }) {
 	const geolocation = useSelector(state => state.geolocation);
 	const [center, setCenter] = React.useState(
@@ -73,6 +74,7 @@ export default function CustomMap({
 			<WarningToast />
 			{geolocation.isAvailable && center && zoom && (
 				<MapContainer
+					{...props}
 					center={center}
 					zoom={zoom}
 					zoomSnap={0.01}

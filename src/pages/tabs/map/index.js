@@ -8,30 +8,29 @@ import Receipt from '@material-ui/icons/Receipt';
 
 // Library imports
 import { useSelector, useDispatch } from 'react-redux';
-import { Marker, Circle, Popup, ImageOverlay } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import { icon, point } from 'leaflet';
 import { getDistance } from 'geolib';
 import { useHistory } from 'react-router-dom';
 
 // Redux actions imports
-import * as MissionActions from '../../redux/actions/missions';
-import * as ModalActions from '../../redux/actions/modal';
+import * as MissionActions from '../../../redux/actions/missions';
+import * as ModalActions from '../../../redux/actions/modal';
 
 // Components imports
-import Map from '../../components/map';
-import MissionDialog from '../../components/modals/mission-dialog';
-import PackModal from '../../components/modals/packet';
+import Map from '../../../components/map';
+import MissionDialog from '../../../components/modals/mission-dialog';
+import PackModal from '../../../components/modals/packet';
 
 // Images imports
-import QuestionMark from '../../images/question-mark.png';
-import ExclamationMark from '../../images/exclamation-mark.png';
+import QuestionMark from '../../../images/question-mark.png';
+import ExclamationMark from '../../../images/exclamation-mark.png';
 
 // MISC imports
-import MISSION_RANGE from '../../constants/missions-range';
-import Routes from '../../constants/routes';
+import MISSION_RANGE from '../../../constants/missions-range';
+import Routes from '../../../constants/routes';
 
-import { makeCharacterPNG } from '../../lib/make-character-png';
-import { usePlayers } from './playersContext';
+import PlayerOverlay from './players-overlay';
 
 const missionIconOutOfRange = icon({
 	iconUrl: QuestionMark,
@@ -51,9 +50,6 @@ const style = {
 	},
 };
 
-const IMAGE_WIDTH = 14;
-const IMAGE_HEIGHT = 9;
-
 function geoToLatLng(geolocation) {
 	if (!geolocation.isAvailable) return [null, null];
 	const { latitude, longitude } = geolocation.position.coords;
@@ -61,7 +57,6 @@ function geoToLatLng(geolocation) {
 }
 
 export default function MapScreen() {
-	const { players } = usePlayers();
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const finishedMissions = useSelector(state => state.auth.user.completed_missions);
@@ -73,10 +68,10 @@ export default function MapScreen() {
 
 	const userPosition = geoToLatLng(geolocation);
 
-	React.useEffect(() => {
-		if (!geolocation.isAvailable) return;
-		MissionActions.fetchNearbyMissions(...userPosition).then(dispatch);
-	}, [geolocation.isAvailable, ...userPosition]);
+	// React.useEffect(() => {
+	// 	if (!geolocation.isAvailable) return;
+	// 	MissionActions.fetchNearbyMissions(...userPosition).then(dispatch);
+	// }, [geolocation.isAvailable, ...userPosition]);
 
 	function inRangeMissonMarker(mission) {
 		return (
@@ -146,20 +141,9 @@ export default function MapScreen() {
 				</Fab>
 			</div>
 			<Map initialConfiguration={{ center: userPosition, zoom: 18 }}>
-				{players.map(player => (
-					<ImageOverlay
-						key={player.name}
-						bounds={[
-							[userPosition[0] - IMAGE_WIDTH / 30000, userPosition[1] - IMAGE_HEIGHT / 30000],
-							[userPosition[0] + IMAGE_WIDTH / 30000, userPosition[1] + IMAGE_HEIGHT / 30000],
-						]}
-						url={player.characterPNG}
-					/>
-				))}
+				<PlayerOverlay />
 				{renderMissionMarkers()}
 			</Map>
 		</>
 	);
 }
-
-// https://image.flaticon.com/icons/png/512/185/185992.png
