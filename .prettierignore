@@ -4,6 +4,3 @@ out
 .vscode
 build
 .github
-public
-dist
-.cache

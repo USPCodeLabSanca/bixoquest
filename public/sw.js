@@ -1,3 +1,3 @@
 self.addEventListener('install', () => {
-  self.skipWaiting()
-})
+	self.skipWaiting();
+});
