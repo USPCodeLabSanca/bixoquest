@@ -1,4 +1,4 @@
-import { ImageOverlay, useMap } from 'react-leaflet';
+import { ImageOverlay, useMapEvent } from 'react-leaflet';
 import React from 'react';
 import { usePlayers } from '../playersContext';
 
@@ -6,20 +6,11 @@ const IMAGE_WIDTH = 14;
 const IMAGE_HEIGHT = 9;
 
 export default function PlayerOverlay() {
-	const map = useMap();
 	const { players, movePlayer } = usePlayers();
-
-	React.useEffect(() => {
-		function handleClick(event) {
-			const { lat, lng } = event.latlng;
-			movePlayer(lat, lng);
-		}
-
-		map.on('click', handleClick);
-		return () => {
-			map.off('click', handleClick);
-		};
-	}, [movePlayer]);
+	useMapEvent('click', event => {
+		const { lat, lng } = event.latlng;
+		movePlayer(lat, lng);
+	});
 
 	return (
 		<>

@@ -42,8 +42,9 @@ export default function MissionMarkers() {
 				key={mission._id}
 				icon={missionIconInRange}
 				position={[mission.lat, mission.lng]}
-				bubblingMouseEvents
-				onClick={() => dispatch(ModalActions.setCurrentModal(<MissionDialog mission={mission} />))}
+				eventHandlers={{
+					click: () => dispatch(ModalActions.setCurrentModal(<MissionDialog mission={mission} />)),
+				}}
 			/>
 		);
 	}
@@ -69,9 +70,11 @@ export default function MissionMarkers() {
 			return inRangeMissonMarker(mission);
 		return outOfRangeMissonMarker(mission);
 	}
-	if (!nearbyMissions) return null;
+	if (!nearbyMissions || !userPlayer) return null;
+
 	const unfinishedMissions = nearbyMissions
 		.filter(mission => mission.type === 'location')
 		.filter(mission => !finishedMissions.some(finishedId => finishedId === mission._id));
+
 	return <>{unfinishedMissions.map(resolveMissionMarker)}</>;
 }
