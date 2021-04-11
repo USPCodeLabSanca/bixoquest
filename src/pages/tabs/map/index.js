@@ -8,27 +8,29 @@ import Receipt from '@material-ui/icons/Receipt';
 
 // Library imports
 import { useSelector, useDispatch } from 'react-redux';
-import { Marker, Circle, Popup } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import { icon, point } from 'leaflet';
 import { getDistance } from 'geolib';
 import { useHistory } from 'react-router-dom';
 
 // Redux actions imports
-import * as MissionActions from '../../redux/actions/missions';
-import * as ModalActions from '../../redux/actions/modal';
+import * as MissionActions from '../../../redux/actions/missions';
+import * as ModalActions from '../../../redux/actions/modal';
 
 // Components imports
-import Map from '../../components/map';
-import MissionDialog from '../../components/modals/mission-dialog';
-import PackModal from '../../components/modals/packet';
+import Map from '../../../components/map';
+import MissionDialog from '../../../components/modals/mission-dialog';
+import PackModal from '../../../components/modals/packet';
 
 // Images imports
-import QuestionMark from '../../images/question-mark.png';
-import ExclamationMark from '../../images/exclamation-mark.png';
+import QuestionMark from '../../../images/question-mark.png';
+import ExclamationMark from '../../../images/exclamation-mark.png';
 
 // MISC imports
-import MISSION_RANGE from '../../constants/missions-range';
-import Routes from '../../constants/routes';
+import MISSION_RANGE from '../../../constants/missions-range';
+import Routes from '../../../constants/routes';
+
+import PlayerOverlay from './players-overlay';
 
 const missionIconOutOfRange = icon({
 	iconUrl: QuestionMark,
@@ -66,10 +68,10 @@ export default function MapScreen() {
 
 	const userPosition = geoToLatLng(geolocation);
 
-	React.useEffect(() => {
-		if (!geolocation.isAvailable) return;
-		MissionActions.fetchNearbyMissions(...userPosition).then(dispatch);
-	}, [geolocation.isAvailable, ...userPosition]);
+	// React.useEffect(() => {
+	// 	if (!geolocation.isAvailable) return;
+	// 	MissionActions.fetchNearbyMissions(...userPosition).then(dispatch);
+	// }, [geolocation.isAvailable, ...userPosition]);
 
 	function inRangeMissonMarker(mission) {
 		return (
@@ -139,8 +141,7 @@ export default function MapScreen() {
 				</Fab>
 			</div>
 			<Map initialConfiguration={{ center: userPosition, zoom: 18 }}>
-				<Circle center={userPosition} radius={MISSION_RANGE} />
-				<Marker position={userPosition} />
+				<PlayerOverlay />
 				{renderMissionMarkers()}
 			</Map>
 		</>
