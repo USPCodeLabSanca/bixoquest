@@ -97,7 +97,7 @@ export default function PlayerOverlay() {
 	return (
 		<>
 			{players.map((player, index) => (
-				<PlayerImage player={player} userPlayer={userPlayer} key={player.user.name + index} />
+				<PlayerImage player={player} userPlayer={userPlayer} key={index} />
 			))}
 		</>
 	);
