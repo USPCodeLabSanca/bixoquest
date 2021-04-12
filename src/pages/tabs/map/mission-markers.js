@@ -7,8 +7,8 @@ import * as ModalActions from '../../../redux/actions/modal';
 import * as MissionActions from '../../../redux/actions/missions';
 
 import MissionDialog from '../../../components/modals/mission-dialog';
-import QuestionMark from '../../../images/question-mark.png';
-import ExclamationMark from '../../../images/exclamation-mark.png';
+import QuestionMark from '/question-mark.png';
+import ExclamationMark from '/exclamation-mark.png';
 import MISSION_RANGE from '../../../constants/missions-range';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePlayers } from '../playersContext';

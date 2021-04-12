@@ -10,7 +10,7 @@ import StickersImages from '../../constants/stickers';
 import * as ModalActions from '../../redux/actions/modal';
 import * as PackActions from '../../redux/actions/packs';
 import API from '../../api';
-import Pack from '../../images/pack.png';
+import Pack from '/pack.png';
 
 const style = {
 	header: 'bg-white rounded-lg px-2 shadow-lg flex items-center',
