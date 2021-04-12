@@ -43,7 +43,7 @@ export default function MissionMarkers() {
 				icon={missionIconInRange}
 				position={[mission.lat, mission.lng]}
 				eventHandlers={{
-					click: () => dispatch(ModalActions.setCurrentModal(<MissionDialog mission={mission} />)),
+					click: () => dispatch(ModalActions.setCurrentModal(<MissionDialog mission={mission} user={userPlayer}/>)),
 				}}
 			/>
 		);

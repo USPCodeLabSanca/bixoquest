@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 import Modal, { ModalActions } from '../modal';
 import { completeLocationMission } from '../../redux/actions/missions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 const style = {
 	root: 'flex justify-center items-center p-4',
@@ -16,17 +16,17 @@ const style = {
 	description: 'text-center flex justify-center py-8',
 };
 
-export default function MissionDialog({ onRequestClose = () => {}, mission }) {
+export default function MissionDialog({ onRequestClose = () => {}, mission, user }) {
 	const [isLoading, setIsLoading] = React.useState(false);
-	const geolocation = useSelector(state => state.geolocation);
 	const dispatch = useDispatch();
 	if (!mission) throw new Error('Mission prop is required');
 
 	async function submit() {
 		setIsLoading(true);
 		try {
-			if (!geolocation) throw new Error('how are you here without a geolocation?');
-			const { latitude, longitude } = geolocation.position.coords;
+			if (!user.position) throw new Error('how are you here without a geolocation?');
+			const latitude = user.position[0];
+      const longitude = user.position[1];
 			const action = await completeLocationMission(mission, latitude, longitude);
 			// const action = await completeMission(mission, -22.007336, -47.895105)
 			dispatch(action);
