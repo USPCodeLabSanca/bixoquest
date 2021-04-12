@@ -1,5 +1,5 @@
-import handlers, { silentHandlers } from './handlers'
+import handlers, { silentHandlers } from './handlers';
 
-export default handlers
+export default handlers;
 
-export { silentHandlers as silentAPI }
+export { silentHandlers as silentAPI };

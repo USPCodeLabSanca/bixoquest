@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy Strapi app
+      - name: Deploy React app
         uses: appleboy/ssh-action@v0.1.2
         with:
           host: ${{secrets.SSH_HOST}}
@@ -23,6 +23,7 @@ jobs:
           script: |
             cd bixoquest
             cd bixoquest
+            git stash
             git pull origin main
             npm install
             npm run build

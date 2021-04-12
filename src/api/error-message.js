@@ -1,41 +1,41 @@
 /** Constant that contains the default messages for each status code. */
 const defaultMessages = {
-  // default
-  default: 'Ocorreu um erro desconhecido.',
+	// default
+	default: 'Ocorreu um erro desconhecido.',
 
-  // network error
-  undefined: 'Erro de conexão! Verifique a sua internet.',
+	// network error
+	undefined: 'Erro de conexão! Verifique a sua internet.',
 
-  // 400
-  400: 'Parece que algo que você me enviou está incorreto! Por favor, tente novamente.',
-  401: 'Vish! Sua sessâo expirou! Por favor, faça login novamente.',
-  403: 'Você não tem acesso a esse recurso! O que você está tentando fazer?',
-  404: 'Opa! esse recurso não existe! Parece que seu link está quebrado.',
+	// 400
+	400: 'Parece que algo que você me enviou está incorreto! Por favor, tente novamente.',
+	401: 'Vish! Sua sessâo expirou! Por favor, faça login novamente.',
+	403: 'Você não tem acesso a esse recurso! O que você está tentando fazer?',
+	404: 'Opa! esse recurso não existe! Parece que seu link está quebrado.',
 
-  // 500
-  500: 'Nosso servidor quebrou! Nos perdoe! D:',
-  503: 'Parece que nosso servidor não está diposnível. Por favor, tente novamente mais tarde.'
-}
+	// 500
+	500: 'Nosso servidor quebrou! Nos perdoe! D:',
+	503: 'Parece que nosso servidor não está diposnível. Por favor, tente novamente mais tarde.',
+};
 
-defaultMessages.NETWORK_ERROR = defaultMessages[undefined]
+defaultMessages.NETWORK_ERROR = defaultMessages[undefined];
 
-defaultMessages.BAD_REQUEST = defaultMessages[400]
-defaultMessages.UNAUTHORIZED = defaultMessages[401]
-defaultMessages.FORBIDDEN = defaultMessages[403]
-defaultMessages.NOT_FOUND = defaultMessages[404]
+defaultMessages.BAD_REQUEST = defaultMessages[400];
+defaultMessages.UNAUTHORIZED = defaultMessages[401];
+defaultMessages.FORBIDDEN = defaultMessages[403];
+defaultMessages.NOT_FOUND = defaultMessages[404];
 
-defaultMessages.INTERNAL_SERVER_ERROR = defaultMessages[500]
-defaultMessages.SERVICE_UNAVAILABLE = defaultMessages[503]
+defaultMessages.INTERNAL_SERVER_ERROR = defaultMessages[500];
+defaultMessages.SERVICE_UNAVAILABLE = defaultMessages[503];
 
 /** @argument { number } statusCode */
-export function getDefaultMessage (response) {
-  if (response && response.data && response.data.message) {
-    return response.data.message
-  } else if (response) {
-    return defaultMessages[response.status] || defaultMessages.default
-  } else {
-    return defaultMessages.undefined
-  }
+export function getDefaultMessage(response) {
+	if (response && response.data && response.data.message) {
+		return response.data.message;
+	} else if (response) {
+		return defaultMessages[response.status] || defaultMessages.default;
+	} else {
+		return defaultMessages.undefined;
+	}
 }
 
 /** @typedef {
@@ -47,22 +47,22 @@ export function getDefaultMessage (response) {
 
 /** @argument { import('axios').AxiosResponse | undefined } response
 @argument { CustomError } customError */
-function customErrorHandler (response, customError) {
-  if (!customError) {
-    throw new Error('Custom error must be provided!')
-  } else if (customError instanceof Function) {
-    return customError(response)
-  } else if (!response) {
-    return null
-  } else if (typeof customError === 'string') {
-    return customError
-  } else if (typeof customError[response.status] === 'string') {
-    return customError[response.status]
-  } else if (customError[response.status] instanceof Function) {
-    return customError[response.status](response)
-  } else {
-    console.error(`CustomError ${customError} was not recognized`)
-  }
+function customErrorHandler(response, customError) {
+	if (!customError) {
+		throw new Error('Custom error must be provided!');
+	} else if (customError instanceof Function) {
+		return customError(response);
+	} else if (!response) {
+		return null;
+	} else if (typeof customError === 'string') {
+		return customError;
+	} else if (typeof customError[response.status] === 'string') {
+		return customError[response.status];
+	} else if (customError[response.status] instanceof Function) {
+		return customError[response.status](response);
+	} else {
+		console.error(`CustomError ${customError} was not recognized`);
+	}
 }
 
 /** This is a `Higher Order Function` that allows for custom errors on an API
@@ -81,15 +81,15 @@ replace the default error message. If they are functions, they will be called
 with the `response` as it's only argument. Will not be called on a `network error`
 @returns { T }
 */
-export function withCustomError (handler, customError) {
-  return async function (...handlerArgs) {
-    try {
-      const response = await handler(...handlerArgs)
-      return response
-    } catch (response) {
-      const errorMessage = customErrorHandler(response, customError)
-      if (errorMessage && response) response.errorMessage = errorMessage
-      throw response
-    }
-  }
+export function withCustomError(handler, customError) {
+	return async function (...handlerArgs) {
+		try {
+			const response = await handler(...handlerArgs);
+			return response;
+		} catch (response) {
+			const errorMessage = customErrorHandler(response, customError);
+			if (errorMessage && response) response.errorMessage = errorMessage;
+			throw response;
+		}
+	};
 }

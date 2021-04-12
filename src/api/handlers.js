@@ -1,5 +1,5 @@
-import API from './base-api'
-import { withCustomError } from './error-message'
+import API from './base-api';
+import { withCustomError } from './error-message';
 
 /** @template T @typedef { import('axios').AxiosResponse<T> } AxiosResponse */
 
@@ -9,31 +9,45 @@ import { withCustomError } from './error-message'
   data: T
 }>> } APIResponse */
 
-const silentHandler = handler => withCustomError(handler, () => '_NO_ERROR_MESSAGE')
+const silentHandler = handler => withCustomError(handler, () => '_NO_ERROR_MESSAGE');
 
 const Handlers = {
-  fetchNearbyMissions: (lat, long) => API.get(`/missions?lat=${lat}&lng=${long}`),
+	fetchNearbyMissions: (lat, long) => API.get(`/missions?lat=${lat}&lng=${long}`),
 
-  completeLocationMission: (missionId, lat, lng) => API.post(`/missions/${missionId}/complete`, { lat, lng }),
+	completeLocationMission: (missionId, lat, lng) =>
+		API.post(`/missions/${missionId}/complete`, { lat, lng }),
 
-  completeQRCodeMission: (missionId, qrcode) => API.post(`/missions/${missionId}/complete`, { qrcode }),
+	completeQRCodeMission: (missionId, qrcode) =>
+		API.post(`/missions/${missionId}/complete`, { qrcode }),
 
-  completeKeyMission: (missionId, key) => API.post(`/missions/${missionId}/complete`, { key }),
+	completeKeyMission: (missionId, key) => API.post(`/missions/${missionId}/complete`, { key }),
 
-  getAllMissions: () => API.get('/missions/all'),
+	getAllMissions: () => API.get('/missions/all'),
 
-  openPack: () => API.post('/packs/open'),
+	openPack: () => API.post('/packs/open'),
 
-  fetchDonationToken: (info) => API.post('/stickers/donate', info),
+	fetchDonationToken: info => API.post('/stickers/donate', info),
 
-  sendQrCodeToken: (token) => API.post('/qrcode/scan', { token }),
+	sendQrCodeToken: token => API.post('/qrcode/scan', { token }),
 
-}
+	login: (email, password) => API.post('/auth/login', { email, password }),
+
+	signup: withCustomError(newUser => API.post('/auth/signup', newUser), {
+		401: 'Este e-mail já está sendo utilizado',
+	}),
+
+	edit: newUser => API.put('/users', newUser),
+};
 
 export const silentHandlers = {
-  login: silentHandler(() => API.get('/auth/success', { withCredentials: true, headers: { 'Access-Control-Allow-Credentials': true } })),
+	tryAuthenticateWithUSPCookie: silentHandler(() =>
+		API.get('/auth/success', {
+			withCredentials: true,
+			headers: { 'Access-Control-Allow-Credentials': true },
+		}),
+	),
 
-  getUser: silentHandler(() => API.get('/user'))
-}
+	getUser: silentHandler(() => API.get('/users')),
+};
 
-export default Handlers
+export default Handlers;

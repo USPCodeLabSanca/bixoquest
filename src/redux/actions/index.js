@@ -1,4 +1,4 @@
-import * as AuthActions from './auth'
-import * as GeoActions from './geolocation'
+import * as AuthActions from './auth';
+import * as GeoActions from './geolocation';
 
-export { AuthActions, GeoActions }
+export { AuthActions, GeoActions };

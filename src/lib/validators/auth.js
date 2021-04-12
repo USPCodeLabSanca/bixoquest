@@ -1,9 +1,10 @@
-import { nusp, password } from './fields'
+import * as validators from './fields';
 
-/** @argument {{ nusp: string, password: string }} user @returns { string[] } */
-export const login = user => (
-  [
-    nusp(user.nusp),
-    password(user.password)
-  ].filter(e => e)
-)
+/**
+ * Validates a login (email and password)
+ * @param {string} email
+ * @param {string} password
+ * @returns {string[]}
+ */
+export const validateLogin = (email, password) =>
+	[validators.email(email), validators.password(password)].filter(e => e);

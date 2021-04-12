@@ -1,86 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
-  --color-primary: #62B9DA;
-  --color-secondary: #FAB227;
-  --color-tertiary: #26DE81;
-  --color-light-gray: #F1F1F1;
-  --color-dark-gray: #CECECE;
+	--color-primary: #62b9da;
+	--color-secondary: #fab227;
+	--color-tertiary: #26de81;
+	--color-light-gray: #f1f1f1;
+	--color-dark-gray: #cecece;
 }
 
-body, html, #root {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-  height: 100%;
-  width: 100%;
+body,
+html,
+#root {
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+	height: 100%;
+	width: 100%;
 }
 
 .bg-primary {
-  background-color: var(--color-primary);
+	background-color: var(--color-primary);
 }
 
 .text-primary {
-  color: var(--color-primary);
+	color: var(--color-primary);
 }
 
 .bg-secondary {
-  background-color: var(--color-secondary);
+	background-color: var(--color-secondary);
 }
 
 .text-secondary {
-  color: var(--color-secondary);
+	color: var(--color-secondary);
 }
 
 .z-10 {
-  z-index: 10;
+	z-index: 10;
 }
 
 .bg-tertiary {
-  background-color: var(--color-tertiary);
+	background-color: var(--color-tertiary);
 }
 
 .bg-light-gray {
-  background-color: var(--color-light-gray);
+	background-color: var(--color-light-gray);
 }
 
 .bg-dark-gray {
-  background-color: var(--color-dark-gray);
+	background-color: var(--color-dark-gray);
 }
 
 .text-tertiary {
-  color: var(--color-tertiary);
+	color: var(--color-tertiary);
 }
 
 .transition {
-  transition: 200ms;
+	transition: 200ms;
 }
 
 .row-gap-6 {
-  row-gap: 1.5rem;
+	row-gap: 1.5rem;
 }
 
 .grid {
-  display: grid;
+	display: grid;
 }
 
 .no-touch-highligh {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none !important;
-  outline: none !important;
-  -webkit-tap-highlight-color: transparent !important;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none !important;
+	outline: none !important;
+	-webkit-tap-highlight-color: transparent !important;
 }
 
 .h-content {
-  height: max-content;
+	height: max-content;
 }
 
 .w-content {
-  width: max-content;
+	width: max-content;
 }
 
 .opacity-15 {
-  opacity: 0.15;
+	opacity: 0.15;
 }
