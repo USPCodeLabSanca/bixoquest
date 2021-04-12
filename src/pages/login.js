@@ -47,7 +47,10 @@ const LoginScreen = () => {
 				if (isSignup) {
 					history.push(routes.signup);
 				} else {
-					rawSetUser(user);
+          dispatch({
+            type: 'SET_USER',
+            user,
+          });
 				}
 			} catch (error) {
 				console.error(error);
