@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { makeCharacterPNG } from '../../lib/make-character-png';
 import { io } from 'socket.io-client';
 import { SOCKET_PATH, SOCKET_URL } from '../../constants/api-url';
+import { initialPlayerPosition } from '../../constants/initial-player-position';
 
 const context = React.createContext(null);
 
@@ -14,21 +15,11 @@ function createPlayer(user, characterPNG) {
 	};
 }
 
-function geoToLatLng(geolocation) {
-	if (!geolocation.isAvailable) return [null, null];
-	const { latitude, longitude } = geolocation.position.coords;
-	return [latitude, longitude];
-}
-
 export function PlayersContextProvider({ ...props }) {
-	const geolocation = useSelector(state => state.geolocation);
 	const user = useSelector(state => state.auth.user);
 	const token = useSelector(state => state.auth.token);
 	const [players, setPlayers] = React.useState({});
 	const [socket, setSocket] = React.useState(null);
-
-	const userPosition = geoToLatLng(geolocation);
-	const hasPosition = userPosition.every(e => e);
 
 	React.useEffect(() => {
 		const socket = io(SOCKET_URL, { path: SOCKET_PATH });
@@ -85,12 +76,12 @@ export function PlayersContextProvider({ ...props }) {
 	}
 
 	React.useEffect(() => {
-		if (!hasPosition || !socket) return;
+		if (!socket) return;
 		async function makeUserPlayer() {
 			const newUser = { ...user };
 			const png = await makeCharacterPNG(user.character);
 			const userPlayer = createPlayer(newUser, png);
-			userPlayer.position = userPosition;
+			userPlayer.position = [...initialPlayerPosition];
 			return userPlayer;
 		}
 
@@ -100,7 +91,7 @@ export function PlayersContextProvider({ ...props }) {
 			setPlayers(newPlayers);
 			socket.emit('move', 'Bearer ' + token, userPlayer.position[0], userPlayer.position[1]);
 		})();
-	}, [socket, user, Boolean(hasPosition)]);
+	}, [socket, user]);
 
 	const playersArray = Object.values(players);
 	const userPlayer = players['user-player'];

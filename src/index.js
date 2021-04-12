@@ -15,7 +15,6 @@ import { updateToken } from './redux/actions/auth';
 import { initializeAPI } from './api/base-api';
 import APIBaseURL from './constants/api-url';
 import ModalRenderer from './services/modal-renderer';
-import GeolocationWatcher from './services/geolocation-watcher';
 import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-checker';
 
 // Pages
@@ -42,7 +41,6 @@ function App() {
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
 					<ModalRenderer />
-					<GeolocationWatcher />
 					<BrowserRouter>
 						<Switch>
 							<Route
