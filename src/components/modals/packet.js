@@ -162,9 +162,8 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 		backImageRef.current.style.backgroundColor = 'white';
 		let stickerId;
 		try {
-			const {
-				data: { stickerId },
-			} = await API.openPack();
+			const { data } = await API.openPack();
+			stickerId = data.stickerId;
 			dispatch(PackActions.openPack(stickerId));
 		} catch (e) {
 			console.error(e);
@@ -243,6 +242,7 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 
 	function frame() {
 		const { isMounted, isFlippingPack } = env.current;
+		if (!cardRef.current) return;
 		if (!isMounted) return;
 
 		if (!isFlippingPack) {
