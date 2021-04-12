@@ -38,11 +38,31 @@ const classes = {
 	title: 'text-xl pb-8',
 };
 
+function renderCards(friendsList) {
+	const list = []
+  
+	for (const [i, friend] of friendsList.entries()) {
+	  list.push(
+		<Card className={style.card}>
+			<Avatar style={style.avatar} />
+			<div className={style.userName}>{friend.user.name}</div>
+			<div className={style.userCourse}>{friend.user.course}</div>
+		</Card>)
+	}
+  
+	return (
+	  <div className={style.friendCards}>
+		{list}
+	  </div>
+	)
+  }
 
 export default function ProfilePage() {
 	const user = useSelector(state => state.auth.user);
+
 	let friendsList=[{user}, {user}, {user}];
 	console.log(friendsList)
+
 
 	function findFriends() {
 		console.log("procurar amiguinhos");
@@ -55,24 +75,9 @@ export default function ProfilePage() {
 	return (
 		<div className={style.root}>
 			<h1 className={classes.title}>Meus amigos</h1>
-			<div className={style.friendCards}>
-				<Card className={style.card}>
-					<Avatar style={style.avatar} />
-					<div className={style.userName}>{user.name}</div>
-					<div className={style.userCourse}>{user.course}</div>
-				</Card>
-			{/*		
-				{friendsList.forEach((friend, i) => { 
-					<Card className={style.card}>
-						<Avatar style={style.avatar} />
-						<div className={style.userName}>{friend.user.name}</div>
-						<div className={style.userCourse}>{friend.user.course}</div>
-					</Card>
-					console.log("card ", i)
-				 })}
-				*/}
-			</div>
-
+					
+			{renderCards(friendsList)}
+					
 			<div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
 				<Fab size="small" style={style.fab} onClick={findFriends}>
 					<GroupAddIcon />
