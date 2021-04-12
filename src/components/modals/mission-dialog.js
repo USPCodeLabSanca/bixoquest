@@ -48,7 +48,7 @@ export default function MissionDialog({ onRequestClose = () => {}, mission, user
 		<Modal open className={style.root} onClose={close}>
 			<Card className={style.card}>
 				<div className={style.title}>Missão Concluída</div>
-				<div className={style.description}>{mission.location_reference}</div>
+				<div className={style.description}>{mission.locationReference}</div>
 				<Button onClick={submit} className={style.button} fullWidth variant="contained">
 					OK
 					{isLoading && <CircularProgress style={{ margin: '0 8px', color: 'black' }} size={20} />}

@@ -160,7 +160,7 @@ export default function Missions() {
 			try {
 				const { data: missions } = await API.getAllMissions();
 				missions.sort((a, b) => {
-					return a.expirate_at < b.expirate_at ? -1 : a.expirate_at > b.expirate_at ? 1 : 0;
+					return a.expirateAt < b.expirateAt ? -1 : a.expirateAt > b.expirateAt ? 1 : 0;
 				});
 				correctAllMissionCoords(missions);
 				setMissions(missions);

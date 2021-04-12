@@ -29,7 +29,7 @@ export default function authReducer(state, action) {
 			user: {
 				...state.user,
 				availablePacks: state.user.availablePacks - 1,
-				opened_packs: state.user.opened_packs + 1,
+				openedPacks: state.user.openedPacks + 1,
 				stickers: [...state.user.stickers, action.stickerId],
 			},
 		};
