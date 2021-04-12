@@ -153,4 +153,18 @@ export const memorablePlaces = [
 			},
 		],
 	},
+	{
+		name: 'Enactus',
+		coords: {
+			lat: -22.006621,
+			lng: -47.897273,
+		},
+		images: [
+			{
+				url: '/memorable-places/enactus/enactus_0.jpg',
+				description:
+					'A Enactus é uma organização internacional sem fins lucrativos dedicada a inspirar alunos a melhorar o mundo através do empreendedorismo social, visando impactar vidas a partir de 3 pilares: social, ambiental e econômico.  Para saber mais de nosso time, acesse o nosso Instagram: @enactus_csaocarlos',
+			},
+		],
+	},
 ];
