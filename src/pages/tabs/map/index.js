@@ -1,26 +1,26 @@
 import React from 'react';
 
 // Material-ui imports
-import Fab from '@material-ui/core/Fab';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import SwapVert from '@material-ui/icons/SwapVert';
-import Receipt from '@material-ui/icons/Receipt';
+// import Fab from '@material-ui/core/Fab';
+// import PhotoCamera from '@material-ui/icons/PhotoCamera';
+// import SwapVert from '@material-ui/icons/SwapVert';
+// import Receipt from '@material-ui/icons/Receipt';
 
 // Library imports
-import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import { useHistory } from 'react-router-dom';
 
 // Redux actions imports
-import * as ModalActions from '../../../redux/actions/modal';
+// import * as ModalActions from '../../../redux/actions/modal';
 
 // Components imports
 import Map from '../../../components/map';
-import PackModal from '../../../components/modals/packet';
+// import PackModal from '../../../components/modals/packet';
 
 // Images imports
 
 // MISC imports
-import Routes from '../../../constants/routes';
+// import Routes from '../../../constants/routes';
 
 import PlayerOverlay from './players-overlay';
 import MissionMarkers from './mission-markers';
@@ -36,23 +36,23 @@ const style = {
 };
 
 export default function MapScreen() {
-	const history = useHistory();
-	const availablePacks = useSelector(state => state.auth.user.availablePacks);
+	// const history = useHistory();
+	// const availablePacks = useSelector(state => state.auth.user.availablePacks);
 
-	const showPack = ModalActions.useModal(() => <PackModal />);
+	// const showPack = ModalActions.useModal(() => <PackModal />);
 
-	function giveCards() {
-		history.push(Routes.giveCards);
-	}
+	// function giveCards() {
+	// 	history.push(Routes.giveCards);
+	// }
 
-	function readQrCode() {
-		history.push(Routes.qrcodeReader);
-	}
+	// function readQrCode() {
+	// 	history.push(Routes.qrcodeReader);
+	// }
 
 	return (
 		<>
 			<div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
-				<Fab size="small" style={style.fab} onClick={giveCards}>
+				{/* <Fab size="small" style={style.fab} onClick={giveCards}>
 					<SwapVert />
 				</Fab>
 				{availablePacks > 0 && (
@@ -62,7 +62,7 @@ export default function MapScreen() {
 				)}
 				<Fab size="small" style={style.fab} onClick={readQrCode}>
 					<PhotoCamera />
-				</Fab>
+				</Fab> */}
 			</div>
 			<Map initialConfiguration={{ center: initialPlayerPosition, zoom: 18 }}>
 				<PlayerOverlay />
