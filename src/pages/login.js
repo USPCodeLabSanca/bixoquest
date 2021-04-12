@@ -6,11 +6,16 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from '@material-ui/core/Backdrop';
 
 import backendURL from '../constants/api-url';
-import { tryAuthenticateWithUSPCookie, login as loginAction } from '../redux/actions/auth';
+import {
+	tryAuthenticateWithUSPCookie,
+	login as loginAction,
+	rawSetUser,
+} from '../redux/actions/auth';
 import TextField from '@material-ui/core/TextField';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import routes from '../constants/routes';
 import { validateLogin, toastifyErrors } from '../lib/validators';
+import { silentAPI } from '../api';
 
 const style = {
 	root: 'flex flex-col justify-center items-center text-center px-4 pb-4 bg-primary h-full',
@@ -25,6 +30,7 @@ const LoginScreen = () => {
 	const [isLoggingIn, setIsLoggingIn] = React.useState(false);
 
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const loginWithUSP = async () => {
 		window.location.href = backendURL + 'auth';
@@ -34,9 +40,18 @@ const LoginScreen = () => {
 		(async () => {
 			try {
 				setIsLoggingIn(true);
-				dispatch(await tryAuthenticateWithUSPCookie());
+				const {
+					data: { user, isSignup },
+				} = await silentAPI.tryAuthenticateWithUSPCookie();
+
+				if (isSignup) {
+					history.push(routes.signup);
+				} else {
+					rawSetUser(user);
+				}
 			} catch (error) {
 				console.error(error);
+			} finally {
 				setIsLoggingIn(false);
 			}
 		})();
@@ -79,10 +94,6 @@ const LoginScreen = () => {
 					>
 						Entrar com e-mail USP
 					</Button>
-					<div className={style.linksContainer}>
-						<Link to={routes.signup}>Não tem uma conta? Faça seu cadastro!</Link>
-						<Link to={routes.forgotPassword}>Esqueci minha senha</Link>
-					</div>
 				</form>
 			</div>
 			<Backdrop style={{ zIndex: 50 }} open={isLoggingIn}>

@@ -12,22 +12,16 @@ const style = {
 };
 
 function SignupOtherInfo() {
-	const { nextStage, updateFormValue, prevStage, formValue } = useMultistep();
+	const { nextStage, updateFormValue, formValue } = useMultistep();
 
 	function getDataFromFormEvent(event) {
 		const course = event.target.course.value.trim();
-		const name = event.target.name.value.trim();
 		const discord = event.target.discord.value.trim();
-		return { name, course, discord };
+		return { course, discord };
 	}
 
 	function validateData(data) {
 		const problems = [];
-		if (!data.name) {
-			problems.push('Você deve fornecer um nome');
-		} else if (data.name.length < 6) {
-			problems.push('Seu nome deve ter no mínimo 6 caracteres');
-		}
 		if (!data.course) {
 			problems.push('Você deve fornecer um curso');
 		}
@@ -51,20 +45,12 @@ function SignupOtherInfo() {
 			<p className={style.subheader}>Criar uma conta</p>
 			<form onSubmit={handleFormSubmit} className={style.form}>
 				<TextField
-					defaultValue={formValue.name}
-					label="Nome (será visto por outros usuários)"
-					name="name"
-				/>
-				<TextField
 					defaultValue={formValue.discord}
 					label="Sua tag no discord"
 					type="string"
 					name="discord"
 				/>
 				<TextField defaultValue={formValue.course} label="Curso" type="string" name="course" />
-				<Button variant="contained" type="button" onClick={prevStage} color="secondary" fullWidth>
-					Voltar
-				</Button>
 				<Button variant="contained" type="submit" color="secondary" fullWidth>
 					Avançar
 				</Button>

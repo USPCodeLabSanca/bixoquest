@@ -25,6 +25,7 @@ import Routes from '../../../constants/routes';
 import PlayerOverlay from './players-overlay';
 import MissionMarkers from './mission-markers';
 import { initialPlayerPosition } from '../../../constants/initial-player-position';
+import MemorablePlaces from './memorable-places';
 
 const style = {
 	actionButtonsContainer: 'absolute bottom-0 right-0 mr-4 mb-16 flex flex-col',
@@ -66,6 +67,7 @@ export default function MapScreen() {
 			<Map initialConfiguration={{ center: initialPlayerPosition, zoom: 18 }}>
 				<PlayerOverlay />
 				<MissionMarkers />
+				<MemorablePlaces />
 			</Map>
 		</>
 	);
