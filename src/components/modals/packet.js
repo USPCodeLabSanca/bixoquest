@@ -10,7 +10,6 @@ import StickersImages from '../../constants/stickers';
 import * as ModalActions from '../../redux/actions/modal';
 import * as PackActions from '../../redux/actions/packs';
 import API from '../../api';
-import Pack from '/pack.png';
 
 const style = {
 	header: 'bg-white rounded-lg px-2 shadow-lg flex items-center',
@@ -283,7 +282,7 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 					style={{
 						outline: 'none',
 						userSelect: 'none',
-						backgroundImage: `url(${Pack})`,
+						backgroundImage: `url('/pack.png')`,
 						backgroundSize: 'cover',
 						backgroundRepeat: 'no-repeat',
 						width: '183px',

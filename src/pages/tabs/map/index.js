@@ -1,21 +1,21 @@
 import React from 'react';
 
 // Material-ui imports
-// import Fab from '@material-ui/core/Fab';
+import Fab from '@material-ui/core/Fab';
 // import PhotoCamera from '@material-ui/icons/PhotoCamera';
 // import SwapVert from '@material-ui/icons/SwapVert';
-// import Receipt from '@material-ui/icons/Receipt';
+import Receipt from '@material-ui/icons/Receipt';
 
 // Library imports
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 // import { useHistory } from 'react-router-dom';
 
 // Redux actions imports
-// import * as ModalActions from '../../../redux/actions/modal';
+import * as ModalActions from '../../../redux/actions/modal';
 
 // Components imports
 import Map from '../../../components/map';
-// import PackModal from '../../../components/modals/packet';
+import PackModal from '../../../components/modals/packet';
 
 // Images imports
 
@@ -37,9 +37,9 @@ const style = {
 
 export default function MapScreen() {
 	// const history = useHistory();
-	// const availablePacks = useSelector(state => state.auth.user.availablePacks);
+	const availablePacks = useSelector(state => state.auth.user.availablePacks);
 
-	// const showPack = ModalActions.useModal(() => <PackModal />);
+	const showPack = ModalActions.useModal(() => <PackModal />);
 
 	// function giveCards() {
 	// 	history.push(Routes.giveCards);
@@ -54,13 +54,13 @@ export default function MapScreen() {
 			<div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
 				{/* <Fab size="small" style={style.fab} onClick={giveCards}>
 					<SwapVert />
-				</Fab>
+				</Fab> */}
 				{availablePacks > 0 && (
 					<Fab size="small" style={style.fab} onClick={showPack}>
 						<Receipt />
 					</Fab>
 				)}
-				<Fab size="small" style={style.fab} onClick={readQrCode}>
+				{/* <Fab size="small" style={style.fab} onClick={readQrCode}>
 					<PhotoCamera />
 				</Fab> */}
 			</div>

@@ -14,8 +14,8 @@ import { completeKeyMission } from '../../../redux/actions/missions';
 import API from '../../../api';
 import { correctAllMissionCoords } from '../../../lib/coords-corrector';
 import { toast } from 'react-toastify';
-// import * as ModalActions from '../../../redux/actions/modal';
-// import PacketsModal from '../../../components/modals/packet';
+import * as ModalActions from '../../../redux/actions/modal';
+import PacketsModal from '../../../components/modals/packet';
 
 const style = {
 	root: 'h-full px-4 overflow-auto',
@@ -152,7 +152,7 @@ export default function Missions() {
 	console.log(useSelector(state => state.auth.user));
 	const user = useSelector(state => state.auth.user);
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
-	// const openPackModal = ModalActions.useModal(() => <PacketsModal />);
+	const openPackModal = ModalActions.useModal(() => <PacketsModal />);
 
 	useEffect(() => {
 		(async () => {
@@ -218,20 +218,18 @@ export default function Missions() {
 		}
 	}
 
-	// function openPack() {
-	// 	openPackModal();
-	// }
+	function openPack() {
+		openPackModal();
+	}
 
 	return (
 		<div className={style.root}>
 			<Button
-				// color="secondary"
-				color="default"
+				color="secondary"
 				fullWidth
 				style={{ margin: '1rem 0 0 0' }}
-				// disabled={availablePacks === 0}
-				disabled={true}
-				// onClick={openPack}
+				disabled={availablePacks === 0}
+				onClick={openPack}
 				variant="contained"
 			>
 				Abrir pacotes ({availablePacks})
