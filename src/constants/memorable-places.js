@@ -126,4 +126,31 @@ export const memorablePlaces = [
 			},
 		],
 	},
+	{
+		name: 'Entrada da Física',
+		coords: {
+			lat: -22.00904,
+			lng: -47.89746,
+		},
+		images: [
+			{
+				url: '/memorable-places/entrada-fisica/entrada-fisica_0.jpg',
+				description:
+					'Posicionada na R. Miguel Petroni, essa entrada coloca o estudante em frente ao prédio administrativo do IFSC (Instituto de Física de São Carlos) e está geograficamente posicionada entre as entradas da arquitetura e produção.',
+			},
+		],
+	},
+	{
+		name: 'Entrada da Matemática',
+		coords: {
+			lat: -22.00622548972774,
+			lng: -47.8952329804725,
+		},
+		images: [
+			{
+				url: '/memorable-places/entrada-matematica/entrada-matematica_0.jpg',
+				description: '',
+			},
+		],
+	},
 ];
