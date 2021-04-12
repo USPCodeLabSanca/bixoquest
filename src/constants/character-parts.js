@@ -17,7 +17,7 @@ export const characterPartImageCount = {
 	feet: 5,
 	hair: 36,
 	clothBottom: 12,
-	clothTop: 15,
+	clothTop: 17,
 };
 
 export const characterPartReadableName = {

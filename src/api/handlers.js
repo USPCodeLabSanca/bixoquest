@@ -36,7 +36,7 @@ const Handlers = {
 		401: 'Este e-mail já está sendo utilizado',
 	}),
 
-	edit: newUser => API.put('/user', newUser),
+	edit: newUser => API.put('/users', newUser),
 };
 
 export const silentHandlers = {
@@ -47,7 +47,7 @@ export const silentHandlers = {
 		}),
 	),
 
-	getUser: silentHandler(() => API.get('/user')),
+	getUser: silentHandler(() => API.get('/users')),
 };
 
 export default Handlers;
