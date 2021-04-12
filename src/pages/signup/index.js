@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import MultistepForm from '../../components/multistep-form';
 
-import routes from '../../constants/routes';
+// import routes from '../../constants/routes';
 
 import SignupOtherInfo from './steps/0-other-info';
 import SignupCharacterSelect from './steps/1-character';
@@ -21,9 +21,9 @@ const SignupScreen = () => {
 			<div className={style.card}>
 				<MultistepForm pages={[<SignupOtherInfo />, <SignupCharacterSelect />]} />
 			</div>
-			<div className={style.linkContainer}>
+			{/* <div className={style.linkContainer}>
 				<Link to={routes.login}>Já tem uma conta? Faça login!</Link>
-			</div>
+			</div> */}
 		</main>
 	);
 };

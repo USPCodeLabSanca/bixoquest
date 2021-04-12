@@ -9,9 +9,9 @@ import backendURL from '../constants/api-url';
 import {
 	tryAuthenticateWithUSPCookie,
 	login as loginAction,
-	rawSetUser,
+	// rawSetUser,
 } from '../redux/actions/auth';
-import TextField from '@material-ui/core/TextField';
+// import TextField from '@material-ui/core/TextField';
 import { useHistory } from 'react-router-dom';
 import routes from '../constants/routes';
 import { validateLogin, toastifyErrors } from '../lib/validators';
@@ -81,13 +81,13 @@ const LoginScreen = () => {
 		<main className={style.root}>
 			<div className={style.card}>
 				<h1 className={style.header}>BixoQuest</h1>
-				<p className={style.subheader}>Entrar com email e senha</p>
-				<form onSubmit={handleSubmit} className={style.form}>
+				{/* <p className={style.subheader}>Entrar com email e senha</p> */}
+				{/* <form onSubmit={handleSubmit} className={style.form}>
 					<TextField label="Usuário" name="email" />
 					<TextField label="Senha" type="password" name="password" />
 					<Button variant="contained" type="submit" color="secondary" fullWidth>
 						Entrar
-					</Button>
+					</Button> */}
 					<Button
 						variant="outlined"
 						onClick={loginWithUSP}
@@ -97,7 +97,7 @@ const LoginScreen = () => {
 					>
 						Entrar com e-mail USP
 					</Button>
-				</form>
+				{/* </form> */}
 			</div>
 			<Backdrop style={{ zIndex: 50 }} open={isLoggingIn}>
 				<CircularProgress size={50} style={{ color: 'white' }} />
