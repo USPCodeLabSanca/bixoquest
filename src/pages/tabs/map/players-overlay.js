@@ -52,7 +52,6 @@ function PlayerImage({ player, userPlayer }) {
 		const dlat = newLat - lat;
 		const dlng = newLng - lng;
 		const dist = Math.sqrt(dlat ** 2 + dlng ** 2);
-		console.log(dist, PLAYER_SPEED);
 		const frames = Math.floor(dist / PLAYER_SPEED);
 		if (frames === 0) return;
 
@@ -71,7 +70,6 @@ function PlayerImage({ player, userPlayer }) {
 
 			currLat += frameDeltaVec[0];
 			currLng += frameDeltaVec[1];
-			console.log(currLat, currLng, frameDeltaVec);
 			imageRef.current.setBounds(calculateBounds([currLat, currLng]));
 		});
 

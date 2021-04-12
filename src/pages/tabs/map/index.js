@@ -24,6 +24,7 @@ import Routes from '../../../constants/routes';
 
 import PlayerOverlay from './players-overlay';
 import MissionMarkers from './mission-markers';
+import { initialPlayerPosition } from '../../../constants/initial-player-position';
 
 const style = {
 	actionButtonsContainer: 'absolute bottom-0 right-0 mr-4 mb-16 flex flex-col',
@@ -33,20 +34,11 @@ const style = {
 	},
 };
 
-function geoToLatLng(geolocation) {
-	if (!geolocation.isAvailable) return [null, null];
-	const { latitude, longitude } = geolocation.position.coords;
-	return [latitude, longitude];
-}
-
 export default function MapScreen() {
 	const history = useHistory();
-	const geolocation = useSelector(state => state.geolocation);
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
 
 	const showPack = ModalActions.useModal(() => <PackModal />);
-
-	const userPosition = geoToLatLng(geolocation);
 
 	function giveCards() {
 		history.push(Routes.giveCards);
@@ -71,7 +63,7 @@ export default function MapScreen() {
 					<PhotoCamera />
 				</Fab>
 			</div>
-			<Map initialConfiguration={{ center: userPosition, zoom: 18 }}>
+			<Map initialConfiguration={{ center: initialPlayerPosition, zoom: 18 }}>
 				<PlayerOverlay />
 				<MissionMarkers />
 			</Map>
