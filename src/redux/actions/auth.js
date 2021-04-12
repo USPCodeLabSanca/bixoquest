@@ -1,15 +1,9 @@
 import API, { silentAPI } from '../../api';
 
-export async function tryAuthenticateWithUSPCookie() {
-	const {
-		data: {
-			data: { user, token },
-		},
-	} = await silentAPI.tryAuthenticateWithUSPCookie();
+export async function rawSetUser(user) {
 	return {
 		type: 'SET_USER',
 		user,
-		token,
 	};
 }
 

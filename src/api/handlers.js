@@ -32,7 +32,7 @@ const Handlers = {
 
 	login: (email, password) => API.post('/auth/login', { email, password }),
 
-	signup: withCustomError(newUser => API.post('/auth/signup', newUser), {
+	signup: withCustomError(newUser => API.post('/auth/signup-usp-second-step', newUser), {
 		401: 'Este e-mail já está sendo utilizado',
 	}),
 
