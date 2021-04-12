@@ -7,19 +7,17 @@ import * as ModalActions from '../../../redux/actions/modal';
 import * as MissionActions from '../../../redux/actions/missions';
 
 import MissionDialog from '../../../components/modals/mission-dialog';
-import QuestionMark from '/question-mark.png';
-import ExclamationMark from '/exclamation-mark.png';
 import MISSION_RANGE from '../../../constants/missions-range';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePlayers } from '../playersContext';
 
 const missionIconOutOfRange = icon({
-	iconUrl: QuestionMark,
+	iconUrl: '/question-mark.png',
 	iconSize: point(40, 40),
 });
 
 const missionIconInRange = icon({
-	iconUrl: ExclamationMark,
+	iconUrl: '/exclamation-mark.png',
 	iconSize: point(40, 40),
 });
 
