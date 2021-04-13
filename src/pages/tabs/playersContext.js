@@ -22,9 +22,10 @@ export function PlayersContextProvider({ ...props }) {
 	const [socket, setSocket] = React.useState(null);
 
 	React.useEffect(() => {
-		const socket = io(SOCKET_URL, { path: SOCKET_PATH });
-		socket.on('error-message', (...args) => console.error('SOCKET ERROR', ...args));
 		setSocket(socket);
+		// const socket = io(SOCKET_URL, { path: SOCKET_PATH });
+		// socket.on('error-message', (...args) => console.error('SOCKET ERROR', ...args));
+		// setSocket(socket);
 	}, []);
 
 	async function handlePlayerMove(eventData) {
@@ -80,7 +81,6 @@ export function PlayersContextProvider({ ...props }) {
 	}
 
 	React.useEffect(() => {
-		if (!socket) return;
 		async function makeUserPlayer() {
 			const newUser = { ...user };
 			const png = await makeCharacterPNG(user.character);
@@ -95,7 +95,7 @@ export function PlayersContextProvider({ ...props }) {
 			setPlayers(newPlayers);
 			// socket.emit('move', 'Bearer ' + token, userPlayer.position[0], userPlayer.position[1]);
 		})();
-	}, [socket, user]);
+	}, [user]);
 
 	const playersArray = Object.values(players);
 	const userPlayer = players['user-player'];
