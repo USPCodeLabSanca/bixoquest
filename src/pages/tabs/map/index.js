@@ -57,7 +57,7 @@ export default function MapScreen() {
 	return (
 		<div className={style.root}>
 			<div className={style.floatingContainer}>
-				<div className={style.actionButtonsContainer} style={{ zIndex: 100000 }}>
+				<div className={style.actionButtonsContainer} style={{ zIndex: 500 }}>
 					{/* <Fab size="small" style={style.fab} onClick={giveCards}>
 						<SwapVert />
 					</Fab> */}

@@ -18,7 +18,7 @@ import * as ModalActions from '../../../redux/actions/modal';
 import PacketsModal from '../../../components/modals/packet';
 
 const style = {
-	root: 'h-full px-4 overflow-auto',
+	root: 'container mx-auto max-w-lg h-full px-4 overflow-auto',
 	spinner: 'w-full justify-center flex my-8',
 };
 

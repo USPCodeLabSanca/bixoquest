@@ -10,10 +10,9 @@ import CharacterEditor from '../character-editor';
 import { TextField } from '@material-ui/core';
 
 const style = {
-	root: 'w-full h-full flex justify-center items-center p-4 py-16',
-	card: 'p-4 bg-white gap-y-4 flex flex-col rounded-lg max-h-full overflow-auto max-w-md w-full',
-	title: 'text-2xl text-center',
-	buttonsContainer: 'flex flex-col mt-4 gap-2',
+	root: 'w-full h-full flex justify-center items-center p-4',
+	card: 'p-4 bg-white max-h-full flex flex-col rounded overflow-auto max-w-md w-full shadow-md',
+	title: 'text-xl text-center',
 };
 
 export default function EditProfileModal() {
@@ -39,28 +38,33 @@ export default function EditProfileModal() {
 		<Modal className={style.root}>
 			<div className={style.card}>
 				<div className={style.title}>Editar perfil</div>
-				<TextField
-					label="Discord tag"
-					onChange={event => {
-						updateNewUser({ discord: event.target.value });
-					}}
-					fullWidth
-					defaultValue={user.discord}
-				/>
+        <div className='py-4'>
+          <TextField
+            label="Discord tag"
+            onChange={event => {
+              updateNewUser({ discord: event.target.value });
+            }}
+            fullWidth
+            defaultValue={user.discord}
+          />
+        </div>
 				<CharacterEditor
 					initialCharacter={user.character}
 					onChange={char => updateNewUser({ character: char })}
 				/>
-				<div className={style.buttonsContainer}>
-					<Button onClick={handleCancel} className={style.button} fullWidth variant="contained">
+				<div className='py-4'>
+					<Button onClick={handleCancel} className={style.button} fullWidth variant="contained" size="small">
 						Cancelar
 					</Button>
+				</div>
+        <div>
 					<Button
 						onClick={handleSubmit}
 						color="secondary"
 						className={style.button}
 						fullWidth
 						variant="contained"
+            size="small"
 					>
 						Enviar
 					</Button>

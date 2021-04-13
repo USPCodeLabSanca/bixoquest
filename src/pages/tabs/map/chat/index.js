@@ -87,7 +87,7 @@ export default function Chat({ isChatUp }) {
 			style={{
 				height: isChatUp ? '40vh' : '0vh',
 				transition: '200ms',
-				zIndex: 99999,
+				zIndex: 500,
 			}}
 		>
 			<div className={style.messagesContainer} ref={messagesContainerRef}>
