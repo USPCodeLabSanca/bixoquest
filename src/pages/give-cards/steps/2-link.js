@@ -18,10 +18,13 @@ const style = {
 const targetLinkURL = new URL(window.location.href);
 targetLinkURL.pathname = Routes.receiveCards;
 targetLinkURL.hash = '';
+targetLinkURL.search = '';
 
 export default function Link() {
 	const { formValue } = useMultistep();
+	console.log(formValue, targetLinkURL);
 	const link = targetLinkURL.toString() + '?token=' + formValue.token;
+	console.log(link);
 	const [isCopied, setCopied] = useClipboard(link, { successDuration: 100 });
 
 	React.useEffect(() => {

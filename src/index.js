@@ -22,7 +22,7 @@ import Tabs from './pages/tabs';
 import Login from './pages/login';
 import Signup from './pages/signup';
 import GiveCards from './pages/give-cards/index.js';
-import ReceiveCards from './pages/receive-cards';
+import ReceiveCards from './pages/receive-cards/index.js';
 
 // CSS
 import './main-style.css';

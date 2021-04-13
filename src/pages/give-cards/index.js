@@ -8,6 +8,8 @@ import SelectCardItems from './steps/0-select';
 import ConfirmCardItems from './steps/1-confirmation';
 import CopyLink from './steps/2-link';
 
+import Routes from '../../constants/routes';
+
 const style = {
 	root: 'w-full h-full flex flex-col',
 	header:
@@ -24,7 +26,7 @@ function GiveCards() {
 	const history = useHistory();
 
 	function leaveScreen() {
-		history.goBack();
+		history.replace(Routes.tabs.map);
 	}
 
 	return (
