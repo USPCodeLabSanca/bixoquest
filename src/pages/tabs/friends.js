@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { useSelector } from 'react-redux';
 
@@ -7,12 +7,13 @@ import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import API from '../../api';
 
 
 const style = {
 	root: 'p-4 h-full',
-	card: 'w-6/12 flex flex-col justify-center items-center p-4',
-	friendCards: 'space-x-1 flex flex-row',
+	card: 'w-1/2 flex flex-col justify-center items-center p-4',
+	friendCards: 'space-x-1 flex flex-row ',
 	avatar: { width: '15vw', height: '15vw', marginBottom: '8px' },
 	userName: 'text-2xl text-center',
 	userCourse: '',
@@ -39,7 +40,7 @@ const classes = {
 };
 
 function renderCards(friendsList) {
-	const list = []
+	const list = [];
   
 	for (const [i, friend] of friendsList.entries()) {
 	  list.push(
@@ -57,11 +58,30 @@ function renderCards(friendsList) {
 	)
   }
 
+
+
 export default function ProfilePage() {
 	const user = useSelector(state => state.auth.user);
 
-	let friendsList=[{user}, {user}, {user}];
-	console.log(friendsList)
+	let friendData;
+	
+
+	useEffect(() => {
+        (async () => {
+            try {
+				//console.log(API.getFriends);
+                //const data = await API.getFriends();
+				await API.getFriends();
+                //console.log(data);
+            } catch (e) {
+                console.error(e);
+            }
+        })();
+    }, []);
+
+	console.log("teste3", friendData);
+
+	let friendsList=[{user}, {user}, {user}, {user}];
 
 
 	function findFriends() {
