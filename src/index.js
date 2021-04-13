@@ -55,7 +55,7 @@ function App() {
 							<Route path={routes.login} component={requiresNoAuthentication(Login)} />
 							<Route path={routes.signup} component={requiresNoAuthentication(Signup)} />
 							<Route path={routes.giveCards} component={requiresAuthentication(GiveCards)} />
-							<Route path={routes.qrcodeReader} component={requiresAuthentication(ReceiveCards)} />
+							<Route path={routes.receiveCards} component={requiresAuthentication(ReceiveCards)} />
 							<Redirect to={routes.login} />
 						</Switch>
 					</BrowserRouter>
