@@ -35,7 +35,6 @@ export default function MissionMarkers() {
 
 	React.useEffect(() => {
 		if (!userPlayer) return;
-		console.log(userPlayer);
 		fetchMissions();
 	}, [userPlayer && userPlayer.position[0], userPlayer && userPlayer.position[1]]);
 
