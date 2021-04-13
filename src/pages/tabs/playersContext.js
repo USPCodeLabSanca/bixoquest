@@ -75,6 +75,10 @@ export function PlayersContextProvider({ ...props }) {
 		socket.emit('move', 'Bearer ' + token, lat, lng);
 	}
 
+	function findPlayerBySocketId(socketId) {
+		return players[socketId];
+	}
+
 	React.useEffect(() => {
 		if (!socket) return;
 		async function makeUserPlayer() {
@@ -96,7 +100,12 @@ export function PlayersContextProvider({ ...props }) {
 	const playersArray = Object.values(players);
 	const userPlayer = players['user-player'];
 
-	return <context.Provider value={{ players: playersArray, userPlayer, movePlayer }} {...props} />;
+	return (
+		<context.Provider
+			value={{ players: playersArray, userPlayer, movePlayer, socket, findPlayerBySocketId }}
+			{...props}
+		/>
+	);
 }
 
 export function usePlayers() {

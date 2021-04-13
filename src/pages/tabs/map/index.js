@@ -2,9 +2,6 @@ import React from 'react';
 
 // Material-ui imports
 import Fab from '@material-ui/core/Fab';
-// import PhotoCamera from '@material-ui/icons/PhotoCamera';
-// import SwapVert from '@material-ui/icons/SwapVert';
-import Receipt from '@material-ui/icons/Receipt';
 
 // Library imports
 import { useSelector } from 'react-redux';
@@ -17,26 +14,34 @@ import * as ModalActions from '../../../redux/actions/modal';
 import Map from '../../../components/map';
 import PackModal from '../../../components/modals/packet';
 
-// Images imports
-
 // MISC imports
 // import Routes from '../../../constants/routes';
+
+// Images imports
+import Chat from '@material-ui/icons/Chat';
+import Receipt from '@material-ui/icons/Receipt';
+// import SwapVert from '@material-ui/icons/SwapVert';
 
 import PlayerOverlay from './players-overlay';
 import MissionMarkers from './mission-markers';
 import { initialPlayerPosition } from '../../../constants/initial-player-position';
 import MemorablePlaces from './memorable-places';
+import ChatContainer from './chat';
 
 const style = {
-	actionButtonsContainer: 'absolute bottom-0 right-0 mr-4 mb-16 flex flex-col',
+	root: 'w-full h-full relative',
+	floatingContainer: 'w-full h-full absolute bottom-0 flex flex-col justify-end items-end',
+	actionButtonsContainer: 'relative w-max mr-4 mb-8 flex flex-col',
 	fab: {
 		margin: '8px 0',
 		outline: 'none',
+		position: 'static',
 	},
 };
 
 export default function MapScreen() {
 	// const history = useHistory();
+	const [isChatUp, setIsChatUp] = React.useState(false);
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
 
 	const showPack = ModalActions.useModal(() => <PackModal />);
@@ -45,30 +50,33 @@ export default function MapScreen() {
 	// 	history.push(Routes.giveCards);
 	// }
 
-	// function readQrCode() {
-	// 	history.push(Routes.qrcodeReader);
-	// }
+	function toggleChat() {
+		setIsChatUp(e => !e);
+	}
 
 	return (
-		<>
-			<div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
-				{/* <Fab size="small" style={style.fab} onClick={giveCards}>
-					<SwapVert />
-				</Fab> */}
-				{availablePacks > 0 && (
-					<Fab size="small" style={style.fab} onClick={showPack}>
-						<Receipt />
+		<div className={style.root}>
+			<div className={style.floatingContainer}>
+				<div className={style.actionButtonsContainer} style={{ zIndex: 100000 }}>
+					{/* <Fab size="small" style={style.fab} onClick={giveCards}>
+						<SwapVert />
+					</Fab> */}
+					{availablePacks > 0 && (
+						<Fab size="small" style={style.fab} onClick={showPack}>
+							<Receipt />
+						</Fab>
+					)}
+					<Fab size="small" style={style.fab} onClick={toggleChat}>
+						<Chat />
 					</Fab>
-				)}
-				{/* <Fab size="small" style={style.fab} onClick={readQrCode}>
-					<PhotoCamera />
-				</Fab> */}
+				</div>
+				<ChatContainer isChatUp={isChatUp} />
 			</div>
 			<Map initialConfiguration={{ center: initialPlayerPosition, zoom: 18 }}>
 				<PlayerOverlay />
 				<MissionMarkers />
 				<MemorablePlaces />
 			</Map>
-		</>
+		</div>
 	);
 }

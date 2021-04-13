@@ -62,6 +62,8 @@ function PlayerImage({ player, userPlayer }) {
 		let currLng = lng;
 
 		const intervalHandler = setInterval(() => {
+			if (!imageRef.current) return;
+
 			if (currFrame >= frames) {
 				imageRef.current.setBounds(calculateBounds([dlat, dlng]));
 				clearInterval(intervalHandler);

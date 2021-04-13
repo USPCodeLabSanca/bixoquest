@@ -26,9 +26,9 @@ const Handlers = {
 
 	openPack: () => API.post('/packs/open'),
 
-	fetchDonationToken: info => API.post('/stickers/donate', info),
+	fetchDonationToken: info => API.post('/stickers/donate', info), // { stickers: [1, 2, 3] }
 
-	sendQrCodeToken: token => API.post('/qrcode/scan', { token }),
+	sendDonationToken: token => API.post('/stickers/receive', { token }),
 
 	login: (email, password) => API.post('/auth/login', { email, password }),
 

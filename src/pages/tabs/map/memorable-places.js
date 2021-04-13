@@ -5,7 +5,7 @@ import MemorablePlacesModal from '../../../components/modals/memorable-places';
 import { memorablePlaces } from '../../../constants/memorable-places';
 import { setCurrentModal } from '../../../redux/actions/modal';
 
-const IMAGE_SIZE = 30;
+const IMAGE_SIZE = 20;
 const IMAGE_SIZE_DIVIDER = 150000;
 
 function calculateBounds(position) {
