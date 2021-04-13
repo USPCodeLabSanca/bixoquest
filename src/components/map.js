@@ -1,37 +1,5 @@
 import React from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
-import Paper from '@material-ui/core/Paper';
-import { useSelector } from 'react-redux';
-
-function WarningToast() {
-	const geolocation = useSelector(state => state.geolocation);
-	const [isOpen, setIsOpen] = React.useState(false);
-	const [text, setText] = React.useState(resolveText(geolocation));
-
-	function resolveText(geolocation) {
-		if (geolocation.isAvailable) return 'Sucesso!';
-		else if (geolocation.error) return geolocation.error.message;
-		else return 'Buscando sua localização...';
-	}
-
-	React.useEffect(() => {
-		const isOpen = !geolocation.isAvailable || !!geolocation.error;
-		setIsOpen(isOpen);
-		if (isOpen) setText(resolveText(geolocation));
-	}, [geolocation]);
-	return (
-		<Paper
-			className="absolute z-10 p-2 text-center"
-			elevation={3}
-			style={Object.assign(
-				{ top: 96, left: 32, right: 32, transition: '1000ms' },
-				isOpen ? {} : { top: -100 },
-			)}
-		>
-			{text}
-		</Paper>
-	);
-}
 
 const exist = e => e !== undefined && e !== null;
 
@@ -52,8 +20,8 @@ function isPointValid(point) {
 export default function CustomMap({
 	initialConfiguration: { center: initialCenter, zoom: initialZoom },
 	children,
+	...props
 }) {
-	const geolocation = useSelector(state => state.geolocation);
 	const [center, setCenter] = React.useState(
 		(isPointValid(initialCenter) && initialCenter) || undefined,
 	);
@@ -70,9 +38,9 @@ export default function CustomMap({
 
 	return (
 		<>
-			<WarningToast />
-			{geolocation.isAvailable && center && zoom && (
+			{center && zoom && (
 				<MapContainer
+					{...props}
 					center={center}
 					zoom={zoom}
 					zoomSnap={0.01}
@@ -80,7 +48,7 @@ export default function CustomMap({
 					style={{ height: '100%' }}
 				>
 					<TileLayer
-						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+						attribution=''
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 					/>
 					{children}

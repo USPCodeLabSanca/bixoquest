@@ -28,15 +28,17 @@ const Handlers = {
 
 	getFriends: () => API.get('/friends'),
 
-	fetchDonationToken: info => API.post('/stickers/donate', info),
+	fetchDonationToken: info => API.post('/stickers/donate', info), // { stickers: [1, 2, 3] }
 
-	sendQrCodeToken: token => API.post('/qrcode/scan', { token }),
+	sendDonationToken: token => API.post('/stickers/receive', { token }),
 
 	login: (email, password) => API.post('/auth/login', { email, password }),
 
-	signup: withCustomError(newUser => API.post('/auth/signup', newUser), {
+	signup: withCustomError(newUser => API.post('/auth/signup-usp-second-step', newUser), {
 		401: 'Este e-mail já está sendo utilizado',
 	}),
+
+	edit: newUser => API.put('/users', newUser),
 };
 
 export const silentHandlers = {
@@ -47,7 +49,7 @@ export const silentHandlers = {
 		}),
 	),
 
-	getUser: silentHandler(() => API.get('/user')),
+	getUser: silentHandler(() => API.get('/users')),
 };
 
 export default Handlers;

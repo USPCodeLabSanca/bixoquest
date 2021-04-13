@@ -90,3 +90,14 @@ html,
 .opacity-15 {
 	opacity: 0.15;
 }
+
+.container-16-9 {
+	width: 100%;
+	padding-top: 56.25%;
+	position: relative;
+	height: 100%;
+}
+
+.h-full-important {
+	height: 100% !important;
+}

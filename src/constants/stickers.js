@@ -1,84 +1,40 @@
-import sticker_1 from '../images/albuns/cards/min/card_1_min.png';
-import sticker_2 from '../images/albuns/cards/min/card_2_min.png';
-import sticker_3 from '../images/albuns/cards/min/card_3_min.png';
-import sticker_4 from '../images/albuns/cards/min/card_4_min.png';
-import sticker_5 from '../images/albuns/cards/min/card_5_min.png';
-import sticker_6 from '../images/albuns/cards/min/card_6_min.png';
-import sticker_7 from '../images/albuns/cards/min/card_7_min.png';
-import sticker_8 from '../images/albuns/cards/min/card_8_min.png';
-import sticker_9 from '../images/albuns/cards/min/card_9_min.png';
-import sticker_10 from '../images/albuns/cards/min/card_10_min.png';
-import sticker_11 from '../images/albuns/cards/min/card_11_min.png';
-import sticker_12 from '../images/albuns/cards/min/card_12_min.png';
-import sticker_13 from '../images/albuns/cards/min/card_13_min.png';
-import sticker_14 from '../images/albuns/cards/min/card_14_min.png';
-import sticker_15 from '../images/albuns/cards/min/card_15_min.png';
-import sticker_16 from '../images/albuns/cards/min/card_16_min.png';
-import sticker_17 from '../images/albuns/cards/min/card_17_min.png';
-import sticker_18 from '../images/albuns/cards/min/card_18_min.png';
-import sticker_19 from '../images/albuns/cards/min/card_19_min.png';
-import sticker_20 from '../images/albuns/cards/min/card_20_min.png';
-import sticker_21 from '../images/albuns/cards/min/card_21_min.png';
-import sticker_22 from '../images/albuns/cards/min/card_22_min.png';
-import sticker_23 from '../images/albuns/cards/min/card_23_min.png';
-import sticker_24 from '../images/albuns/cards/min/card_24_min.png';
-import sticker_25 from '../images/albuns/cards/min/card_25_min.png';
-import sticker_26 from '../images/albuns/cards/min/card_26_min.png';
-import sticker_27 from '../images/albuns/cards/min/card_27_min.png';
-import sticker_28 from '../images/albuns/cards/min/card_28_min.png';
-import sticker_29 from '../images/albuns/cards/min/card_29_min.png';
-import sticker_30 from '../images/albuns/cards/min/card_30_min.png';
-import sticker_31 from '../images/albuns/cards/min/card_31_min.png';
-import sticker_32 from '../images/albuns/cards/min/card_32_min.png';
-import sticker_33 from '../images/albuns/cards/min/card_33_min.png';
-import sticker_34 from '../images/albuns/cards/min/card_34_min.png';
-import sticker_35 from '../images/albuns/cards/min/card_35_min.png';
-import sticker_36 from '../images/albuns/cards/min/card_36_min.png';
-
-import page_1 from '../images/albuns/bichinhos_min.png';
-import page_2 from '../images/albuns/grupos_extensao_min.png';
-import page_3 from '../images/albuns/ipe_min.png';
-import page_4 from '../images/albuns/redondo_min.png';
-
-import porcarata from '../images/albuns/porcarata_min.png';
-
 const stickers = [
-	sticker_1,
-	sticker_2,
-	sticker_3,
-	sticker_4,
-	sticker_5,
-	sticker_6,
-	sticker_7,
-	sticker_8,
-	sticker_9,
-	sticker_10,
-	sticker_11,
-	sticker_12,
-	sticker_13,
-	sticker_14,
-	sticker_15,
-	sticker_16,
-	sticker_17,
-	sticker_18,
-	sticker_19,
-	sticker_20,
-	sticker_21,
-	sticker_22,
-	sticker_23,
-	sticker_24,
-	sticker_25,
-	sticker_26,
-	sticker_27,
-	sticker_28,
-	sticker_29,
-	sticker_30,
-	sticker_31,
-	sticker_32,
-	sticker_33,
-	sticker_34,
-	sticker_35,
-	sticker_36,
+	'/albuns/cards/card-1.jpg',
+	'/albuns/cards/card-2.jpg',
+	'/albuns/cards/card-3.jpg',
+	'/albuns/cards/card-4.jpg',
+	'/albuns/cards/card-5.jpg',
+	'/albuns/cards/card-6.jpg',
+	'/albuns/cards/card-7.jpg',
+	'/albuns/cards/card-8.jpg',
+	'/albuns/cards/card-9.jpg',
+	'/albuns/cards/card-10.jpg',
+	'/albuns/cards/card-11.jpg',
+	'/albuns/cards/card-12.jpg',
+	'/albuns/cards/card-13.jpg',
+	'/albuns/cards/card-14.jpg',
+	'/albuns/cards/card-15.jpg',
+	'/albuns/cards/card-16.jpg',
+	'/albuns/cards/card-17.jpg',
+	'/albuns/cards/card-18.jpg',
+	'/albuns/cards/card-19.jpg',
+	'/albuns/cards/card-20.jpg',
+	'/albuns/cards/card-21.jpg',
+	'/albuns/cards/card-22.jpg',
+	'/albuns/cards/card-23.jpg',
+	'/albuns/cards/card-24.jpg',
+	'/albuns/cards/card-25.jpg',
+	'/albuns/cards/card-26.jpg',
+	'/albuns/cards/card-27.jpg',
+	'/albuns/cards/card-28.jpg',
+	'/albuns/cards/card-29.jpg',
+	'/albuns/cards/card-30.jpg',
+	'/albuns/cards/card-31.jpg',
+	'/albuns/cards/card-32.jpg',
+	'/albuns/cards/card-33.jpg',
+	'/albuns/cards/card-34.jpg',
+	'/albuns/cards/card-35.jpg',
+	'/albuns/cards/card-36.jpg',
 ];
 
 const pageStickers = [
@@ -88,11 +44,16 @@ const pageStickers = [
 	stickers.slice(27, 36),
 ];
 
-const pages = [page_1, page_2, page_3, page_4];
+const pages = [
+	'/albuns/page_1.jpg',
+	'/albuns/page_2.jpg',
+	'/albuns/page_3.jpg',
+	'/albuns/page_4.jpg',
+];
 
 //Array of stickers
 const stickers_data = {
-	placeholder: porcarata,
+	placeholder: '/albuns/porcarata.png',
 	pageStickers,
 	stickers,
 	pages,

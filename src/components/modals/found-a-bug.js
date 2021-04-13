@@ -9,8 +9,8 @@ import Modal from '../modal';
 const style = {
 	root: 'w-full h-full flex justify-center items-center p-4 py-16',
 	card: 'p-4 bg-white rounded-lg max-h-full overflow-auto max-w-md',
-	title: 'text-2xl',
-	paragraph: 'my-4 text-justify',
+	title: 'text-xl',
+	paragraph: 'text-sm my-4 text-justify',
 };
 
 const P = props => <p className={style.paragraph} {...props} />;
@@ -43,7 +43,7 @@ function FoundABugModal() {
 						o possivel!
 					</P>
 				</div>
-				<Button onClick={submit} className={style.button} fullWidth variant="contained">
+				<Button onClick={submit} className={style.button} fullWidth variant="contained" size="small">
 					OK
 				</Button>
 			</div>

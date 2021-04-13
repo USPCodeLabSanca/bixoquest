@@ -10,7 +10,6 @@ import StickersImages from '../../constants/stickers';
 import * as ModalActions from '../../redux/actions/modal';
 import * as PackActions from '../../redux/actions/packs';
 import API from '../../api';
-import Pack from '../../images/pack.png';
 
 const style = {
 	header: 'bg-white rounded-lg px-2 shadow-lg flex items-center',
@@ -163,12 +162,8 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 		backImageRef.current.style.backgroundColor = 'white';
 		let stickerId;
 		try {
-			const {
-				data: {
-					data: { sticker_id },
-				},
-			} = await API.openPack();
-			stickerId = sticker_id;
+			const { data } = await API.openPack();
+			stickerId = data.stickerId;
 			dispatch(PackActions.openPack(stickerId));
 		} catch (e) {
 			console.error(e);
@@ -247,6 +242,7 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 
 	function frame() {
 		const { isMounted, isFlippingPack } = env.current;
+		if (!cardRef.current) return;
 		if (!isMounted) return;
 
 		if (!isFlippingPack) {
@@ -286,7 +282,7 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 					style={{
 						outline: 'none',
 						userSelect: 'none',
-						backgroundImage: `url(${Pack})`,
+						backgroundImage: `url('/pack.png')`,
 						backgroundSize: 'cover',
 						backgroundRepeat: 'no-repeat',
 						width: '183px',
@@ -320,7 +316,7 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 export default function PacketsModal() {
 	const [isPackOpen, setIsPackOpen] = React.useState(false);
 	const dispatch = useDispatch();
-	const availablePacks = useSelector(state => state.auth.user.available_packs);
+	const availablePacks = useSelector(state => state.auth.user.availablePacks);
 	const cardRef = React.useRef();
 
 	function requestClose() {

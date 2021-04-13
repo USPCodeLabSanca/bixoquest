@@ -15,15 +15,15 @@ import { updateToken } from './redux/actions/auth';
 import { initializeAPI } from './api/base-api';
 import APIBaseURL from './constants/api-url';
 import ModalRenderer from './services/modal-renderer';
-import GeolocationWatcher from './services/geolocation-watcher';
 import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-checker';
 
 // Pages
 import Tabs from './pages/tabs';
 import Login from './pages/login';
+import LoginTest from './pages/login-test';
 import Signup from './pages/signup';
-import GiveCards from './pages/give-cards';
-import QrCodeReader from './pages/read-qrcode';
+import GiveCards from './pages/give-cards/index.js';
+import ReceiveCards from './pages/receive-cards/index.js';
 
 // CSS
 import './main-style.css';
@@ -42,7 +42,6 @@ function App() {
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
 					<ModalRenderer />
-					<GeolocationWatcher />
 					<BrowserRouter>
 						<Switch>
 							<Route
@@ -55,10 +54,11 @@ function App() {
 								]}
 								component={requiresAuthentication(Tabs)}
 							/>
+							<Route path={routes.loginTest} component={requiresNoAuthentication(LoginTest)} />
 							<Route path={routes.login} component={requiresNoAuthentication(Login)} />
 							<Route path={routes.signup} component={requiresNoAuthentication(Signup)} />
 							<Route path={routes.giveCards} component={requiresAuthentication(GiveCards)} />
-							<Route path={routes.qrcodeReader} component={requiresAuthentication(QrCodeReader)} />
+							<Route path={routes.receiveCards} component={requiresAuthentication(ReceiveCards)} />
 							<Redirect to={routes.login} />
 						</Switch>
 					</BrowserRouter>

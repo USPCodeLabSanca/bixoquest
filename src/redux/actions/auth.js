@@ -1,15 +1,9 @@
 import API, { silentAPI } from '../../api';
 
-export async function tryAuthenticateWithUSPCookie() {
-	const {
-		data: {
-			data: { user, token },
-		},
-	} = await silentAPI.tryAuthenticateWithUSPCookie();
+export async function rawSetUser(user) {
 	return {
 		type: 'SET_USER',
 		user,
-		token,
 	};
 }
 
@@ -17,6 +11,14 @@ export async function login(email, password) {
 	const {
 		data: { user },
 	} = await API.login(email, password);
+	return {
+		type: 'SET_USER',
+		user,
+	};
+}
+
+export async function editProfile(newUser) {
+	const { data: user } = await API.edit(newUser);
 	return {
 		type: 'SET_USER',
 		user,
