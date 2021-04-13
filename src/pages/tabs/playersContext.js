@@ -22,7 +22,7 @@ export function PlayersContextProvider({ ...props }) {
 	const [socket, setSocket] = React.useState(null);
 
 	React.useEffect(() => {
-		const socket = io(SOCKET_URL, { path: SOCKET_PATH });
+		const socket = io(SOCKET_URL, { path: SOCKET_PATH, reconnectionDelay: 10000 });
 		socket.on('error-message', (...args) => console.error('SOCKET ERROR', ...args));
 		setSocket(socket);
 	}, []);
