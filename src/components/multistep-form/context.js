@@ -22,16 +22,18 @@ const context = React.createContext(null);
 
 /**
  * @typedef { Object } MultistepProviderProps
+ * @prop {boolean} markStepOnURLHash
  * @prop {number} maxStage
  */
 
 /** @type {React.FunctionComponent<MultistepProviderProps>} */
-const MultistepProvider = ({ maxStage, ...props }) => {
+const MultistepProvider = ({ maxStage, markStepOnURLHash, ...props }) => {
 	const [formValue, setFormValue] = React.useState({});
 	const [stage, rawSetStage] = React.useState(0);
 	const [hasSubmited, setHasSubmited] = React.useState(false);
 
 	React.useLayoutEffect(() => {
+		if (!markStepOnURLHash) return;
 		const oldFormStep = getHashMarker('form-step');
 
 		if (!oldFormStep) {
@@ -43,6 +45,7 @@ const MultistepProvider = ({ maxStage, ...props }) => {
 	}, []);
 
 	useEffectUpdate(() => {
+		if (!markStepOnURLHash) return;
 		writeHashMarker('form-step', stage.toString());
 	}, [stage]);
 

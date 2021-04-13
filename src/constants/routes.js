@@ -12,7 +12,7 @@ const routes = {
 	signup: '/signup',
 	forgotPassword: '/forgot-password',
 	giveCards: '/give-cards',
-	qrcodeReader: '/read-qrcode',
+	receiveCards: '/receive-cards',
 };
 
 export default routes;
