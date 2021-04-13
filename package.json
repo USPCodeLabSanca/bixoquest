@@ -23,10 +23,10 @@
 		"react-router-dom": "^5.2.0",
 		"react-scripts": "4.0.3",
 		"react-toastify": "^7.0.3",
+		"react-use-clipboard": "^1.0.7",
 		"redux": "^4.0.5",
 		"redux-persist": "^6.0.0",
-		"socket.io-client": "^4.0.1",
-		"react-use-clipboard": "^1.0.7"
+		"socket.io-client": "^4.0.1"
 	},
 	"scripts": {
 		"start": "craco start",

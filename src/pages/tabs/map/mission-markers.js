@@ -10,6 +10,7 @@ import MissionDialog from '../../../components/modals/mission-dialog';
 import MISSION_RANGE from '../../../constants/missions-range';
 import { useDispatch, useSelector } from 'react-redux';
 import { usePlayers } from '../playersContext';
+import { useDebounce } from '../../../lib/hooks/use-debounce';
 
 const missionIconOutOfRange = icon({
 	iconUrl: '/question-mark.png',
@@ -28,10 +29,15 @@ export default function MissionMarkers() {
 	const finishedMissions = useSelector(state => state.auth.user.completedMissions);
 	const nearbyMissions = useSelector(state => state.missions.nearbyMissions);
 
+	const fetchMissions = useDebounce(async () => {
+		dispatch(await MissionActions.fetchNearbyMissions(...userPlayer.position));
+	}, 1000);
+
 	React.useEffect(() => {
 		if (!userPlayer) return;
-		MissionActions.fetchNearbyMissions(...userPlayer.position).then(dispatch);
-	}, [userPlayer]);
+		console.log(userPlayer);
+		fetchMissions();
+	}, [userPlayer && userPlayer.position[0], userPlayer && userPlayer.position[1]]);
 
 	function inRangeMissonMarker(mission) {
 		return (
@@ -41,7 +47,10 @@ export default function MissionMarkers() {
 				icon={missionIconInRange}
 				position={[mission.lat, mission.lng]}
 				eventHandlers={{
-					click: () => dispatch(ModalActions.setCurrentModal(<MissionDialog mission={mission} user={userPlayer}/>)),
+					click: () =>
+						dispatch(
+							ModalActions.setCurrentModal(<MissionDialog mission={mission} user={userPlayer} />),
+						),
 				}}
 			/>
 		);
