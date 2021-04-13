@@ -5,7 +5,7 @@ import Message from './message';
 import { usePlayers } from '../../playersContext';
 
 const style = {
-	root: 'w-full absolute bottom-0 bg-white flex flex-col border-t border-gray-600 bg-gray-200',
+	root: 'w-full bg-white flex flex-col border-t border-gray-600 bg-gray-200 overflow-hidden',
 	input: 'w-full p-2',
 	button: 'border-l border-gray-600 p-2',
 	form: 'border flex border-gray-600 bg-white',
@@ -19,7 +19,7 @@ function readableDate(date) {
 	return `${hours}h ${minutes}m`;
 }
 
-export default function Chat() {
+export default function Chat({ isChatUp }) {
 	const { socket } = usePlayers();
 	const currentUser = useSelector(state => state.auth.user);
 	const token = useSelector(state => state.auth.token);
@@ -85,9 +85,9 @@ export default function Chat() {
 		<div
 			className={style.root}
 			style={{
-				height: '40vh',
+				height: isChatUp ? '40vh' : '0vh',
+				transition: '200ms',
 				zIndex: 99999,
-				top: '100%',
 			}}
 		>
 			<div className={style.messagesContainer} ref={messagesContainerRef}>

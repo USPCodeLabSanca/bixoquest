@@ -25,11 +25,12 @@ import ChatContainer from './chat';
 
 const style = {
 	root: 'w-full h-full relative',
-	floatingContainer: 'w-full h-full absolute',
-	actionButtonsContainer: 'absolute bottom-0 right-0 mr-4 mb-8 flex flex-col',
+	floatingContainer: 'w-full h-full absolute bottom-0 flex flex-col justify-end items-end',
+	actionButtonsContainer: 'relative w-max mr-4 mb-8 flex flex-col',
 	fab: {
 		margin: '8px 0',
 		outline: 'none',
+		position: 'static',
 	},
 };
 
@@ -45,10 +46,7 @@ export default function MapScreen() {
 
 	return (
 		<div className={style.root}>
-			<div
-				className={style.floatingContainer}
-				style={{ transition: 'bottom 200ms', bottom: isChatUp ? '40vh' : '0vh' }}
-			>
+			<div className={style.floatingContainer}>
 				<div className={style.actionButtonsContainer} style={{ zIndex: 100000 }}>
 					{availablePacks > 0 && (
 						<Fab size="small" style={style.fab} onClick={showPack}>
@@ -59,7 +57,7 @@ export default function MapScreen() {
 						<Chat />
 					</Fab>
 				</div>
-				<ChatContainer />
+				<ChatContainer isChatUp={isChatUp} />
 			</div>
 			<Map initialConfiguration={{ center: initialPlayerPosition, zoom: 18 }}>
 				<PlayerOverlay />
