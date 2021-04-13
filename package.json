@@ -1,65 +1,66 @@
 {
-  "name": "bixoquest",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@craco/craco": "^6.1.1",
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
-    "@testing-library/jest-dom": "^5.11.10",
-    "@testing-library/react": "^11.2.5",
-    "@testing-library/user-event": "^13.0.16",
-    "axios": "^0.21.1",
-    "geolib": "^3.3.1",
-    "jwt-decode": "^3.1.2",
-    "leaflet": "^1.7.1",
-    "moment": "^2.29.1",
-    "qrcode.react": "^1.0.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-leaflet": "^3.1.0",
-    "react-redux": "^7.2.3",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
-    "react-toastify": "^7.0.3",
-    "redux": "^4.0.5",
-    "redux-persist": "^6.0.0",
-    "socket.io-client": "^4.0.1"
-  },
-  "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "standard": {
-    "ignore": [
-      "/public/sw.js"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^4.0.3",
-    "@tailwindcss/postcss7-compat": "^2.0.4",
-    "autoprefixer": "^9.8.6",
-    "postcss": "^7.0.35",
-    "postcss-cli": "^8.3.1",
-    "prettier": "^2.2.1",
-    "standard": "^16.0.3",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
-  }
+	"name": "bixoquest",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@craco/craco": "^6.1.1",
+		"@material-ui/core": "^4.11.3",
+		"@material-ui/icons": "^4.11.2",
+		"@testing-library/jest-dom": "^5.11.10",
+		"@testing-library/react": "^11.2.5",
+		"@testing-library/user-event": "^13.0.16",
+		"axios": "^0.21.1",
+		"geolib": "^3.3.1",
+		"jwt-decode": "^3.1.2",
+		"leaflet": "^1.7.1",
+		"moment": "^2.29.1",
+		"qrcode.react": "^1.0.1",
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2",
+		"react-leaflet": "^3.1.0",
+		"react-redux": "^7.2.3",
+		"react-router-dom": "^5.2.0",
+		"react-scripts": "4.0.3",
+		"react-toastify": "^7.0.3",
+		"react-use-clipboard": "^1.0.7",
+		"redux": "^4.0.5",
+		"redux-persist": "^6.0.0",
+		"socket.io-client": "^4.0.1"
+	},
+	"scripts": {
+		"start": "craco start",
+		"build": "craco build",
+		"test": "craco test",
+		"eject": "react-scripts eject"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"standard": {
+		"ignore": [
+			"/public/sw.js"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@fullhuman/postcss-purgecss": "^4.0.3",
+		"@tailwindcss/postcss7-compat": "^2.0.4",
+		"autoprefixer": "^9.8.6",
+		"postcss": "^7.0.35",
+		"postcss-cli": "^8.3.1",
+		"prettier": "^2.2.1",
+		"standard": "^16.0.3",
+		"tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
+	}
 }

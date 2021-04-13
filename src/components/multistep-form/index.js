@@ -7,14 +7,15 @@ import PageRenderer from './page-renderer';
  * @prop {React.ReactNode[]} pages
  * @prop {(newPage: number) => void} [onChangePage]
  * @prop {(formValue: Object) => void} [onSubmit]
+ * @prop {boolean} [markStepOnURLHash]
  */
 
 /**
  * @type { React.FunctionComponent<Props> }
  */
-const MultistepForm = ({ pages, onSubmit, onChangePage }) => {
+const MultistepForm = ({ pages, markStepOnURLHash = true, onSubmit, onChangePage }) => {
 	return (
-		<MultistepProvider maxStage={pages.length - 1}>
+		<MultistepProvider markStepOnURLHash={markStepOnURLHash} maxStage={pages.length - 1}>
 			<PageRenderer onSubmit={onSubmit} pages={pages} onChangePage={onChangePage} />
 		</MultistepProvider>
 	);

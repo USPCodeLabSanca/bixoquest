@@ -28,19 +28,14 @@ const style = {
 	nextButton: { width: '100%', justifySelf: 'flex-end' },
 };
 
-function QrCodeScan() {
+export default function ReceiveCards() {
 	const [isSendingCode, setIsSendingCode] = React.useState(false);
 	const [qrCodeBackendResponse, setQrCodeBackendResponse] = React.useState(null);
 	const [qrCodePayload, setQrCodePayload] = React.useState(null);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
-	function error() {
-		toast.error('Erro ao tentar abrir a câmera.');
-		history.goBack();
-	}
-
-	async function onScan(token) {
+	async function sendToken(token) {
 		if (!token || isSendingCode || qrCodeBackendResponse) return;
 		setIsSendingCode(true);
 		const payload = JWTDecode(token);
@@ -48,7 +43,7 @@ function QrCodeScan() {
 		try {
 			const {
 				data: { data: response },
-			} = await API.sendQrCodeToken(token);
+			} = await API.sendDonationToken(token);
 			setQrCodeBackendResponse(response);
 			if (payload.isMission === false) dispatch(receiveDonation(payload.stickers));
 			else if (payload.isMission === true) {
@@ -99,25 +94,6 @@ function QrCodeScan() {
 		);
 	}
 
-	function renderMissionCompletetion() {
-		console.log(qrCodeBackendResponse, qrCodePayload);
-		return null;
-	}
-
-	function renderQrCodeReader() {
-		return (
-			<div>
-				<h1 className={style.scanTitle}>Leia um QRCode de missão ou de doação para prosseguir.</h1>
-				{/* <QrReader
-					delay={300}
-					style={{ width: '100%' }}
-					onError={error}
-					onScan={onScan}
-				/> */}
-			</div>
-		);
-	}
-
 	function renderContent() {
 		if (isSendingCode) {
 			return (
@@ -126,11 +102,7 @@ function QrCodeScan() {
 				</div>
 			);
 		} else if (qrCodeBackendResponse) {
-			if (qrCodePayload.isMission) {
-				return renderMissionCompletetion();
-			} else {
-				return renderDonation();
-			}
+			return renderDonation();
 		} else if (qrCodePayload) {
 			return (
 				<div className="w-full h-full flex flex-col justify-center items-center">
@@ -140,8 +112,6 @@ function QrCodeScan() {
 					</Button>
 				</div>
 			);
-		} else {
-			return renderQrCodeReader();
 		}
 	}
 
@@ -156,5 +126,3 @@ function QrCodeScan() {
 		</div>
 	);
 }
-
-export default QrCodeScan;
