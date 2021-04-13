@@ -51,17 +51,17 @@ export function PlayersContextProvider({ ...props }) {
 	function handlePlayerJoing() {
 		if (!userPlayer) return;
 		const { position } = userPlayer;
-		socket.emit('move', 'Bearer ' + token, position[0], position[1]);
+		// socket.emit('move', 'Bearer ' + token, position[0], position[1]);
 	}
 
 	React.useEffect(() => {
 		if (!socket) return;
-		socket.on('player-move', handlePlayerMove);
+		// socket.on('player-move', handlePlayerMove);
 		socket.on('leave-game', handlePlayerDisconnect);
 		socket.on('join-game', handlePlayerJoing);
 
 		return () => {
-			socket.off('player-move', handlePlayerMove);
+			// socket.off('player-move', handlePlayerMove);
 			socket.off('leave-game', handlePlayerDisconnect);
 			socket.off('join-game', handlePlayerDisconnect);
 		};
@@ -72,7 +72,7 @@ export function PlayersContextProvider({ ...props }) {
 		newUserPlayer.position = [lat, lng];
 		const newPlayers = { ...players, 'user-player': newUserPlayer };
 		setPlayers(newPlayers);
-		socket.emit('move', 'Bearer ' + token, lat, lng);
+		// socket.emit('move', 'Bearer ' + token, lat, lng);
 	}
 
 	function findPlayerBySocketId(socketId) {
