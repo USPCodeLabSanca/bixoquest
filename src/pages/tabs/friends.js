@@ -40,14 +40,15 @@ const classes = {
 };
 
 function renderCards(friendsList) {
+	console.log(friendsList)
 	const list = [];
   
 	for (const [i, friend] of friendsList.entries()) {
 	  list.push(
-		<Card className={style.card}>
+		<Card className={style.card} key={i}>
 			<Avatar style={style.avatar} />
-			<div className={style.userName}>{friend.user.name}</div>
-			<div className={style.userCourse}>{friend.user.course}</div>
+			<div className={style.userName}>{friend.name}</div>
+			<div className={style.userCourse}>{friend.course}</div>
 		</Card>)
 	}
   
@@ -63,23 +64,22 @@ function renderCards(friendsList) {
 export default function ProfilePage() {
 	const user = useSelector(state => state.auth.user);
 
-	let friendData;
-	
+	const [isLoading, setIsLoading] = React.useState(true);
+	const [friendData, setFriendData] = React.useState([]);
 
 	useEffect(() => {
         (async () => {
             try {
 				//console.log(API.getFriends);
-                //const data = await API.getFriends();
-				await API.getFriends();
-                //console.log(data);
+				setFriendData((await API.getFriends()).data)
+				setIsLoading(false);
+                console.log(friendData);
             } catch (e) {
                 console.error(e);
             }
         })();
     }, []);
 
-	console.log("teste3", friendData);
 
 	let friendsList=[{user}, {user}, {user}, {user}];
 
@@ -95,8 +95,8 @@ export default function ProfilePage() {
 	return (
 		<div className={style.root}>
 			<h1 className={classes.title}>Meus amigos</h1>
-					
-			{renderCards(friendsList)}
+			
+			{!isLoading && renderCards(friendData)}
 					
 			<div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
 				<Fab size="small" style={style.fab} onClick={findFriends}>
