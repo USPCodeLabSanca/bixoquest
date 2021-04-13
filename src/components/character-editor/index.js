@@ -12,9 +12,9 @@ import { useEffectUpdate } from '../../lib/hooks/use-effect-update';
 
 const classes = {
 	root: 'grid',
-	arrows: 'flex flex-col justify-between',
-	selectorRoot: `border flex flex-col`,
-	selectorTitle: `text-center px-2`,
+	arrows: 'flex flex-col justify-between pl-4',
+	selectorRoot: `flex flex-col`,
+	selectorTitle: `text-sm text-center px-2`,
 	selectorArrowContainer: `flex`,
 	selectorArrowNumber: `w-full text-center`,
 };
@@ -81,16 +81,18 @@ export default function CharacterEditor({ onChange = () => {}, initialCharacter 
 			style={{ minHeight: 400, gridTemplateColumns: 'auto max-content' }}
 			className={classes.root}
 		>
-			<div className="flex flex-col">
-				<SlideableCharacterRenderer charParts={currentChar} />
-				<Button
-					style={{ margin: '0 16px' }}
-					className="px-4"
-					variant="contained"
-					onClick={randomize}
-				>
-					Aleatório
-				</Button>
+			<div className="flex flex-col items-center">
+        <div className="w-32 h-full">
+				  <SlideableCharacterRenderer charParts={currentChar} />
+        </div>
+        <Button
+          variant="contained"
+          onClick={randomize}
+          size="small"
+          fullWidth
+        >
+          Aleatório
+        </Button>
 			</div>
 			<div className={classes.arrows}>
 				{makeSelector('skin')}
