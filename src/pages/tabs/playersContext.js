@@ -93,7 +93,7 @@ export function PlayersContextProvider({ ...props }) {
 			const userPlayer = await makeUserPlayer();
 			const newPlayers = { ...players, 'user-player': userPlayer };
 			setPlayers(newPlayers);
-			socket.emit('move', 'Bearer ' + token, userPlayer.position[0], userPlayer.position[1]);
+			// socket.emit('move', 'Bearer ' + token, userPlayer.position[0], userPlayer.position[1]);
 		})();
 	}, [socket, user]);
 

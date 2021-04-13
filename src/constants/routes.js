@@ -9,6 +9,7 @@ const routes = {
 		},
 	},
 	login: '/login',
+	loginTest: '/login-test',
 	signup: '/signup',
 	forgotPassword: '/forgot-password',
 	giveCards: '/give-cards',

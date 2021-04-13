@@ -20,6 +20,7 @@ import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-che
 // Pages
 import Tabs from './pages/tabs';
 import Login from './pages/login';
+import LoginTest from './pages/login-test';
 import Signup from './pages/signup';
 import GiveCards from './pages/give-cards/index.js';
 import ReceiveCards from './pages/receive-cards/index.js';
@@ -52,6 +53,7 @@ function App() {
 								]}
 								component={requiresAuthentication(Tabs)}
 							/>
+							<Route path={routes.loginTest} component={requiresNoAuthentication(LoginTest)} />
 							<Route path={routes.login} component={requiresNoAuthentication(Login)} />
 							<Route path={routes.signup} component={requiresNoAuthentication(Signup)} />
 							<Route path={routes.giveCards} component={requiresAuthentication(GiveCards)} />
