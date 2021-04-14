@@ -11,22 +11,11 @@ import API from '../../api';
 
 const style = {
 	root: 'p-4 h-full',
-	card: 'w-1/2 flex flex-col justify-center items-center p-4',
-	friendCards: 'space-x-1 flex flex-row ',
-	avatar: { width: '15vw', height: '15vw', marginBottom: '8px' },
-	userName: 'text-2xl text-center',
-	userCourse: '',
-	userYear: '',
-	logoutButton: {
-		margin: '16px 0',
-		backgroundColor: '#718096',
-		color: 'white',
-		padding: '16px 0',
-		fontSize: 16,
-	},
-	generalButton: {
-		margin: '8px 0',
-	},
+	card: 'flex flex-col justify-center items-center p-2',
+	friendCards: 'w-auto grid grid-cols-3 gap-1 ',
+	avatar: { width: '15vw', height: '15vw' },
+	userName: 'text-md text-center font-bold',
+	userCourse: 'text-xs',
 	actionButtonsContainer: 'absolute bottom-0 right-0 mr-4 mb-16 flex flex-col',
 	fab: {
 		margin: '8px 0',
