@@ -27,6 +27,7 @@ import MissionMarkers from './mission-markers';
 import { initialPlayerPosition } from '../../../constants/initial-player-position';
 import MemorablePlaces from './memorable-places';
 import ChatContainer from './chat';
+import { usePlayers } from '../playersContext';
 
 const style = {
 	root: 'w-full h-full relative',
@@ -40,6 +41,7 @@ const style = {
 };
 
 export default function MapScreen() {
+  const { players } = usePlayers();
 	// const history = useHistory();
 	const [isChatUp, setIsChatUp] = React.useState(false);
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
@@ -73,8 +75,12 @@ export default function MapScreen() {
 				<ChatContainer isChatUp={isChatUp} />
 			</div>
 			<Map initialConfiguration={{ center: initialPlayerPosition, zoom: 18 }}>
-				<PlayerOverlay />
-				<MissionMarkers />
+        {
+				  players && <PlayerOverlay />
+        }
+        {
+				  players && <MissionMarkers />
+        }
 				<MemorablePlaces />
 			</Map>
 		</div>

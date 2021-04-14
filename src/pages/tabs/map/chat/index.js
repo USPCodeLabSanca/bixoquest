@@ -33,7 +33,7 @@ export default function Chat({ isChatUp }) {
 		const text = event.target.message.value;
 
 		if (!text) return;
-		// socket.emit('chat-message', 'Bearer ' + token, text);
+		socket.emit('chat-message', 'Bearer ' + token, text);
 		event.target.message.value = '';
 		const newMessage = {
 			text,

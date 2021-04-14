@@ -28,15 +28,15 @@ function PlayerImage({ player, userPlayer }) {
 	const imageRef = React.useRef();
 	const dispatch = useDispatch();
 
-	function handlePlayerClick(event) {
-		if (player === userPlayer) return;
-		event.stopPropagation();
-		dispatch(setCurrentModal(<UserProfileModal user={player.user} />));
-	}
-
 	React.useEffect(() => {
 		const imageElement = imageRef.current.getElement();
 		const style = imageElement.style;
+
+    function handlePlayerClick(event) {
+      if (player === userPlayer) return;
+      event.stopPropagation();
+      dispatch(setCurrentModal(<UserProfileModal user={player.user} />));
+    }
 
 		style.pointerEvents = 'auto';
 
@@ -89,7 +89,7 @@ function PlayerImage({ player, userPlayer }) {
 }
 
 export default function PlayerOverlay() {
-	const { players, movePlayer, userPlayer } = usePlayers();
+	const { players, movePlayer } = usePlayers();
 
 	useMapEvent('click', event => {
 		const { lat, lng } = event.latlng;
@@ -98,8 +98,8 @@ export default function PlayerOverlay() {
 
 	return (
 		<>
-			{players.map((player, index) => (
-				<PlayerImage player={player} userPlayer={userPlayer} key={index} />
+      {Object.values(players).map((player, index) => (
+				<PlayerImage player={player} userPlayer={players['user-player']} key={index} />
 			))}
 		</>
 	);
