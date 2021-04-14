@@ -44,7 +44,7 @@ function PlayerImage({ player, userPlayer }) {
 		return () => {
 			imageElement.removeEventListener('click', handlePlayerClick);
 		};
-	}, []);
+	}, [player, userPlayer]);
 
 	React.useEffect(() => {
 		const { lat, lng } = imageRef.current.getBounds().getCenter();
