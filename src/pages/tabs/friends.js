@@ -7,6 +7,8 @@ import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import CharacterRenderer from '../../components/character-renderer';
+
 import API from '../../api';
 
 
@@ -46,10 +48,13 @@ function renderCards(friendsList) {
 	for (const [i, friend] of friendsList.entries()) {
 	  list.push(
 		<Card className={style.card} key={i}>
-			<Avatar style={style.avatar} />
+			<div style={{ width: '100%', height: 150 }}>
+				<CharacterRenderer charParts={friend.character} />
+			</div>
 			<div className={style.userName}>{friend.name}</div>
 			<div className={style.userCourse}>{friend.course}</div>
-		</Card>)
+		</Card>
+		)
 	}
   
 	return (
@@ -81,7 +86,7 @@ export default function ProfilePage() {
     }, []);
 
 
-	let friendsList=[{user}, {user}, {user}, {user}];
+	//let friendsList=[{user}, {user}, {user}, {user}];
 
 
 	function findFriends() {
