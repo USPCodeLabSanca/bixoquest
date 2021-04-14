@@ -1,6 +1,6 @@
 import React from 'react';
 
-import uniqolor from 'uniqolor';
+// import uniqolor from 'uniqolor';
 
 import CharacterRenderer from '../../../../components/character-renderer';
 
@@ -50,7 +50,7 @@ export default function Message({ message }) {
 			>
 				<p
           className={style.senderName}
-          style={{color: uniqolor.random({saturation: 95, lightness: [30, 40]}).color}}
+          // style={{color: uniqolor.random({saturation: 95, lightness: [30, 40]}).color}}
         >{sender.name}</p>
 				<p className={style.text}>{text}</p>
 				<p className={style.date}>{readableDate(date)}</p>
