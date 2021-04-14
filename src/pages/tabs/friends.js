@@ -1,10 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-import { useSelector } from 'react-redux';
+import React, { useEffect} from 'react';
 
 import Fab from '@material-ui/core/Fab';
 import Card from '@material-ui/core/Card';
-import Avatar from '@material-ui/core/Avatar';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import CharacterRenderer from '../../components/character-renderer';
@@ -42,7 +39,6 @@ const classes = {
 };
 
 function renderCards(friendsList) {
-	console.log(friendsList)
 	const list = [];
   
 	for (const [i, friend] of friendsList.entries()) {
@@ -64,30 +60,22 @@ function renderCards(friendsList) {
 	)
   }
 
-
-
 export default function ProfilePage() {
-	const user = useSelector(state => state.auth.user);
-
 	const [isLoading, setIsLoading] = React.useState(true);
 	const [friendData, setFriendData] = React.useState([]);
 
 	useEffect(() => {
         (async () => {
             try {
-				//console.log(API.getFriends);
 				setFriendData((await API.getFriends()).data)
 				setIsLoading(false);
-                console.log(friendData);
             } catch (e) {
                 console.error(e);
             }
         })();
     }, []);
 
-
 	//let friendsList=[{user}, {user}, {user}, {user}];
-
 
 	function findFriends() {
 		console.log("procurar amiguinhos");
