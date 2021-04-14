@@ -1,4 +1,7 @@
 import React from 'react';
+
+import uniqolor from 'uniqolor';
+
 import CharacterRenderer from '../../../../components/character-renderer';
 
 const style = {
@@ -6,12 +9,12 @@ const style = {
 	myMessageRoot: 'justify-end',
 	otherMessageRoot: '',
 	characterContainer: 'self-end',
-	messageCard: 'mb-8 p-2 rounded-xl my-1',
+	messageCard: 'mb-8 p-4 rounded-xl my-1',
 	myMessageCard: 'bg-white rounded-br-none',
 	otherMessageCard: 'rounded-bl-none',
-	senderName: 'text-sm mb-2',
-	text: 'break-words',
-	date: 'text-sm mt-2',
+	senderName: 'text-sm',
+	text: 'break-words py-1',
+	date: 'text-xs',
 };
 
 function readableDate(date) {
@@ -45,7 +48,10 @@ export default function Message({ message }) {
 					isCurrentUser ? style.myMessageCard : style.otherMessageCard
 				}`}
 			>
-				<p className={style.senderName}>{sender.name}</p>
+				<p
+          className={style.senderName}
+          style={{color: uniqolor.random({saturation: 95, lightness: [30, 40]}).color}}
+        >{sender.name}</p>
 				<p className={style.text}>{text}</p>
 				<p className={style.date}>{readableDate(date)}</p>
 			</div>
