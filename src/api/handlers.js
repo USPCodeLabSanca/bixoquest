@@ -12,7 +12,7 @@ import { withCustomError } from './error-message';
 const silentHandler = handler => withCustomError(handler, () => '_NO_ERROR_MESSAGE');
 
 const Handlers = {
-	fetchNearbyMissions: (lat, long) => API.get(`/missions?lat=${lat}&lng=${long}`),
+	fetchNearbyMissions: (lat, lng) => API.get(`/missions?lat=${lat}&lng=${lng}`),
 
 	completeLocationMission: (missionId, lat, lng) =>
 		API.post(`/missions/${missionId}/complete`, { lat, lng }),
