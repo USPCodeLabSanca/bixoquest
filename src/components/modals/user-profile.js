@@ -11,6 +11,9 @@ const style = {
 	card: 'p-4 bg-white flex flex-col rounded-lg max-h-full overflow-auto max-w-md w-full',
 	name: 'text-2xl text-center my-4',
 	info: 'text-md',
+	gridInfo: 'grid grid-rows-2 grid-flow-col gap-2',
+	gridCol1: 'col-span-10 row-span-2',
+	gridCol2: 'col-span-2 row-span-2',
 };
 
 export default function UserProfileModal({ user }) {
@@ -20,6 +23,10 @@ export default function UserProfileModal({ user }) {
 		dispatch(closeModal());
 	}
 
+	function addFriend() {
+		console.log("Add amiguinho");
+	}
+
 	return (
 		<Modal open className={style.root} onClose={handleClose}>
 			<div className={style.card}>
@@ -27,8 +34,22 @@ export default function UserProfileModal({ user }) {
 					<CharacterRenderer charParts={user.character} />
 				</div>
 				<div className={style.name}>{user.name}</div>
-				<div className={style.info}>Curso: {user.course}</div>
-				<div className={style.info}>Discord tag: {user.discord}</div>
+				<div className={style.gridInfo}>
+					<div className={style.gridCol1}>
+						<div className={style.info}>Curso: {user.course}</div>
+						<div className={style.info}>Discord tag: {user.discord}</div>
+					</div>
+					<div className={style.gridCol2}>
+						<Button
+							color="primary"
+							variant="contained"
+							style={{ padding: 15 }}
+							onClick={addFriend}
+						>
+							Adicionar amigo
+						</Button>
+					</div>
+				</div>
 				<Button
 					color="secondary"
 					variant="contained"
