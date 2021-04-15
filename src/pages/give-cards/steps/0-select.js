@@ -35,8 +35,8 @@ export default function SelectCardItems() {
 
 	function selectCard(cardId) {
 		const newCardValue = (selectedCards[cardId] || 0) + 1;
-		if (newCardValue > uniquedCards[cardId]) {
-			toast.error('Você não pode selecionar mais cartas');
+		if (newCardValue >= uniquedCards[cardId]) {
+			toast.error('Você não pode doar todas as suas cartas (deve sobrar pelo menos uma)');
 			return;
 		}
 		setSelectedCards({ ...selectedCards, [cardId]: newCardValue });
