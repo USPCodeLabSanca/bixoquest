@@ -10,9 +10,9 @@ import Button from '@material-ui/core/Button';
 const style = {
 	root: 'flex justify-center items-center',
 	backdrop: 'fixed top-0 left-0 w-full h-full flex justify-center items-center',
-	card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded',
+	card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded max-h-full overflow-auto',
 	imageContainer: '',
-	name: 'bg-gray-800 text-xl text-white p-4 text-center',
+	name: 'bg-gray-800 text-xl text-white py-4 px-8 text-center',
 	image: 'absolute inset-0 h-full-important shadow-md w-full',
 	description: 'text-xs p-8',
 	buttonContainer: 'w-full px-8 pb-8',

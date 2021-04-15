@@ -10,8 +10,8 @@ import { useDispatch } from 'react-redux';
 
 const style = {
   root: 'flex justify-center items-center',
-  card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded text-center',
-	modalTitle: 'bg-gray-800 text-xl text-white p-4',
+  card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded text-center max-h-full overflow-auto',
+	modalTitle: 'bg-gray-800 text-xl text-white py-4 px-8',
 	title: 'text-lg p-8',
 	description: 'text-xs px-8',
 	locationReference: 'p-8',

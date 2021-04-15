@@ -85,7 +85,7 @@ export default function CharacterEditor({ onChange = () => {}, initialCharacter 
 				<div className="w-32 h-full">
 					<SlideableCharacterRenderer charParts={currentChar} />
 				</div>
-				<Button variant="contained" onClick={randomize} size="small" fullWidth>
+				<Button variant="contained" color='primary' onClick={randomize} size="small" fullWidth>
 					Aleatório
 				</Button>
 			</div>
