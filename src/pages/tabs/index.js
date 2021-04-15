@@ -25,8 +25,8 @@ const style = {
 const TabOrder = [
 	Routes.tabs.missionsTabs.missions,
 	Routes.tabs.map,
-	Routes.tabs.profile,
 	Routes.tabs.friends,
+	Routes.tabs.profile,
 ];
 
 const PathToTabIndex = path => TabOrder.findIndex(s => s === path);
@@ -61,8 +61,8 @@ export default function TabsScreen() {
 					<Tabs value={tabValue} onChange={handleChange} variant="fullWidth" className="w-full">
 						<Tab icon={<BookIcon />} />
 						<Tab icon={<HomeIcon />} />
-						<Tab icon={<PersonIcon />} />
 						<Tab icon={<GroupIcon />} />
+						<Tab icon={<PersonIcon />} />
 					</Tabs>
 				</footer>
 			</div>

@@ -1,22 +1,24 @@
 import React from 'react';
 
-import Modal from '../modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { closeModal } from '../../redux/actions/modal';
-import CharacterRenderer from '../character-renderer';
-import { Button, CircularProgress } from '@material-ui/core';
-import { addFriend as addFriendAction } from '../../redux/actions/friends';
-import routes from '../../constants/routes';
 import { useHistory } from 'react-router-dom';
+import { Button, CircularProgress } from '@material-ui/core';
+import Backdrop from '@material-ui/core/Backdrop';
+
+import Modal from '../modal';
+import { closeModal } from '../../redux/actions/modal';
+import { addFriend as addFriendAction } from '../../redux/actions/friends';
+import CharacterRenderer from '../character-renderer';
+import routes from '../../constants/routes';
 
 const style = {
 	root: 'flex justify-center items-center',
-	card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded text-center',
+	card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded text-center max-h-full overflow-auto',
 	modalTitle: 'bg-gray-800 text-xl text-white py-4 px-8',
 	info: 'text-md',
 	gridInfo: 'grid grid-rows-2 grid-flow-col gap-4',
 	gridCol1: 'col-span-10 row-span-2 p-8',
-	gridCol2: 'col-span-1 row-span-2',
+	gridCol2: 'col-span-1 row-span-2 pr-8 py-8',
 	buttonContainer: 'w-full px-8 pb-8',
 };
 
@@ -50,55 +52,54 @@ export default function UserProfileModal({ user }) {
 	}
 
 	return (
-		<Modal open className={style.root} onClose={handleClose}>
-			<div className={style.card}>
-				<div className={style.modalTitle}>{user.name}</div>
-				<div style={{ height: 300 }}>
-					<CharacterRenderer charParts={user.character} />
-				</div>
-				<div className={style.gridInfo}>
-					<div className={style.gridCol1}>
-						<div className={style.info}>
-							Curso: <b>{user.course}</b>
-						</div>
-						<div className={style.info}>
-							Discord tag: <b>{user.discord}</b>
-						</div>
-					</div>
-					{!isFriend && (
-						<div className={style.gridCol2}>
-							<Button
-								color="primary"
-								variant="contained"
-								style={{ padding: 10 }}
-								onClick={addFriend}
-							>
-								Adicionar amigo{' '}
-								{isLoading && (
-									<CircularProgress size={16} style={{ color: 'white', marginLeft: 8 }} />
-								)}
-							</Button>
-						</div>
-					)}
-				</div>
-				<div className={style.buttonContainer}>
-					<Button
-						color="primary"
-						variant="contained"
-						fullWidth
-						style={{ marginBottom: 8 }}
-						onClick={handleDonate}
-					>
-						Doar cartas
-					</Button>
-					<Button variant="contained" color="secondary" fullWidth onClick={handleClose}>
-						Ok
-						{isLoading && (
-							<CircularProgress style={{ margin: '0 8px', color: 'black' }} size={20} />
-						)}
-					</Button>
-				</div>
-			</div>
-		</Modal>
+    <>
+      <Modal open className={style.root} onClose={handleClose}>
+        <div className={style.card}>
+          <div className={style.modalTitle}>{user.name}</div>
+          <div style={{ height: 300 }}>
+            <CharacterRenderer charParts={user.character} />
+          </div>
+          <div className={style.gridInfo}>
+            <div className={style.gridCol1}>
+              <div className={style.info}>
+                Curso: <b>{user.course}</b>
+              </div>
+              <div className={style.info}>
+                Discord tag: <b>{user.discord}</b>
+              </div>
+            </div>
+            {!isFriend && (
+              <div className={style.gridCol2}>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  style={{ padding: 10 }}
+                  onClick={addFriend}
+                >
+                  Adicionar amigo
+                </Button>
+              </div>
+            )}
+          </div>
+          <div className={style.buttonContainer}>
+            <Button
+              color="primary"
+              variant="contained"
+              fullWidth
+              style={{ marginBottom: 8 }}
+              onClick={handleDonate}
+            >
+              Doar cartas
+            </Button>
+            <Button variant="contained" color="secondary" fullWidth onClick={handleClose}>
+              Ok
+            </Button>
+          </div>
+        </div>
+      </Modal>
+      <Backdrop style={{ zIndex: 9999999 }} open={isLoading}>
+        <CircularProgress size={50} style={{ color: 'white' }} />
+      </Backdrop>
+    </>
 	);
 }
