@@ -49,9 +49,11 @@ export default function Message({ message }) {
 				}`}
 			>
 				<p
-          className={style.senderName}
-          // style={{color: uniqolor.random({saturation: 95, lightness: [30, 40]}).color}}
-        >{sender.name}</p>
+					className={style.senderName}
+					// style={{color: uniqolor.random({saturation: 95, lightness: [30, 40]}).color}}
+				>
+					{sender.name}
+				</p>
 				<p className={style.text}>{text}</p>
 				<p className={style.date}>{readableDate(date)}</p>
 			</div>

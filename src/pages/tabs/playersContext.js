@@ -15,7 +15,12 @@ function createPlayer(user, characterPNG) {
 	};
 }
 
-const serverSocket = io(SOCKET_URL, { path: SOCKET_PATH, requestTimeout: 100000, reconnectionDelay: 100000, randomizationFactor: 0 });
+const serverSocket = io(SOCKET_URL, {
+	path: SOCKET_PATH,
+	requestTimeout: 100000,
+	reconnectionDelay: 100000,
+	randomizationFactor: 0,
+});
 
 serverSocket.on('error-message', (...args) => console.error('SOCKET ERROR', ...args));
 
@@ -28,7 +33,7 @@ export function PlayersContextProvider({ ...props }) {
 	React.useEffect(() => {
 		setSocket(serverSocket);
 
-    async function makeUserPlayer() {
+		async function makeUserPlayer() {
 			const newUser = { ...user };
 			const png = await makeCharacterPNG(user.character);
 			const userPlayer = createPlayer(newUser, png);
@@ -43,43 +48,43 @@ export function PlayersContextProvider({ ...props }) {
 		})();
 	}, []);
 
-  React.useEffect(() => {
-    if (!socket) return;
+	React.useEffect(() => {
+		if (!socket) return;
 
-    async function handlePlayerMove(eventData) {
-      const { socketId, user, lat, lng } = eventData;
-      const newPlayers = { ...players };
-      if (players && players[socketId]) {
-        newPlayers[socketId].position = [lat, lng];
-        newPlayers[socketId].user = user;
-      } else {
-        const png = await makeCharacterPNG(user.character);
-        const player = createPlayer(user, png);
-        player.position = [lat, lng];
-        newPlayers[socketId] = player;
-      }
-      setPlayers(newPlayers);
-    }
+		async function handlePlayerMove(eventData) {
+			const { socketId, user, lat, lng } = eventData;
+			const newPlayers = { ...players };
+			if (players && players[socketId]) {
+				newPlayers[socketId].position = [lat, lng];
+				newPlayers[socketId].user = user;
+			} else {
+				const png = await makeCharacterPNG(user.character);
+				const player = createPlayer(user, png);
+				player.position = [lat, lng];
+				newPlayers[socketId] = player;
+			}
+			setPlayers(newPlayers);
+		}
 
-    function handlePlayerDisconnect({ socketId }) {
-      const newPlayers = { ...players };
-      delete newPlayers[socketId];
-      setPlayers(newPlayers);
-    }
+		function handlePlayerDisconnect({ socketId }) {
+			const newPlayers = { ...players };
+			delete newPlayers[socketId];
+			setPlayers(newPlayers);
+		}
 
-    socket.on('player-move', handlePlayerMove);
+		socket.on('player-move', handlePlayerMove);
 		socket.on('leave-game', handlePlayerDisconnect);
-    // socket.on('join-game', handlePlayerJoing);
+		// socket.on('join-game', handlePlayerJoing);
 
-    return () => {
+		return () => {
 			socket.off('player-move', handlePlayerMove);
 			socket.off('leave-game', handlePlayerDisconnect);
-      // socket.off('join-game', handlePlayerDisconnect);
+			// socket.off('join-game', handlePlayerDisconnect);
 		};
 	}, [socket, players]);
 
-  // causes polling loop bug
-  // function handlePlayerJoing() {
+	// causes polling loop bug
+	// function handlePlayerJoing() {
 	// 	if (!userPlayer) return;
 	// 	const { position } = userPlayer;
 	// 	socket.emit('move', 'Bearer ' + token, position[0], position[1]);
@@ -98,10 +103,7 @@ export function PlayersContextProvider({ ...props }) {
 	}
 
 	return (
-		<context.Provider
-			value={{ players, movePlayer, socket, findPlayerBySocketId }}
-			{...props}
-		/>
+		<context.Provider value={{ players, movePlayer, socket, findPlayerBySocketId }} {...props} />
 	);
 }
 
