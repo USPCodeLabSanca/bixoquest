@@ -87,7 +87,7 @@ const MissionCard = ({ mission }) => {
 				toast.success('Senha correta!');
 				toggle();
 			} catch (e) {
-				console.log(e);
+				console.error(e);
 			} finally {
 				setIsSendingPassword(false);
 			}
@@ -149,7 +149,6 @@ export default function Missions() {
 	const [missions, setMissions] = useState();
 	const [isLoadingMissions, setIsLoadingMissions] = useState(true);
 
-	console.log(useSelector(state => state.auth.user));
 	const user = useSelector(state => state.auth.user);
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
 	const openPackModal = ModalActions.useModal(() => <PacketsModal />);

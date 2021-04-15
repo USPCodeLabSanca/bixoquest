@@ -4,8 +4,12 @@ import Button from '@material-ui/core/Button';
 
 import { useMultistep } from '../../../components/multistep-form/context';
 import StickersImages from '../../../constants/stickers';
-import API from '../../../api';
 import { CircularProgress } from '@material-ui/core';
+import { useHistory, useParams } from 'react-router';
+import routes from '../../../constants/routes';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { donateStickers } from '../../../redux/actions/stickers';
 
 const style = {
 	root: 'h-full w-full flex flex-col',
@@ -19,9 +23,12 @@ const style = {
 
 export default function Confirmation() {
 	const [isFetchingToken, setIsFetchingToken] = React.useState(false);
-	const { nextStage, prevStage, formValue, updateFormValue } = useMultistep();
+	const dispatch = useDispatch();
+	const { prevStage, formValue } = useMultistep();
+	const history = useHistory();
 
 	const { selectedCards } = formValue;
+	const { id: targetId } = useParams();
 
 	async function handleSubmit() {
 		const cards = [];
@@ -30,9 +37,9 @@ export default function Confirmation() {
 		});
 		setIsFetchingToken(true);
 		try {
-			const { data: token } = await API.fetchDonationToken({ stickers: cards });
-			updateFormValue({ token });
-			nextStage();
+			dispatch(await donateStickers(cards, targetId));
+			toast.success('Cartas enviadas com sucesso!');
+			history.push(routes.tabs.map);
 		} catch (e) {
 			console.error(e);
 		} finally {

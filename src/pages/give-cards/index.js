@@ -6,28 +6,32 @@ import MultistepForm from '../../components/multistep-form';
 
 import SelectCardItems from './steps/0-select';
 import ConfirmCardItems from './steps/1-confirmation';
-import CopyLink from './steps/2-link';
+import { updateUser as updateUserAction } from '../../redux/actions/auth';
 
 import Routes from '../../constants/routes';
+import { useDispatch } from 'react-redux';
 
 const style = {
 	root: 'w-full h-full flex flex-col',
 	header:
 		'w-full h-12 flex justify-end text-white items-center uppercase font-bold mb-8 bg-gray-100 shadow-lg',
 	headerButton: 'w-16 h-full justify-center items-center flex',
-	backArrowContainer:
-		'z-10 w-16 h-16 rounded-full flex justify-center items-center absolute left-0',
 	main: 'h-full overflow-auto',
-	prevButton: { width: '100%', justifySelf: 'flex-start' },
-	nextButton: { width: '100%', justifySelf: 'flex-end' },
 };
 
 function GiveCards() {
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	function leaveScreen() {
 		history.replace(Routes.tabs.map);
 	}
+
+	React.useEffect(() => {
+		(async () => {
+			dispatch(await updateUserAction());
+		})();
+	}, []);
 
 	return (
 		<div className={style.root}>
@@ -39,7 +43,7 @@ function GiveCards() {
 			<main className={style.main}>
 				<MultistepForm
 					markStepOnURLHash={false}
-					pages={[<SelectCardItems />, <ConfirmCardItems />, <CopyLink />]}
+					pages={[<SelectCardItems />, <ConfirmCardItems />]}
 				/>
 			</main>
 		</div>

@@ -6,6 +6,8 @@ import { closeModal } from '../../redux/actions/modal';
 import CharacterRenderer from '../character-renderer';
 import { Button, CircularProgress } from '@material-ui/core';
 import { addFriend as addFriendAction } from '../../redux/actions/friends';
+import routes from '../../constants/routes';
+import { useHistory } from 'react-router-dom';
 
 const style = {
 	root: 'flex justify-center items-center p-4',
@@ -21,6 +23,7 @@ export default function UserProfileModal({ user }) {
 	const friends = useSelector(state => state.auth.user.friends);
 	const dispatch = useDispatch();
 	const [isLoading, setIsLoading] = React.useState(false);
+	const history = useHistory();
 
 	const isFriend = friends.includes(user._id);
 
@@ -38,6 +41,11 @@ export default function UserProfileModal({ user }) {
 			handleClose();
 			setIsLoading(false);
 		}
+	}
+
+	function handleDonate() {
+		history.push(routes.giveCards.replace(':id', user._id));
+		dispatch(closeModal());
 	}
 
 	return (
@@ -73,9 +81,17 @@ export default function UserProfileModal({ user }) {
 					)}
 				</div>
 				<Button
-					color="secondary"
+					color="primary"
 					variant="contained"
 					style={{ marginTop: 16 }}
+					onClick={handleDonate}
+				>
+					Doar cartas
+				</Button>
+				<Button
+					color="secondary"
+					variant="contained"
+					style={{ marginTop: 8 }}
 					onClick={handleClose}
 				>
 					Ok
