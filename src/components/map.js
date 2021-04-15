@@ -47,7 +47,10 @@ export default function CustomMap({
 					maxZoom={18} // Map cannot have more than 18 zoom without breaking
 					style={{ height: '100%' }}
 				>
-					<TileLayer attribution="" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+					<TileLayer
+						attribution=''
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
 					{children}
 				</MapContainer>
 			)}

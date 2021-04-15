@@ -23,20 +23,20 @@ const missionIconInRange = icon({
 });
 
 export default function MissionMarkers() {
-	const { userPlayer } = usePlayers();
+	const { players } = usePlayers();
 
 	const dispatch = useDispatch();
 	const finishedMissions = useSelector(state => state.auth.user.completedMissions);
 	const nearbyMissions = useSelector(state => state.missions.nearbyMissions);
 
 	const fetchMissions = useDebounce(async () => {
-		dispatch(await MissionActions.fetchNearbyMissions(...userPlayer.position));
+		dispatch(await MissionActions.fetchNearbyMissions(players['user-player'].position[0], players['user-player'].position[1]));
 	}, 1000);
 
 	React.useEffect(() => {
-		if (!userPlayer) return;
+		if (!players) return;
 		fetchMissions();
-	}, [userPlayer && userPlayer.position[0], userPlayer && userPlayer.position[1]]);
+	}, [players['user-player']?.position]);
 
 	function inRangeMissonMarker(mission) {
 		return (
@@ -48,7 +48,7 @@ export default function MissionMarkers() {
 				eventHandlers={{
 					click: () =>
 						dispatch(
-							ModalActions.setCurrentModal(<MissionDialog mission={mission} user={userPlayer} />),
+							ModalActions.setCurrentModal(<MissionDialog mission={mission} user={players['user-player']} />),
 						),
 				}}
 			/>
@@ -70,13 +70,13 @@ export default function MissionMarkers() {
 		if (
 			getDistance(
 				{ latitude: mission.lat, longitude: mission.lng },
-				{ latitude: userPlayer.position[0], longitude: userPlayer.position[1] },
+				{ latitude: players['user-player'].position[0], longitude: players['user-player'].position[1] },
 			) < MISSION_RANGE
 		)
 			return inRangeMissonMarker(mission);
 		return outOfRangeMissonMarker(mission);
 	}
-	if (!nearbyMissions || !userPlayer) return null;
+	if (!nearbyMissions || !players['user-player']) return null;
 
 	const unfinishedMissions = nearbyMissions
 		.filter(mission => mission.type === 'location')

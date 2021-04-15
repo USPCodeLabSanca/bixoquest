@@ -51,34 +51,28 @@ export default function ProfilePage() {
 				<div className={style.userName}>{user.name}</div>
 				<div className={style.userCourse}>{user.course}</div>
 			</Card>
-			<div className="pt-4">
-				<Button
-					variant="contained"
-					color="secondary"
-					fullWidth
-					style={style.generalButton}
-					onClick={edit}
-					size="small"
-				>
-					Editar perfil
-				</Button>
-			</div>
-			<div className="pt-4">
-				<Button
-					variant="contained"
-					fullWidth
-					style={style.generalButton}
-					onClick={foundABug}
-					size="small"
-				>
-					Achou um bug?
-				</Button>
-			</div>
-			<div className="pt-4">
-				<Button variant="contained" fullWidth style={style.logoutButton} onClick={logout}>
-					SAIR
-				</Button>
-			</div>
+      <div className="pt-4">
+        <Button
+          variant="contained"
+          color="secondary"
+          fullWidth
+          style={style.generalButton}
+          onClick={edit}
+          size="small"
+        >
+          Editar perfil
+        </Button>
+      </div>
+      <div className="pt-4">
+        <Button variant="contained" fullWidth style={style.generalButton} onClick={foundABug} size="small">
+          Achou um bug?
+        </Button>
+      </div>
+      <div className="pt-4">
+        <Button variant="contained" fullWidth style={style.logoutButton} onClick={logout}>
+          SAIR
+        </Button>
+      </div>
 		</div>
 	);
 }

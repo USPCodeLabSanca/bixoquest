@@ -5,10 +5,10 @@ import Message from './message';
 import { usePlayers } from '../../playersContext';
 
 const style = {
-	root: 'w-full bg-white flex flex-col border-t border-gray-600 bg-gray-200 overflow-hidden',
+	root: 'w-full bg-gray-200 flex flex-col border-t border-gray-400 overflow-hidden',
 	input: 'w-full p-2',
-	button: 'border-l border-gray-600 p-2',
-	form: 'border flex border-gray-600 bg-white',
+	button: 'border-l border-gray-400 p-2',
+	form: 'border flex border-gray-400 bg-white',
 	messagesContainer: 'h-full w-full p-2 flex flex-col overflow-y-auto',
 	metaMessage: 'text-center text-sm text-gray-400',
 };
@@ -87,7 +87,7 @@ export default function Chat({ isChatUp }) {
 			style={{
 				height: isChatUp ? '40vh' : '0vh',
 				transition: '200ms',
-				zIndex: 500,
+				zIndex: 1100,
 			}}
 		>
 			<div className={style.messagesContainer} ref={messagesContainerRef}>

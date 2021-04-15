@@ -12,7 +12,7 @@ import { withCustomError } from './error-message';
 const silentHandler = handler => withCustomError(handler, () => '_NO_ERROR_MESSAGE');
 
 const Handlers = {
-	fetchNearbyMissions: (lat, long) => API.get(`/missions?lat=${lat}&lng=${long}`),
+	fetchNearbyMissions: (lat, lng) => API.get(`/missions?lat=${lat}&lng=${lng}`),
 
 	completeLocationMission: (missionId, lat, lng) =>
 		API.post(`/missions/${missionId}/complete`, { lat, lng }),
@@ -26,7 +26,11 @@ const Handlers = {
 
 	openPack: () => API.post('/packs/open'),
 
+	fetchDonationToken: info => API.post('/stickers/donate', info), // { stickers: [1, 2, 3] }
+
 	getFriends: () => API.get('/friends'),
+
+	sendDonationToken: token => API.post('/stickers/receive', { token }),
 
 	addFriend: idFriend => API.post('/friends', { idFriend }),
 

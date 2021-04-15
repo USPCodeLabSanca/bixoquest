@@ -14,7 +14,7 @@ const numaDescription =
 	'O NUMA é uma organização que agrega atualmente alguns grupos de pesquisa do Departamento de Engenharia de Produção (SEP) da Escola de Engenharia de São Carlos (EESC) da Universidade de São Paulo (USP).';
 
 const jorgeCaronDescription =
-	'O NUMA é uma organização que agrega atualmente alguns grupos de pesquisa do Departamento de Engenharia de Produção (SEP) da Escola de Engenharia de São Carlos (EESC) da Universidade de São Paulo (USP).';
+	'O anfiteatro é o mais famoso de todo o campus de São Carlos, o seu nome, Jorge Caron,  homenageia um dos grandes arquitetos brasileiros, ex-professor do Instituto de Arquitetura e Urbanismo';
 
 const cetepeDescription =
 	'O CETEPE é o Centro de Tecnologia Educacional para Engenharia, pensado para aprimorar o ensino da engenharia. Para a realização de seus eventos, palestras, conferências, cursos, seminários etc, conta com dois auditórios: O auditório I -  Marcius Fantozzi Giorgetti se localiza no piso superior do cetepe e comporta até 192 lugares. O auditório II se localiza no piso térreo e tem a capacidade de 34 lugares.';
