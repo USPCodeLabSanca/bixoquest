@@ -12,10 +12,10 @@ const style = {
 	backdrop: 'fixed top-0 left-0 w-full h-full flex justify-center items-center',
 	card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded',
 	imageContainer: '',
-	name: 'text-xl text-center p-4',
+	name: 'bg-gray-800 text-xl text-white p-4 text-center',
 	image: 'absolute inset-0 h-full-important shadow-md w-full',
-	description: 'text-xs p-4',
-	buttonContainer: 'w-full px-4 pb-4',
+	description: 'text-xs p-8',
+	buttonContainer: 'w-full px-8 pb-8',
 };
 
 export default function MemorablePlacesModal({ memorablePlace }) {
