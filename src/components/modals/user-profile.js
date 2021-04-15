@@ -4,7 +4,7 @@ import Modal from '../modal';
 import { useDispatch } from 'react-redux';
 import { closeModal } from '../../redux/actions/modal';
 import CharacterRenderer from '../character-renderer';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import API from '../../api';
 
 const style = {
@@ -61,7 +61,10 @@ export default function UserProfileModal({ user, isFriend }) {
 								style={{ padding: 10 }}
 								onClick={addFriend}
 							>
-								Adicionar amigo
+								Adicionar amigo{' '}
+								{isLoading && (
+									<CircularProgress size={16} style={{ color: 'white', marginLeft: 8 }} />
+								)}
 							</Button>
 						</div>
 					)}
