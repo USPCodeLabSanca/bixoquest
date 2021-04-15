@@ -151,7 +151,7 @@ export default function Missions() {
 
 	const user = useSelector(state => state.auth.user);
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
-	const availableSpecialPacks = useSelector(state => state.auth.user.availablePacks);
+	const availableSpecialPacks = useSelector(state => state.auth.user.availableSpecialPacks);
 	const openPackModal = ModalActions.useModal(() => <PacketsModal />);
 
 	useEffect(() => {

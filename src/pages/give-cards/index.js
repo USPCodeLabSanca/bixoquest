@@ -12,7 +12,7 @@ import Routes from '../../constants/routes';
 import { useDispatch } from 'react-redux';
 
 const style = {
-	root: 'w-full h-full flex flex-col',
+	root: 'w-full min-h-screen flex flex-col',
 	header:
 		'w-full h-12 flex justify-end text-white items-center uppercase font-bold mb-8 bg-gray-100 shadow-lg',
 	headerButton: 'w-16 h-full justify-center items-center flex',
