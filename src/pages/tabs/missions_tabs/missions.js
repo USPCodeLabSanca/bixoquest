@@ -151,6 +151,7 @@ export default function Missions() {
 
 	const user = useSelector(state => state.auth.user);
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
+	const availableSpecialPacks = useSelector(state => state.auth.user.availablePacks);
 	const openPackModal = ModalActions.useModal(() => <PacketsModal />);
 
 	useEffect(() => {
@@ -232,6 +233,16 @@ export default function Missions() {
 				variant="contained"
 			>
 				Abrir pacotes ({availablePacks})
+			</Button>
+			<Button
+				color="secondary"
+				fullWidth
+				style={{ margin: '1rem 0 0 0' }}
+				disabled
+				onClick={openPack}
+				variant="contained"
+			>
+				Abrir pacotes especiais ({availableSpecialPacks})
 			</Button>
 			{renderMissions()}
 		</div>
