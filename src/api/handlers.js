@@ -26,11 +26,7 @@ const Handlers = {
 
 	openPack: () => API.post('/packs/open'),
 
-	fetchDonationToken: info => API.post('/stickers/donate', info), // { stickers: [1, 2, 3] }
-
 	getFriends: () => API.get('/friends'),
-
-	sendDonationToken: token => API.post('/stickers/receive', { token }),
 
 	addFriend: idFriend => API.post('/friends', { idFriend }),
 

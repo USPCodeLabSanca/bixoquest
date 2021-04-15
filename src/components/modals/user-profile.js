@@ -26,7 +26,6 @@ export default function UserProfileModal({ user, isFriend }) {
 	}
 
 	async function addFriend() {
-		console.log(user);
 		setIsLoading(true);
 		try {
 			await API.addFriend(user._id);

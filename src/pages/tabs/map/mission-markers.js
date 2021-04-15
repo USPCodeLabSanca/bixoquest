@@ -30,12 +30,7 @@ export default function MissionMarkers() {
 	const nearbyMissions = useSelector(state => state.missions.nearbyMissions);
 
 	const fetchMissions = useDebounce(async () => {
-		dispatch(
-			await MissionActions.fetchNearbyMissions(
-				players['user-player'].position[0],
-				players['user-player'].position[1],
-			),
-		);
+		dispatch(await MissionActions.fetchNearbyMissions(...players['user-player'].position));
 	}, 1000);
 
 	React.useEffect(() => {

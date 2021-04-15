@@ -58,8 +58,6 @@ export default function ProfilePage() {
 		})();
 	}, []);
 
-	//let friendsList=[{user}, {user}, {user}, {user}];
-
 	function findFriends() {
 		console.log('procurar amiguinhos');
 	}
