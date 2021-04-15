@@ -36,9 +36,7 @@ export async function signup(newUser) {
 }
 
 export async function updateUser() {
-	const {
-		data: { data: user },
-	} = await silentAPI.getUser();
+	const { data: user } = await silentAPI.getUser();
 	return {
 		type: 'SET_USER',
 		user: user,

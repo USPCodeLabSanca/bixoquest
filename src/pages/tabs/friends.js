@@ -4,9 +4,12 @@ import Fab from '@material-ui/core/Fab';
 import Card from '@material-ui/core/Card';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import Button from '@material-ui/core/Button';
 
 import CharacterRenderer from '../../components/character-renderer';
 import API from '../../api';
+import routes from '../../constants/routes';
+import { useHistory } from 'react-router';
 
 const style = {
 	root: 'p-4 h-full',
@@ -25,27 +28,10 @@ const style = {
 	},
 };
 
-function renderCards(friendsList) {
-	const list = [];
-
-	for (const [i, friend] of friendsList.entries()) {
-		list.push(
-			<Card className={style.card} key={i}>
-				<div style={{ width: '100%', height: 150 }}>
-					<CharacterRenderer charParts={friend.character} />
-				</div>
-				<div className={style.userName}>{friend.name}</div>
-				<div className={style.userCourse}>{friend.course}</div>
-			</Card>,
-		);
-	}
-
-	return <div className={style.cardsList}>{list}</div>;
-}
-
 export default function ProfilePage() {
 	const [isLoading, setIsLoading] = React.useState(true);
 	const [friendData, setFriendData] = React.useState([]);
+	const history = useHistory();
 
 	useEffect(() => {
 		(async () => {
@@ -66,11 +52,35 @@ export default function ProfilePage() {
 		console.log('ver novas solicitações de amizades');
 	}
 
+	function handleDonate(id) {
+		history.push(routes.giveCards.replace(':id', id));
+	}
+
 	return (
 		<div className={style.root}>
 			<h1 className={style.title}>Meus amigos</h1>
 
-			{!isLoading && renderCards(friendData)}
+			{!isLoading && (
+				<div className={style.cardsList}>
+					{Object.entries(friendData).map(([i, friend]) => (
+						<Card className={style.card} key={i}>
+							<div style={{ width: '100%', height: 150 }}>
+								<CharacterRenderer charParts={friend.character} />
+							</div>
+							<Button
+								color="primary"
+								variant="contained"
+								style={{ marginTop: 8, marginBottom: 8, fontSize: 10 }}
+								onClick={() => handleDonate(friend._id)}
+							>
+								Doar cartas
+							</Button>
+							<div className={style.userName}>{friend.name}</div>
+							<div className={style.userCourse}>{friend.course}</div>
+						</Card>
+					))}
+				</div>
+			)}
 
 			<div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
 				{/*

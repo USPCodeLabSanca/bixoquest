@@ -1,6 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import STICKERS_DATA from '../../../constants/stickers';
+import { updateUser as updateUserAction } from '../../../redux/actions/auth';
 
 import PropTypes from 'prop-types';
 
@@ -65,13 +66,19 @@ function a11yProps(index) {
 
 export default function Stickers() {
 	const user = useSelector(state => state.auth.user);
+	const dispatch = useDispatch();
 	const [value, setValue] = React.useState(0);
+
+	React.useEffect(() => {
+		(async () => {
+			dispatch(await updateUserAction());
+		})();
+	}, []);
 
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
 
-	console.log(user.stickers);
 	return (
 		<div className={style.root}>
 			<nav className={style.nav}>
@@ -104,6 +111,7 @@ export default function Stickers() {
 						>
 							{[...Array(9)].map((x, i) => (
 								<Grid
+									key={i}
 									container
 									item
 									xs={4}

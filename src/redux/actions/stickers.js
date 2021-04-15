@@ -1,6 +1,10 @@
-export function receiveDonation(stickers) {
+import API from '../../api';
+
+export async function donateStickers(stickers, userId) {
+	await API.donationStickers(stickers, userId);
+
 	return {
-		type: 'RECEIVE_DONATION',
+		type: 'DONATE_STICKERS',
 		stickers,
 	};
 }
