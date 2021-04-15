@@ -30,7 +30,12 @@ export default function MissionMarkers() {
 	const nearbyMissions = useSelector(state => state.missions.nearbyMissions);
 
 	const fetchMissions = useDebounce(async () => {
-		dispatch(await MissionActions.fetchNearbyMissions(players['user-player'].position[0], players['user-player'].position[1]));
+		dispatch(
+			await MissionActions.fetchNearbyMissions(
+				players['user-player'].position[0],
+				players['user-player'].position[1],
+			),
+		);
 	}, 1000);
 
 	React.useEffect(() => {
@@ -48,7 +53,9 @@ export default function MissionMarkers() {
 				eventHandlers={{
 					click: () =>
 						dispatch(
-							ModalActions.setCurrentModal(<MissionDialog mission={mission} user={players['user-player']} />),
+							ModalActions.setCurrentModal(
+								<MissionDialog mission={mission} user={players['user-player']} />,
+							),
 						),
 				}}
 			/>
@@ -70,7 +77,10 @@ export default function MissionMarkers() {
 		if (
 			getDistance(
 				{ latitude: mission.lat, longitude: mission.lng },
-				{ latitude: players['user-player'].position[0], longitude: players['user-player'].position[1] },
+				{
+					latitude: players['user-player'].position[0],
+					longitude: players['user-player'].position[1],
+				},
 			) < MISSION_RANGE
 		)
 			return inRangeMissonMarker(mission);
