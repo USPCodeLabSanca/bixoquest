@@ -41,6 +41,14 @@ export default function authReducer(state, action) {
 				stickers: [...state.user.stickers, ...action.stickers],
 			},
 		};
+	} else if (action.type === 'ADD_FRIEND') {
+		return {
+			...state,
+			user: {
+				...state.user,
+				friends: [...state.user.friends, action.friendId],
+			},
+		};
 	} else {
 		return state;
 	}

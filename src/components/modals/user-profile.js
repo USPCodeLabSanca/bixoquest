@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Modal from '../modal';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeModal } from '../../redux/actions/modal';
 import CharacterRenderer from '../character-renderer';
 import { Button, CircularProgress } from '@material-ui/core';
-import API from '../../api';
+import { addFriend as addFriendAction } from '../../redux/actions/friends';
 
 const style = {
 	root: 'flex justify-center items-center p-4',
@@ -17,9 +17,12 @@ const style = {
 	gridCol2: 'col-span-1 row-span-2',
 };
 
-export default function UserProfileModal({ user, isFriend }) {
+export default function UserProfileModal({ user }) {
+	const friends = useSelector(state => state.auth.user.friends);
 	const dispatch = useDispatch();
 	const [isLoading, setIsLoading] = React.useState(false);
+
+	const isFriend = friends.includes(user._id);
 
 	function handleClose() {
 		dispatch(closeModal());
@@ -28,7 +31,7 @@ export default function UserProfileModal({ user, isFriend }) {
 	async function addFriend() {
 		setIsLoading(true);
 		try {
-			await API.addFriend(user._id);
+			dispatch(await addFriendAction(user._id));
 		} catch (error) {
 			console.log(error);
 		} finally {
