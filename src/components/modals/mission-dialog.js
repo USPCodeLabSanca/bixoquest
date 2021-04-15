@@ -26,7 +26,7 @@ export default function MissionDialog({ onRequestClose = () => {}, mission, user
 		try {
 			if (!user.position) throw new Error('how are you here without a geolocation?');
 			const latitude = user.position[0];
-      const longitude = user.position[1];
+			const longitude = user.position[1];
 			const action = await completeLocationMission(mission, latitude, longitude);
 			// const action = await completeMission(mission, -22.007336, -47.895105)
 			dispatch(action);

@@ -26,15 +26,13 @@ export default function UserProfileModal({ user, isFriend }) {
 	}
 
 	async function addFriend() {
-		console.log(user)
+		console.log(user);
 		setIsLoading(true);
-		try{
+		try {
 			await API.addFriend(user._id);
-		}
-		catch (error){
+		} catch (error) {
 			console.log(error);
-		}
-		finally {
+		} finally {
 			handleClose();
 			setIsLoading(false);
 		}
@@ -49,22 +47,25 @@ export default function UserProfileModal({ user, isFriend }) {
 				<div className={style.name}>{user.name}</div>
 				<div className={style.gridInfo}>
 					<div className={style.gridCol1}>
-						<div className={style.info}>Curso: <b>{user.course}</b></div>
-						<div className={style.info}>Discord tag: <b>{user.discord}</b></div>
+						<div className={style.info}>
+							Curso: <b>{user.course}</b>
+						</div>
+						<div className={style.info}>
+							Discord tag: <b>{user.discord}</b>
+						</div>
 					</div>
 					{!isFriend && (
-					<div className={style.gridCol2}>
-						<Button
-							color="primary"
-							variant="contained"
-							style={{ padding: 10 }}
-							onClick={addFriend}
-						>
-							Adicionar amigo
-						</Button>
-					</div>
+						<div className={style.gridCol2}>
+							<Button
+								color="primary"
+								variant="contained"
+								style={{ padding: 10 }}
+								onClick={addFriend}
+							>
+								Adicionar amigo
+							</Button>
+						</div>
 					)}
-					
 				</div>
 				<Button
 					color="secondary"

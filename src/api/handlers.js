@@ -28,7 +28,7 @@ const Handlers = {
 
 	getFriends: () => API.get('/friends'),
 
-	addFriend: (idFriend) => API.post('/friends', {idFriend}),
+	addFriend: idFriend => API.post('/friends', { idFriend }),
 
 	fetchDonationToken: info => API.post('/stickers/donate', info), // { stickers: [1, 2, 3] }
 

@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 import Fab from '@material-ui/core/Fab';
 import Card from '@material-ui/core/Card';
@@ -7,7 +7,6 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import CharacterRenderer from '../../components/character-renderer';
 import API from '../../api';
-
 
 const style = {
 	root: 'p-4 h-full',
@@ -28,57 +27,53 @@ const style = {
 
 function renderCards(friendsList) {
 	const list = [];
-  
+
 	for (const [i, friend] of friendsList.entries()) {
-	  list.push(
-		<Card className={style.card} key={i}>
-			<div style={{ width: '100%', height: 150 }}>
-				<CharacterRenderer charParts={friend.character} />
-			</div>
-			<div className={style.userName}>{friend.name}</div>
-			<div className={style.userCourse}>{friend.course}</div>
-		</Card>
-		)
+		list.push(
+			<Card className={style.card} key={i}>
+				<div style={{ width: '100%', height: 150 }}>
+					<CharacterRenderer charParts={friend.character} />
+				</div>
+				<div className={style.userName}>{friend.name}</div>
+				<div className={style.userCourse}>{friend.course}</div>
+			</Card>,
+		);
 	}
-  
-	return (
-	  <div className={style.cardsList}>
-		{list}
-	  </div>
-	)
-  }
+
+	return <div className={style.cardsList}>{list}</div>;
+}
 
 export default function ProfilePage() {
 	const [isLoading, setIsLoading] = React.useState(true);
 	const [friendData, setFriendData] = React.useState([]);
 
 	useEffect(() => {
-        (async () => {
-            try {
-				setFriendData((await API.getFriends()).data)
+		(async () => {
+			try {
+				setFriendData((await API.getFriends()).data);
 				setIsLoading(false);
-            } catch (error) {
-                console.error(error);
-            }
-        })();
-    }, []);
+			} catch (error) {
+				console.error(error);
+			}
+		})();
+	}, []);
 
 	//let friendsList=[{user}, {user}, {user}, {user}];
 
 	function findFriends() {
-		console.log("procurar amiguinhos");
+		console.log('procurar amiguinhos');
 	}
 
 	function notificationFriends() {
-		console.log("ver novas solicitações de amizades");
+		console.log('ver novas solicitações de amizades');
 	}
 
 	return (
 		<div className={style.root}>
 			<h1 className={style.title}>Meus amigos</h1>
-			
+
 			{!isLoading && renderCards(friendData)}
-					
+
 			<div className={style.actionButtonsContainer} style={{ zIndex: 10000 }}>
 				{/*
 				<Fab size="small" style={style.fab} onClick={findFriends}>

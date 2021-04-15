@@ -82,17 +82,12 @@ export default function CharacterEditor({ onChange = () => {}, initialCharacter 
 			className={classes.root}
 		>
 			<div className="flex flex-col items-center">
-        <div className="w-32 h-full">
-				  <SlideableCharacterRenderer charParts={currentChar} />
-        </div>
-        <Button
-          variant="contained"
-          onClick={randomize}
-          size="small"
-          fullWidth
-        >
-          Aleatório
-        </Button>
+				<div className="w-32 h-full">
+					<SlideableCharacterRenderer charParts={currentChar} />
+				</div>
+				<Button variant="contained" onClick={randomize} size="small" fullWidth>
+					Aleatório
+				</Button>
 			</div>
 			<div className={classes.arrows}>
 				{makeSelector('skin')}

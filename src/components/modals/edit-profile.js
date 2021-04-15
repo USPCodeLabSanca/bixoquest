@@ -38,33 +38,39 @@ export default function EditProfileModal() {
 		<Modal className={style.root}>
 			<div className={style.card}>
 				<div className={style.title}>Editar perfil</div>
-        <div className='py-4'>
-          <TextField
-            label="Discord tag"
-            onChange={event => {
-              updateNewUser({ discord: event.target.value });
-            }}
-            fullWidth
-            defaultValue={user.discord}
-          />
-        </div>
+				<div className="py-4">
+					<TextField
+						label="Discord tag"
+						onChange={event => {
+							updateNewUser({ discord: event.target.value });
+						}}
+						fullWidth
+						defaultValue={user.discord}
+					/>
+				</div>
 				<CharacterEditor
 					initialCharacter={user.character}
 					onChange={char => updateNewUser({ character: char })}
 				/>
-				<div className='py-4'>
-					<Button onClick={handleCancel} className={style.button} fullWidth variant="contained" size="small">
+				<div className="py-4">
+					<Button
+						onClick={handleCancel}
+						className={style.button}
+						fullWidth
+						variant="contained"
+						size="small"
+					>
 						Cancelar
 					</Button>
 				</div>
-        <div>
+				<div>
 					<Button
 						onClick={handleSubmit}
 						color="secondary"
 						className={style.button}
 						fullWidth
 						variant="contained"
-            size="small"
+						size="small"
 					>
 						Enviar
 					</Button>

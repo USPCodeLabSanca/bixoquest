@@ -43,7 +43,13 @@ function FoundABugModal() {
 						o possivel!
 					</P>
 				</div>
-				<Button onClick={submit} className={style.button} fullWidth variant="contained" size="small">
+				<Button
+					onClick={submit}
+					className={style.button}
+					fullWidth
+					variant="contained"
+					size="small"
+				>
 					OK
 				</Button>
 			</div>
