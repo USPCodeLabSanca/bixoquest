@@ -20,7 +20,8 @@ export default function authReducer(state, action) {
 			user: {
 				...state.user,
 				completedMissions: [...state.user.completedMissions, action.mission._id],
-				availablePacks: state.user.availablePacks + action.mission.numberOfPacks,
+				availablePacks: action.mission.isSpecial ? state.user.availablePacks : state.user.availablePacks + action.mission.numberOfPacks,
+				availableSpecialPacks: action.mission.isSpecial ? state.user.availableSpecialPacks + action.mission.numberOfPacks : state.user.availableSpecialPacks,
 			},
 		};
 	} else if (action.type === 'OPEN_PACK') {
