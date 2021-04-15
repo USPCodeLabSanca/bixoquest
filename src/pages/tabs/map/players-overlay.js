@@ -31,7 +31,8 @@ function PlayerImage({ player, userPlayer }) {
 	function handlePlayerClick(event) {
 		if (player === userPlayer) return;
 		event.stopPropagation();
-		dispatch(setCurrentModal(<UserProfileModal user={player.user} />));
+		console.log(userPlayer)
+		dispatch(setCurrentModal(<UserProfileModal user={player.user} isFriend={userPlayer.user.friends.indexOf(player._id) !== -1} />));
 	}
 
 	React.useEffect(() => {

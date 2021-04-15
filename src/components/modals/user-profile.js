@@ -7,7 +7,6 @@ import CharacterRenderer from '../character-renderer';
 import { Button } from '@material-ui/core';
 import API from '../../api';
 
-
 const style = {
 	root: 'flex justify-center items-center p-4',
 	card: 'p-4 bg-white flex flex-col rounded-lg max-h-full overflow-auto max-w-md w-full',
@@ -18,7 +17,7 @@ const style = {
 	gridCol2: 'col-span-1 row-span-2',
 };
 
-export default function UserProfileModal({ user }) {
+export default function UserProfileModal({ user, isFriend }) {
 	const dispatch = useDispatch();
 	const [isLoading, setIsLoading] = React.useState(false);
 
@@ -36,6 +35,7 @@ export default function UserProfileModal({ user }) {
 			console.log(error);
 		}
 		finally {
+			handleClose();
 			setIsLoading(false);
 		}
 	}
@@ -52,6 +52,7 @@ export default function UserProfileModal({ user }) {
 						<div className={style.info}>Curso: <b>{user.course}</b></div>
 						<div className={style.info}>Discord tag: <b>{user.discord}</b></div>
 					</div>
+					{!isFriend && (
 					<div className={style.gridCol2}>
 						<Button
 							color="primary"
@@ -62,6 +63,8 @@ export default function UserProfileModal({ user }) {
 							Adicionar amigo
 						</Button>
 					</div>
+					)}
+					
 				</div>
 				<Button
 					color="secondary"
