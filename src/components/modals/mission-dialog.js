@@ -1,20 +1,22 @@
 import React from 'react';
 
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { toast } from 'react-toastify';
+import Backdrop from '@material-ui/core/Backdrop';
 
 import Modal, { ModalActions } from '../modal';
 import { completeLocationMission } from '../../redux/actions/missions';
-import { useDispatch } from 'react-redux';
 
 const style = {
   root: 'flex justify-center items-center',
   card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded text-center max-h-full overflow-auto',
 	modalTitle: 'bg-gray-800 text-xl text-white py-4 px-8',
-	title: 'text-lg p-8',
-	description: 'text-xs px-8',
-	locationReference: 'p-8',
+	title: 'text-lg pt-8',
+	description: 'text-xs px-8 pt-8',
+	locationReference: 'text-sm px-8 pt-8',
+	numberOfPacks: 'px-8 p-8',
 	buttonContainer: 'w-full px-8 pb-8',
 };
 
@@ -46,19 +48,24 @@ export default function MissionDialog({ onRequestClose = () => {}, mission, user
 	}
 
 	return (
-		<Modal open className={style.root} onClose={close}>
-			<div className={style.card}>
-				<div className={style.modalTitle}>Missão Concluída</div>
-				<div className={style.title}>{mission.title}</div>
-				<div className={style.description}>{mission.description}</div>
-				<div className={style.locationReference}>{mission.locationReference}</div>
-        <div className={style.buttonContainer}>
-          <Button variant="contained" color="secondary" fullWidth onClick={submit}>
-            Ok
-            {isLoading && <CircularProgress style={{ margin: '0 8px', color: 'black' }} size={20} />}
-          </Button>
-				</div>
-			</div>
-		</Modal>
+    <>
+      <Modal open className={style.root} onClose={close}>
+        <div className={style.card}>
+          <div className={style.modalTitle}>Concluir Missão</div>
+          <div className={style.title}>{mission.title}</div>
+          <div className={style.description}>{mission.description}</div>
+          <div className={style.locationReference}>{mission.locationReference}</div>
+          <div className={style.numberOfPacks}>Você vai ganhar {mission.numberOfPacks} pacotes{mission.isSpecial && ' especiais'}.</div>
+          <div className={style.buttonContainer}>
+            <Button variant="contained" color="secondary" fullWidth onClick={submit}>
+              Concluir
+            </Button>
+          </div>
+        </div>
+      </Modal>
+      <Backdrop style={{ zIndex: 9999999 }} open={isLoading}>
+        <CircularProgress size={50} style={{ color: 'white' }} />
+      </Backdrop>
+    </>
 	);
 }
