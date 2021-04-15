@@ -10,9 +10,9 @@ import CharacterEditor from '../character-editor';
 import { TextField } from '@material-ui/core';
 
 const style = {
-	root: 'w-full h-full flex justify-center items-center p-4',
-	card: 'p-4 bg-white max-h-full flex flex-col rounded overflow-auto max-w-md w-full shadow-md',
-	title: 'text-xl text-center',
+  root: 'flex justify-center items-center',
+  card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded text-center max-h-full overflow-auto',
+	modalTitle: 'bg-gray-800 text-xl text-white py-4 px-8',
 };
 
 export default function EditProfileModal() {
@@ -37,36 +37,44 @@ export default function EditProfileModal() {
 	return (
 		<Modal className={style.root}>
 			<div className={style.card}>
-				<div className={style.title}>Editar perfil</div>
-        <div className='py-4'>
-          <TextField
-            label="Discord tag"
-            onChange={event => {
-              updateNewUser({ discord: event.target.value });
-            }}
-            fullWidth
-            defaultValue={user.discord}
+				<div className={style.modalTitle}>Editar perfil</div>
+				<div className="p-8">
+					<TextField
+						label="Discord tag"
+						onChange={event => {
+							updateNewUser({ discord: event.target.value });
+						}}
+						fullWidth
+						defaultValue={user.discord}
+					/>
+				</div>
+        <div className="px-8">
+          <CharacterEditor
+            initialCharacter={user.character}
+            onChange={char => updateNewUser({ character: char })}
           />
         </div>
-				<CharacterEditor
-					initialCharacter={user.character}
-					onChange={char => updateNewUser({ character: char })}
-				/>
-				<div className='py-4'>
-					<Button onClick={handleCancel} className={style.button} fullWidth variant="contained" size="small">
-						Cancelar
-					</Button>
-				</div>
-        <div>
+				<div className="p-8">
 					<Button
 						onClick={handleSubmit}
 						color="secondary"
 						className={style.button}
 						fullWidth
 						variant="contained"
-            size="small"
+						size="small"
 					>
 						Enviar
+					</Button>
+				</div>
+				<div className='px-8 pb-8'>
+					<Button
+						onClick={handleCancel}
+						className={style.button}
+						fullWidth
+						variant="contained"
+						size="small"
+					>
+						Cancelar
 					</Button>
 				</div>
 			</div>

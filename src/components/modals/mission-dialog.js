@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { toast } from 'react-toastify';
@@ -10,10 +9,13 @@ import { completeLocationMission } from '../../redux/actions/missions';
 import { useDispatch } from 'react-redux';
 
 const style = {
-	root: 'flex justify-center items-center p-4',
-	card: 'w-full max-w-md',
-	title: 'text-center bg-gray-700 text-3xl text-white px-2',
-	description: 'text-center flex justify-center py-8',
+  root: 'flex justify-center items-center',
+  card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded text-center max-h-full overflow-auto',
+	modalTitle: 'bg-gray-800 text-xl text-white py-4 px-8',
+	title: 'text-lg p-8',
+	description: 'text-xs px-8',
+	locationReference: 'p-8',
+	buttonContainer: 'w-full px-8 pb-8',
 };
 
 export default function MissionDialog({ onRequestClose = () => {}, mission, user }) {
@@ -26,9 +28,8 @@ export default function MissionDialog({ onRequestClose = () => {}, mission, user
 		try {
 			if (!user.position) throw new Error('how are you here without a geolocation?');
 			const latitude = user.position[0];
-      const longitude = user.position[1];
+			const longitude = user.position[1];
 			const action = await completeLocationMission(mission, latitude, longitude);
-			// const action = await completeMission(mission, -22.007336, -47.895105)
 			dispatch(action);
 			dispatch(ModalActions.closeModal());
 			toast.success('Missão concluida com sucesso');
@@ -46,14 +47,18 @@ export default function MissionDialog({ onRequestClose = () => {}, mission, user
 
 	return (
 		<Modal open className={style.root} onClose={close}>
-			<Card className={style.card}>
-				<div className={style.title}>Missão Concluída</div>
-				<div className={style.description}>{mission.locationReference}</div>
-				<Button onClick={submit} className={style.button} fullWidth variant="contained">
-					OK
-					{isLoading && <CircularProgress style={{ margin: '0 8px', color: 'black' }} size={20} />}
-				</Button>
-			</Card>
+			<div className={style.card}>
+				<div className={style.modalTitle}>Missão Concluída</div>
+				<div className={style.title}>{mission.title}</div>
+				<div className={style.description}>{mission.description}</div>
+				<div className={style.locationReference}>{mission.locationReference}</div>
+        <div className={style.buttonContainer}>
+          <Button variant="contained" color="secondary" fullWidth onClick={submit}>
+            Ok
+            {isLoading && <CircularProgress style={{ margin: '0 8px', color: 'black' }} size={20} />}
+          </Button>
+				</div>
+			</div>
 		</Modal>
 	);
 }

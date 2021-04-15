@@ -7,10 +7,12 @@ import { closeModal } from '../../redux/actions/modal';
 import Modal from '../modal';
 
 const style = {
-	root: 'w-full h-full flex justify-center items-center p-4 py-16',
-	card: 'p-4 bg-white rounded-lg max-h-full overflow-auto max-w-md',
-	title: 'text-xl',
-	paragraph: 'text-sm my-4 text-justify',
+	root: 'flex justify-center items-center',
+	card: 'bg-white shadow-md container mx-auto max-w-lg lg:rounded max-h-full overflow-auto',
+  modalTitle: 'bg-gray-800 text-xl text-white py-4 px-8',
+	description: 'py-4',
+	paragraph: 'text-sm my-4 px-8 text-justify',
+  buttonContainer: 'w-full px-8 pb-8',
 };
 
 const P = props => <p className={style.paragraph} {...props} />;
@@ -25,7 +27,7 @@ function FoundABugModal() {
 	return (
 		<Modal className={style.root}>
 			<div className={style.card}>
-				<div className={style.title}>Encontrei um bug!</div>
+				<div className={style.modalTitle}>Encontrei um bug!</div>
 				<div className={style.description}>
 					<P>Oh não! Pedimos desculpas!</P>
 					<P>
@@ -43,9 +45,11 @@ function FoundABugModal() {
 						o possivel!
 					</P>
 				</div>
-				<Button onClick={submit} className={style.button} fullWidth variant="contained" size="small">
-					OK
-				</Button>
+        <div className={style.buttonContainer}>
+          <Button variant="contained" color="secondary" fullWidth onClick={submit}>
+            Ok
+          </Button>
+				</div>
 			</div>
 		</Modal>
 	);

@@ -33,12 +33,25 @@ export default function authReducer(state, action) {
 				stickers: [...state.user.stickers, action.stickerId],
 			},
 		};
-	} else if (action.type === 'RECEIVE_DONATION') {
+	} else if (action.type === 'DONATE_STICKERS') {
+		const newStickers = [...state.user.stickers];
+		action.stickers.forEach(sticker => {
+			const index = newStickers.findIndex(item => item === sticker);
+			newStickers.splice(index, 1);
+		});
 		return {
 			...state,
 			user: {
 				...state.user,
-				stickers: [...state.user.stickers, ...action.stickers],
+				stickers: newStickers,
+			},
+		};
+	} else if (action.type === 'ADD_FRIEND') {
+		return {
+			...state,
+			user: {
+				...state.user,
+				friends: [...state.user.friends, action.friendId],
 			},
 		};
 	} else {

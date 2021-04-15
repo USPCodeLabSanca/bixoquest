@@ -41,7 +41,7 @@ const style = {
 };
 
 export default function MapScreen() {
-  const { players } = usePlayers();
+	const { players } = usePlayers();
 	// const history = useHistory();
 	const [isChatUp, setIsChatUp] = React.useState(false);
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
@@ -75,12 +75,8 @@ export default function MapScreen() {
 				<ChatContainer isChatUp={isChatUp} />
 			</div>
 			<Map initialConfiguration={{ center: initialPlayerPosition, zoom: 18 }}>
-        {
-				  players && <PlayerOverlay />
-        }
-        {
-				  players && <MissionMarkers />
-        }
+				{players && <PlayerOverlay />}
+				{players && <MissionMarkers />}
 				<MemorablePlaces />
 			</Map>
 		</div>

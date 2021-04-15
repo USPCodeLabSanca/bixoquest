@@ -32,11 +32,11 @@ function PlayerImage({ player, userPlayer }) {
 		const imageElement = imageRef.current.getElement();
 		const style = imageElement.style;
 
-    function handlePlayerClick(event) {
-      if (player === userPlayer) return;
-      event.stopPropagation();
-      dispatch(setCurrentModal(<UserProfileModal user={player.user} />));
-    }
+		function handlePlayerClick(event) {
+			if (player === userPlayer) return;
+			event.stopPropagation();
+			dispatch(setCurrentModal(<UserProfileModal user={player.user} />));
+		}
 
 		style.pointerEvents = 'auto';
 
@@ -98,7 +98,7 @@ export default function PlayerOverlay() {
 
 	return (
 		<>
-      {Object.values(players).map((player, index) => (
+			{Object.values(players).map((player, index) => (
 				<PlayerImage player={player} userPlayer={players['user-player']} key={index} />
 			))}
 		</>

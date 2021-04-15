@@ -23,7 +23,6 @@ import Login from './pages/login';
 import LoginTest from './pages/login-test';
 import Signup from './pages/signup';
 import GiveCards from './pages/give-cards/index.js';
-import ReceiveCards from './pages/receive-cards/index.js';
 
 // CSS
 import './main-style.css';
@@ -41,13 +40,14 @@ function App() {
 		<ThemeProvider theme={MuiTheme}>
 			<Provider store={store}>
 				<PersistGate loading={null} persistor={persistor}>
-					<ModalRenderer />
 					<BrowserRouter>
+						<ModalRenderer />
 						<Switch>
 							<Route
 								path={[
 									routes.tabs.map,
 									routes.tabs.profile,
+									routes.tabs.friends,
 									routes.tabs.missionsTabs.missions,
 									routes.tabs.missionsTabs.stickers,
 								]}
@@ -57,7 +57,6 @@ function App() {
 							<Route path={routes.login} component={requiresNoAuthentication(Login)} />
 							<Route path={routes.signup} component={requiresNoAuthentication(Signup)} />
 							<Route path={routes.giveCards} component={requiresAuthentication(GiveCards)} />
-							<Route path={routes.receiveCards} component={requiresAuthentication(ReceiveCards)} />
 							<Redirect to={routes.login} />
 						</Switch>
 					</BrowserRouter>

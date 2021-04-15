@@ -2,6 +2,7 @@ const routes = {
 	tabs: {
 		map: '/map',
 		profile: '/profile',
+		friends: '/friends',
 
 		missionsTabs: {
 			missions: '/missions',
@@ -12,8 +13,7 @@ const routes = {
 	loginTest: '/login-test',
 	signup: '/signup',
 	forgotPassword: '/forgot-password',
-	giveCards: '/give-cards',
-	receiveCards: '/receive-cards',
+	giveCards: '/give-cards/:id',
 };
 
 export default routes;
