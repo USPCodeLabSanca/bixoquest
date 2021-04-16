@@ -22,6 +22,11 @@ const missionIconInRange = icon({
 	iconSize: point(40, 40),
 });
 
+const specialMissionIconInRange = icon({
+	iconUrl: '/exclamation-mark.png',
+	iconSize: point(40, 40),
+});
+
 export default function MissionMarkers() {
 	const { players } = usePlayers();
 
@@ -43,7 +48,7 @@ export default function MissionMarkers() {
 			<Marker
 				zIndexOffset={10000}
 				key={mission._id}
-				icon={missionIconInRange}
+				icon={mission.isSpecial ? specialMissionIconInRange : missionIconInRange}
 				position={[mission.lat, mission.lng]}
 				eventHandlers={{
 					click: () =>
@@ -84,7 +89,7 @@ export default function MissionMarkers() {
 	if (!nearbyMissions || !players['user-player']) return null;
 
 	const unfinishedMissions = nearbyMissions
-		.filter(mission => mission.type === 'location')
+		.filter(mission => mission.type === 'location' || mission.type === 'group')
 		.filter(mission => !finishedMissions.some(finishedId => finishedId === mission._id));
 
 	return <>{unfinishedMissions.map(resolveMissionMarker)}</>;
