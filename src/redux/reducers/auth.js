@@ -20,8 +20,12 @@ export default function authReducer(state, action) {
 			user: {
 				...state.user,
 				completedMissions: [...state.user.completedMissions, action.mission._id],
-				availablePacks: action.mission.isSpecial ? state.user.availablePacks : state.user.availablePacks + action.mission.numberOfPacks,
-				availableSpecialPacks: action.mission.isSpecial ? state.user.availableSpecialPacks + action.mission.numberOfPacks : state.user.availableSpecialPacks,
+				availablePacks: action.mission.isSpecial
+					? state.user.availablePacks
+					: state.user.availablePacks + action.mission.numberOfPacks,
+				availableSpecialPacks: action.mission.isSpecial
+					? state.user.availableSpecialPacks + action.mission.numberOfPacks
+					: state.user.availableSpecialPacks,
 			},
 		};
 	} else if (action.type === 'OPEN_PACK') {
@@ -32,6 +36,16 @@ export default function authReducer(state, action) {
 				availablePacks: state.user.availablePacks - 1,
 				openedPacks: state.user.openedPacks + 1,
 				stickers: [...state.user.stickers, action.stickerId],
+			},
+		};
+	} else if (action.type === 'OPEN_SPECIAL_PACK') {
+		return {
+			...state,
+			user: {
+				...state.user,
+				availableSpecialPacks: state.user.availableSpecialPacks - 1,
+				openedSpecialPacks: state.user.openedSpecialPacks + 1,
+				specialStickers: [...state.user.specialStickers, action.specialStickerId],
 			},
 		};
 	} else if (action.type === 'DONATE_STICKERS') {

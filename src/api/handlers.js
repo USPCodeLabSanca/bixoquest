@@ -26,6 +26,8 @@ const Handlers = {
 
 	openPack: () => API.post('/packs/open'),
 
+	openSpecialPack: () => API.post('/packs/special/open'),
+
 	getFriends: () => API.get('/friends'),
 
 	addFriend: idFriend => API.post('/friends', { idFriend }),

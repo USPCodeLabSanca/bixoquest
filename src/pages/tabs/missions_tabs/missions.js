@@ -16,6 +16,7 @@ import { correctAllMissionCoords } from '../../../lib/coords-corrector';
 import { toast } from 'react-toastify';
 import * as ModalActions from '../../../redux/actions/modal';
 import PacketsModal from '../../../components/modals/packet';
+import SpecialPacketsModal from '../../../components/modals/special-packet';
 
 const style = {
 	root: 'container mx-auto max-w-lg h-full px-4 overflow-auto',
@@ -153,6 +154,7 @@ export default function Missions() {
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
 	const availableSpecialPacks = useSelector(state => state.auth.user.availableSpecialPacks);
 	const openPackModal = ModalActions.useModal(() => <PacketsModal />);
+	const openSpecialPackModal = ModalActions.useModal(() => <SpecialPacketsModal />);
 
 	useEffect(() => {
 		(async () => {
@@ -222,6 +224,10 @@ export default function Missions() {
 		openPackModal();
 	}
 
+	function openSpecialPack() {
+		openSpecialPackModal();
+	}
+
 	return (
 		<div className={style.root}>
 			<Button
@@ -235,11 +241,11 @@ export default function Missions() {
 				Abrir pacotes ({availablePacks})
 			</Button>
 			<Button
-				color="secondary"
+				color="primary"
 				fullWidth
 				style={{ margin: '1rem 0 0 0' }}
-				disabled
-				onClick={openPack}
+				disabled={availableSpecialPacks === 0}
+				onClick={openSpecialPack}
 				variant="contained"
 			>
 				Abrir pacotes especiais ({availableSpecialPacks})
