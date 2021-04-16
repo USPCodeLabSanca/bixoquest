@@ -12,8 +12,8 @@ export async function fetchNearbyMissions(lat, lng) {
 	};
 }
 
-export async function completeLocationMission(mission, lat, lng) {
-	await API.completeLocationMission(mission._id, lat, lng);
+export async function completeLocationMission(missionArg, lat, lng) {
+	const { data: mission } = await API.completeLocationMission(missionArg._id, lat, lng);
 	return {
 		type: 'COMPLETE_MISSION',
 		mission,
