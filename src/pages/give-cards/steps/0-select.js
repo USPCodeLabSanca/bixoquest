@@ -77,7 +77,7 @@ export default function SelectCardItems() {
 								backgroundSize: 'cover',
 							}}
 						>
-							{stickerId + 1}
+							{+stickerId + 1}
 						</div>
 						<div className={style.controlsContainer}>
 							<div className={style.multiplier}>
