@@ -31,6 +31,7 @@ export default function ProfilePage() {
 
 	function logout() {
 		dispatch(AuthActions.logout());
+		window.localStorage.removeItem('persist:root');
 		window.location.href = backendURL + 'auth/logout';
 	}
 
