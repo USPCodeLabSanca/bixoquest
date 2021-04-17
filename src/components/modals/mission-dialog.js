@@ -71,7 +71,7 @@ export default function MissionDialog({ onRequestClose = () => {}, mission, user
 		const toastId = toast.info(
 			<>
 				A missão será completada em <Timer closeAt={closeAt} /> segundos se{' '}
-				{minimumOfUsersToComplete} outros usuário também tentarem completar-la
+				{minimumOfUsersToComplete - 1} outra{minimumOfUsersToComplete > 2 && 's'} pessoa{minimumOfUsersToComplete > 2 && 's'} também tentar{minimumOfUsersToComplete > 2 && 'em'} completá-la
 			</>,
 			{ autoClose: false, closeOnClick: false },
 		);
@@ -98,7 +98,7 @@ export default function MissionDialog({ onRequestClose = () => {}, mission, user
 					<div className={style.description}>{mission.description}</div>
 					<div className={style.locationReference}>{mission.locationReference}</div>
 					<div className={style.numberOfPacks}>
-						Você vai ganhar {mission.numberOfPacks} pacotes{mission.isSpecial && ' especiais'}.
+						Você vai ganhar {mission.numberOfPacks} pacote{mission.numberOfPacks > 1 && 's'}{mission.isSpecial && (mission.numberOfPacks > 1 ? ' especiais' : ' especial')}.
 					</div>
 					<div className={style.buttonContainer}>
 						<Button variant="contained" color="secondary" fullWidth onClick={submit}>
