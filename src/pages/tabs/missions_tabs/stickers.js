@@ -26,7 +26,9 @@ const style = {
 	sticker: {
 		height: '33.4%',
 		backgroundImage: `url(${STICKERS_DATA.placeholder})`,
-		backgroundColor: '#23b14d',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+		backgroundColor: '#62b9da',
 		border: '0.5px solid white',
 		color: 'white',
 		padding: '3px',
@@ -92,6 +94,9 @@ export default function Stickers() {
 					{STICKERS_DATA.pages.map((page_image, index) => (
 						<Tab label={index + 1} key={index} {...a11yProps(index)} />
 					))}
+          {STICKERS_DATA.specialPages.map((page_image, index) => (
+						<Tab label={STICKERS_DATA.pages.length + index + 1} key={STICKERS_DATA.pages.length + index} {...a11yProps(STICKERS_DATA.pages.length + index)} />
+					))}
 				</Tabs>
 			</nav>
 
@@ -118,6 +123,42 @@ export default function Stickers() {
 									style={{
 										...style.sticker,
 										...(user.stickers.includes(i + index * 9) ? style.discoveredSticker : {}),
+									}}
+									direction="row"
+									alignItems="flex-end"
+								>
+									{i + 1 + index * 9}
+								</Grid>
+							))}
+						</Grid>
+					</TabPanel>
+				))}
+        {STICKERS_DATA.specialPages.map((page_image, index) => (
+					<TabPanel
+            value={value}
+            index={STICKERS_DATA.pages.length + index}
+            key={STICKERS_DATA.pages.length + index}
+          >
+						<Grid
+							container
+							className={style.paginaClass}
+							style={{
+								...style.pagina,
+								...{ backgroundImage: `url(${page_image})` },
+							}}
+							direction="row"
+							justify="center"
+							alignItems="center"
+						>
+							{[...Array(9)].map((x, i) => (
+								<Grid
+									key={i}
+									container
+									item
+									xs={4}
+									style={{
+										...style.sticker,
+										...(user.specialStickers.includes(i + index * 9) ? style.discoveredSticker : {}),
 									}}
 									direction="row"
 									alignItems="flex-end"
