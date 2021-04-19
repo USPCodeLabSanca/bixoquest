@@ -173,7 +173,7 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 		await sleep(1000);
 		if (!env.current.isMounted) return;
 		env.current.currentFace = 'front';
-		frontImageRef.current.style.backgroundImage = `url(${StickersImages.stickers[specialStickerId]})`;
+		frontImageRef.current.style.backgroundImage = `url(${StickersImages.specialStickers[specialStickerId]})`;
 		backImageRef.current.style.backgroundColor = 'transparent';
 		backImageRef.current.style.opacity = '0';
 		frontImageRef.current.style.filter = 'blur(0px) grayscale(0%) brightness(1)';
@@ -282,7 +282,7 @@ const Content = React.forwardRef(({ onOpen = () => {}, onFailure = () => {} }, r
 					style={{
 						outline: 'none',
 						userSelect: 'none',
-						backgroundImage: `url('/pack.png')`,
+						backgroundImage: `url('/special-pack.png')`,
 						backgroundSize: 'cover',
 						backgroundRepeat: 'no-repeat',
 						width: '183px',
