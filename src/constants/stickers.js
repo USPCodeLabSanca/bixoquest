@@ -51,12 +51,35 @@ const pages = [
 	'/albuns/page_4.jpg',
 ];
 
+const specialStickers = [
+	'/albuns/special-cards/special-card-1.jpg',
+	'/albuns/special-cards/special-card-2.jpg',
+	'/albuns/special-cards/special-card-3.jpg',
+	'/albuns/special-cards/special-card-4.jpg',
+	'/albuns/special-cards/special-card-5.jpg',
+	'/albuns/special-cards/special-card-6.jpg',
+	'/albuns/special-cards/special-card-7.jpg',
+	'/albuns/special-cards/special-card-8.jpg',
+	'/albuns/special-cards/special-card-9.jpg',
+];
+
+const specialPageStickers = [
+	specialStickers.slice(0, 9),
+];
+
+const specialPages = [
+	'/albuns/special_page_1.jpg',
+];
+
 //Array of stickers
 const stickers_data = {
 	placeholder: '/albuns/porcarata.png',
 	pageStickers,
 	stickers,
 	pages,
+  specialPageStickers,
+  specialStickers,
+  specialPages,
 };
 
 export default stickers_data;
