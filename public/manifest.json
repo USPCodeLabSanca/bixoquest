@@ -13,7 +13,7 @@
 			"type": "image/png"
 		}
 	],
-	"start_url": "/login",
+	"start_url": "/entrar",
 	"theme_color": "#5a57a5",
 	"background_color": "#5a57a5",
 	"display": "standalone"

@@ -1,19 +1,19 @@
 const routes = {
 	tabs: {
-		map: '/map',
-		profile: '/profile',
-		friends: '/friends',
+		map: '/mapa',
+		profile: '/perfil',
+		friends: '/amigos',
 
 		missionsTabs: {
-			missions: '/missions',
-			stickers: '/stickers',
+			missions: '/missoes',
+			stickers: '/figurinhas',
 		},
 	},
-	login: '/login',
+	login: '/entrar',
 	loginTest: '/login-test',
-	signup: '/signup',
-	forgotPassword: '/forgot-password',
-	giveCards: '/give-cards/:id',
+	signup: '/cadastrar',
+	forgotPassword: '/esqueci-a-senha',
+	giveCards: '/doar-figurinhas/:id',
 };
 
 export default routes;
