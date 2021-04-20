@@ -5,7 +5,6 @@ import Fab from '@material-ui/core/Fab';
 
 // Library imports
 import { useSelector } from 'react-redux';
-// import { useHistory } from 'react-router-dom';
 
 // Redux actions imports
 import * as ModalActions from '../../../redux/actions/modal';
@@ -13,14 +12,11 @@ import * as ModalActions from '../../../redux/actions/modal';
 // Components imports
 import Map from '../../../components/map';
 import PackModal from '../../../components/modals/packet';
-
-// MISC imports
-// import Routes from '../../../constants/routes';
+import SpecialPackModal from '../../../components/modals/special-packet';
 
 // Images imports
 import Chat from '@material-ui/icons/Chat';
 import Receipt from '@material-ui/icons/Receipt';
-// import SwapVert from '@material-ui/icons/SwapVert';
 
 import PlayerOverlay from './players-overlay';
 import MissionMarkers from './mission-markers';
@@ -36,21 +32,24 @@ const style = {
 	fab: {
 		margin: '8px 0',
 		outline: 'none',
-		position: 'static',
 	},
+  goldenFab: {
+    margin: '8px 0',
+		outline: 'none',
+    backgroundColor: '#daa520',
+    color: '#fafafa',
+  }
 };
 
 export default function MapScreen() {
 	const { players } = usePlayers();
-	// const history = useHistory();
 	const [isChatUp, setIsChatUp] = React.useState(false);
 	const availablePacks = useSelector(state => state.auth.user.availablePacks);
+	const availableSpecialPacks = useSelector(state => state.auth.user.availableSpecialPacks);
 
 	const showPack = ModalActions.useModal(() => <PackModal />);
 
-	// function giveCards() {
-	// 	history.push(Routes.giveCards);
-	// }
+  const showSpecialPack = ModalActions.useModal(() => <SpecialPackModal />);
 
 	function toggleChat() {
 		setIsChatUp(e => !e);
@@ -60,10 +59,12 @@ export default function MapScreen() {
 		<div className={style.root}>
 			<div className={style.floatingContainer}>
 				<div className={style.actionButtonsContainer} style={{ zIndex: 500 }}>
-					{/* <Fab size="small" style={style.fab} onClick={giveCards}>
-						<SwapVert />
-					</Fab> */}
-					{availablePacks > 0 && (
+					{availableSpecialPacks > 0 && (
+						<Fab size="small" style={style.goldenFab} onClick={showSpecialPack}>
+							<Receipt />
+						</Fab>
+					)}
+          {availablePacks > 0 && (
 						<Fab size="small" style={style.fab} onClick={showPack}>
 							<Receipt />
 						</Fab>
