@@ -12,9 +12,9 @@ import * as PackActions from '../../redux/actions/packs';
 import API from '../../api';
 
 const style = {
-	header: 'bg-white rounded-lg px-2 shadow-lg flex items-center',
+	header: 'bg-gray-800 text-white shadow-md rounded-lg shadow-lg flex items-center p-4',
 	textContainer: '',
-	textLarge: 'text-center text-lg',
+	textLarge: 'text-center text-lg pb-2',
 	textSmall: 'text-center text-sm relative',
 
 	root: 'w-full h-full flex flex-col justify-between items-center px-4 py-6 fixed top-0 left-0',
