@@ -8,3 +8,12 @@ export async function donateStickers(stickers, userId) {
 		stickers,
 	};
 }
+
+export async function donateSpecialStickers(specialStickers, userId) {
+	await API.donationSpecialStickers(specialStickers, userId);
+
+	return {
+		type: 'DONATE_SPECIAL_STICKERS',
+		specialStickers,
+	};
+}

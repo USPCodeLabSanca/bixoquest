@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
 
-import Fab from '@material-ui/core/Fab';
 import Card from '@material-ui/core/Card';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import Button from '@material-ui/core/Button';
 
 import CharacterRenderer from '../../components/character-renderer';
@@ -56,6 +53,10 @@ export default function ProfilePage() {
 		history.push(routes.giveCards.replace(':id', id));
 	}
 
+	function handleDonateSpecial(id) {
+		history.push(routes.giveSpecialCards.replace(':id', id));
+	}
+
 	return (
 		<div className={style.root}>
 			<h1 className={style.title}>Meus amigos</h1>
@@ -70,10 +71,20 @@ export default function ProfilePage() {
 							<Button
 								color="primary"
 								variant="contained"
+								fullWidth
 								style={{ marginTop: 8, marginBottom: 8, fontSize: 10 }}
 								onClick={() => handleDonate(friend._id)}
 							>
 								Doar cartas
+							</Button>
+							<Button
+								color="primary"
+								variant="contained"
+								fullWidth
+								style={{ marginTop: 8, marginBottom: 8, fontSize: 10 }}
+								onClick={() => handleDonateSpecial(friend._id)}
+							>
+								Doar cartas especiais
 							</Button>
 							<div className={style.userName}>{friend.name}</div>
 							<div className={style.userCourse}>{friend.course}</div>

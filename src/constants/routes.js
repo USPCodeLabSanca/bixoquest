@@ -14,6 +14,7 @@ const routes = {
 	signup: '/cadastrar',
 	forgotPassword: '/esqueci-a-senha',
 	giveCards: '/doar-figurinhas/:id',
+	giveSpecialCards: '/doar-figurinhas-especiais/:id',
 };
 
 export default routes;

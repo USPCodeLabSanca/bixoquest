@@ -23,6 +23,7 @@ import Login from './pages/login';
 import LoginTest from './pages/login-test';
 import Signup from './pages/signup';
 import GiveCards from './pages/give-cards/index.js';
+import GiveSpecialCards from './pages/give-special-cards/index.js';
 
 // CSS
 import './main-style.css';
@@ -57,6 +58,10 @@ function App() {
 							<Route path={routes.login} component={requiresNoAuthentication(Login)} />
 							<Route path={routes.signup} component={requiresNoAuthentication(Signup)} />
 							<Route path={routes.giveCards} component={requiresAuthentication(GiveCards)} />
+							<Route
+								path={routes.giveSpecialCards}
+								component={requiresAuthentication(GiveSpecialCards)}
+							/>
 							<Redirect to={routes.login} />
 						</Switch>
 					</BrowserRouter>
