@@ -61,6 +61,19 @@ export default function authReducer(state, action) {
 				stickers: newStickers,
 			},
 		};
+	} else if (action.type === 'DONATE_SPECIAL_STICKERS') {
+		const newSpecialStickers = [...state.user.specialStickers];
+		action.specialStickers.forEach(specialSticker => {
+			const index = newSpecialStickers.findIndex(item => item === specialSticker);
+			newSpecialStickers.splice(index, 1);
+		});
+		return {
+			...state,
+			user: {
+				...state.user,
+				specialStickers: newSpecialStickers,
+			},
+		};
 	} else if (action.type === 'ADD_FRIEND') {
 		return {
 			...state,

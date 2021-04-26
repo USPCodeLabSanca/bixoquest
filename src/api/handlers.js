@@ -34,6 +34,9 @@ const Handlers = {
 
 	donationStickers: (stickers, userId) => API.post('/stickers/donate', { stickers, userId }),
 
+	donationSpecialStickers: (specialStickers, userId) =>
+		API.post('/stickers/special/donate', { specialStickers, userId }),
+
 	login: (email, password) => API.post('/auth/login', { email, password }),
 
 	signup: withCustomError(newUser => API.post('/auth/signup-usp-second-step', newUser), {
