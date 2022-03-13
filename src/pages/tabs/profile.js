@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 
-import backendURL from '../../constants/api-url';
+import {API_URL} from '../../constants/api-url';
 import { setCurrentModal } from '../../redux/actions/modal';
 import * as AuthActions from '../../redux/actions/auth';
 import FoundABugModal from '../../components/modals/found-a-bug';
@@ -32,7 +32,7 @@ export default function ProfilePage() {
 	function logout() {
 		dispatch(AuthActions.logout());
 		window.localStorage.removeItem('persist:root');
-		setTimeout(() => (window.location.href = backendURL + 'auth/logout'), 500);
+		setTimeout(() => (window.location.href = API_URL + '/auth/logout'), 500);
 	}
 
 	function foundABug() {

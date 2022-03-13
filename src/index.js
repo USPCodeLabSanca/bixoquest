@@ -13,7 +13,7 @@ import routes from './constants/routes';
 import { store, persistor } from './redux/store';
 import { updateToken } from './redux/actions/auth';
 import { initializeAPI } from './api/base-api';
-import APIBaseURL from './constants/api-url';
+import {API_URL} from './constants/api-url';
 import ModalRenderer from './services/modal-renderer';
 import { requiresAuthentication, requiresNoAuthentication } from './lib/auth-checker';
 
@@ -30,7 +30,7 @@ import './main-style.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 initializeAPI({
-	baseURL: APIBaseURL,
+	baseURL: API_URL,
 	tokenSelector: () => store.getState().auth.token,
 	tokenDispatcher: newToken => store.dispatch(updateToken(newToken)),
 	onError: message => toast.error(message),

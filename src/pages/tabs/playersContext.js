@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { makeCharacterPNG } from '../../lib/make-character-png';
 import { io } from 'socket.io-client';
-import { SOCKET_PATH, SOCKET_URL } from '../../constants/api-url';
+import BASE_URL, { SOCKET_PATH } from '../../constants/api-url';
 import { initialPlayerPosition } from '../../constants/initial-player-position';
 
 const context = React.createContext(null);
@@ -15,7 +15,7 @@ function createPlayer(user, characterPNG) {
 	};
 }
 
-const serverSocket = io(SOCKET_URL, {
+const serverSocket = io(BASE_URL, {
 	path: SOCKET_PATH,
 	requestTimeout: 100000,
 	reconnectionDelay: 100000,

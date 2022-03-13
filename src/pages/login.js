@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Backdrop from '@material-ui/core/Backdrop';
 
-import backendURL from '../constants/api-url';
+import {API_URL} from '../constants/api-url';
 import { useHistory } from 'react-router-dom';
 import routes from '../constants/routes';
 import { silentAPI } from '../api';
@@ -26,7 +26,7 @@ const LoginScreen = () => {
 	const history = useHistory();
 
 	const loginWithUSP = async () => {
-		window.location.href = backendURL + 'auth';
+		window.location.href = API_URL + '/auth';
 	};
 
 	React.useEffect(() => {
