@@ -1,9 +1,11 @@
-import { ImageOverlay, useMapEvent } from 'react-leaflet';
+import { ImageOverlay } from 'react-leaflet';
 import React from 'react';
-import { usePlayers } from '../playersContext';
 import { useDispatch } from 'react-redux';
+
+import { usePlayers } from '../playersContext';
 import { setCurrentModal } from '../../../redux/actions/modal';
 import UserProfileModal from '../../../components/modals/user-profile';
+import { usePosition } from '../../../lib/hooks/use-position';
 
 const IMAGE_WIDTH = 14;
 const IMAGE_HEIGHT = 9;
@@ -91,10 +93,18 @@ function PlayerImage({ player, userPlayer }) {
 export default function PlayerOverlay() {
 	const { players, movePlayer } = usePlayers();
 
-	useMapEvent('click', event => {
-		const { lat, lng } = event.latlng;
-		movePlayer(lat, lng);
-	});
+	const {
+    latitude,
+    longitude,
+  } = usePosition(true);
+
+	React.useEffect(() => {
+		if (
+			latitude && longitude
+		) {
+			movePlayer(latitude, longitude);
+		}
+	}, [movePlayer, latitude, longitude]);
 
 	return (
 		<>

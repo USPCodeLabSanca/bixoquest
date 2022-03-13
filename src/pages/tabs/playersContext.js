@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { makeCharacterPNG } from '../../lib/make-character-png';
 import { io } from 'socket.io-client';
@@ -90,20 +90,16 @@ export function PlayersContextProvider({ ...props }) {
 	// 	socket.emit('move', 'Bearer ' + token, position[0], position[1]);
 	// }
 
-	function movePlayer(lat, lng) {
-		const newUserPlayer = { ...findPlayerBySocketId('user-player') };
-		newUserPlayer.position = [lat, lng];
-		const newPlayers = { ...players, 'user-player': newUserPlayer };
-		setPlayers(newPlayers);
+	const movePlayer = useCallback((lat, lng) => {
+		setPlayers(players => ({
+			...players,
+			'user-player': { ...players['user-player'], position: [lat, lng] }
+		}));
 		socket.emit('move', 'Bearer ' + token, lat, lng);
-	}
-
-	function findPlayerBySocketId(socketId) {
-		return players[socketId];
-	}
+	}, [socket, token]);
 
 	return (
-		<context.Provider value={{ players, movePlayer, socket, findPlayerBySocketId }} {...props} />
+		<context.Provider value={{ players, movePlayer, socket }} {...props} />
 	);
 }
 
